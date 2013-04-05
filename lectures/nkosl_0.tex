@@ -1,0 +1,120 @@
+% The "t" in documentclass vertically aligns the frame text to the top
+% t-top c-center b-bottom 
+\listfiles
+\documentclass[croatian,t]{beamer} % must specify a language if using babel
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{babel} % đ doesn't work without this package
+\usepackage{datetime}
+% Changing of bullet foreground color not possible if {itemize item}[ball]
+\DefineNamedColor{named}{BrickRed}{cmyk}{0,0.89,0.94,0.28}
+\setbeamertemplate{itemize item}[triangle]
+\setbeamercolor{title}{fg=BrickRed}
+\setbeamercolor{itemize item}{fg=BrickRed}
+\setbeamercolor{section number projected}{bg=BrickRed,fg=white}
+\setbeamercolor{subsection number projected}{bg=BrickRed}
+% Beamer defines "\Tiny" so we have to redefine it to "\tiny"
+\let\Tiny=\tiny
+
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the\year}
+\title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
+\subtitle{Opis vještine}
+\author{Goran Cetušić}
+\author[Goran Cetušić]{Goran Cetušić\\{\small Nositelj: dr. sc. Stjepan Groš}}
+\institute[FER]{Sveučilište u Zagrebu \\
+				Fakultet elektrotehnike i računarstva}
+\date{\todayiso}
+
+\begin{document}
+    %\beamerdefaultoverlayspecification{<+->}
+    {
+    \setbeamertemplate{headline}[] % still there but empty
+    \setbeamertemplate{footline}{}
+    \begin{frame}
+        \maketitle
+    \end{frame}
+    }
+    
+    \begin{frame}
+    	\begin{itemize}
+    		\item Predavači
+    		\begin{itemize}
+    			\item Goran Cetušić - \href{mailto:goran.cetusic@fer.hr}{goran.cetusic@fer.hr}
+    		\end{itemize}
+    		\item Predavanja
+    		\begin{itemize}
+    			\item dvorana A102
+    			\item svaka subota 12-14 sati
+    			\item iznimke su radne subote i praznici
+    			\begin{itemize}
+    				\item nadoknade vjerojatno nedjeljom
+    			\end{itemize}
+    		\end{itemize}
+    		\item Radni uvjeti
+    		\begin{itemize}
+    			\item podrazumijeva se instalirana Linux distribucija
+    			\item Debian, Fedora, Ubuntu...
+    			\item sustav će studenti neprestano modificirati
+    			\begin{itemize}
+    				\item ne preporučuje se držanje važnih podataka na instalaciji Linuxa
+    				\item računajte na moguću reinstalaciju sustava
+    			\end{itemize}
+    		\end{itemize}
+    	\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\begin{itemize}
+    		\item Komponente ocjenjivanja
+    	 	\begin{itemize}
+    	 		\item 10 labosa
+    	 		\item maksimalno 10 bodova po labosu
+    	 		\item 1 labos po terminu
+    	 		\begin{itemize}
+    	 			\item sat predavanja
+    	 			\item sat labosa
+    	 		\end{itemize}
+    	 		\item nasumično ispitivanje 5-10 studenata na svakom labosu
+    	 		\item svaki student može biti ispitan nekoliko puta
+    	 	\end{itemize}
+    	 	\item Uvjeti polaganja vještine
+    	 	\begin{itemize}
+    	 		 \item predani svi labosi
+    	 		 \item minimalno 70 bodova na labosima
+    	 		 \item minimalno 5 bodova na svakom labosu
+    	 		 \item ispituju se svi do tada neispitani labosi
+    	 	\end{itemize}
+    	\item Pretpostavka je da vještinu slučaju studenti koji žele više naučiti o korištenju Linuxa
+    	\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\begin{itemize}
+			\item Literatura
+			\begin{thebibliography}{9}
+  				\bibitem{rhel}
+  					Damian Tomassino.
+  					\emph{Hands-on Guide to Red Hat Exams: RHCSA and RHCE Cert Guide and Lab Manual},
+					Pearson
+					800 East 96th Street
+					Indianapolis, Indiana 46240 USA
+  				\bibitem{linux}
+  					Josep Sorba Esteve (coordinator), Remo Suppi Boldrito.
+  					\emph{GNU/Linux Advanced Administration},
+					Eureca Media, SL.
+					Av. Tilbidabo, 39-43
+					08035 Barcelona, Spain
+				\bibitem{lpi}
+  					JSteven Pritchard, Nicolai Langfeldt, Jeff Dean, James Stanger.
+  					\emph{LPI Linux Certification in a Nutshell, Second Edition},
+					2nd edition.
+					O’Reilly Media Inc.,
+  					Sebastopol, Canada:
+  			\end{thebibliography}
+		\end{itemize}
+	\end{frame}
+\end{document}

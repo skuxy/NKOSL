@@ -1,0 +1,509 @@
+% The "t" in documentclass vertically aligns the frame text to the top
+% t-top c-center b-bottom 
+\listfiles
+\documentclass[croatian,t]{beamer} % must specify a language if using babel
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{babel} % đ doesn't work without this package
+\usepackage{datetime}
+% Changing of bullet foreground color not possible if {itemize item}[ball]
+\DefineNamedColor{named}{BrickRed}{cmyk}{0,0.89,0.94,0.28}
+\setbeamertemplate{itemize item}[triangle]
+\setbeamercolor{title}{fg=BrickRed}
+\setbeamercolor{itemize item}{fg=BrickRed}
+\setbeamercolor{section number projected}{bg=BrickRed,fg=white}
+\setbeamercolor{subsection number projected}{bg=BrickRed}
+% Beamer defines "\Tiny" so we have to redefine it to "\tiny"
+\let\Tiny=\tiny
+
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the\year}
+\title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
+\subtitle{Particije i datotečni sustavi}
+\author{Goran Cetušić}
+\author[Goran Cetušić]{Goran Cetušić\\{\small Nositelj: dr. sc. Stjepan Groš}}
+\institute[FER]{Sveučilište u Zagrebu \\
+				Fakultet elektrotehnike i računarstva}
+\date{\todayiso}
+
+\begin{document}
+    %\beamerdefaultoverlayspecification{<+->}
+    {
+    \setbeamertemplate{headline}[] % still there but empty
+    \setbeamertemplate{footline}{}
+    \begin{frame}
+        \maketitle
+    \end{frame}
+    }
+    
+    \begin{frame}
+        \tableofcontents
+    \end{frame}
+    
+    \section{Particioniranje}
+    \begin{frame}{Particije}
+    	\begin{itemize}
+    		\item Kako Linux prikazuje diskove
+    		\begin{itemize}
+    			\item diskovi idu redom po abecedi – a, b, c, d\ldots
+    			\item sda, sdb\ldots SATA disk a, SATA disk b
+    		\end{itemize}
+    		\item Kako Linux prikazuje particije
+    		\begin{itemize}
+    			\item Brojanje particija kreće od 1
+    			\item Primarne particije imaju brojeve od 1 do 4
+    			\item Logičke particije imaju brojeve od 5 na dalje
+    			\item sda1, sda2, sda5\ldots
+    		\end{itemize}
+    		\item Disk kontroler pristupa sektoru na disku
+    	 	\item Sektor je najmanji mogući zapis podataka
+    	 	\begin{itemize}
+    	 		\item 512 bajta na današnjim diskovima
+    	 	\end{itemize} 
+    	 	\item 16 GB datoteka ne stane na jedan sektor
+    	 	\begin{itemize}
+    	 		\item Potrebno je nekoliko stotina sektora diska za veće datoteke
+    	 		\item Često nije moguće zapisati datoteku na uzastopne sektore već su podaci zapisani na nekoliko mjesta
+    	 	\end{itemize}
+    	\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Blokovi}
+		\begin{itemize}
+			\item Svaki datotečni sustav vodi bilješke o datotekama i posjeduje superblock – opisnik datotečnog sustava
+			\item superblock sadrži sljedeće podatke o datotečnom sustavu
+			\begin{itemize}
+				\item tip sustava
+				\item veličina sustava
+				\item status
+				\item informacije o metapodacima
+			\end{itemize}
+			\item Linux podržava veliki broj datotečnih sustava - ext4, xfs, reiserfs\ldots
+			\begin{itemize}
+				\item Svaki sustav na svoj način vodi evidenciju o datotekama
+				\item Moguće je dodavanje podrške za dodatne sustave
+				\item Lista podržanih sustava nalazi se u datoteci /proc/filesystems
+			\end{itemize}
+			\item Za smanjenje broja zapisa datotečni sustav koristi blokove kao mjerne jedinice
+			\begin{itemize}
+				\item 4KB – zahtjev kontroleru za 8 uzastopnih sektora za zapis podataka
+			\end{itemize}
+		\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}[fragile]
+	\frametitle{Raspored particija}
+		\begin{itemize}
+			\item Standardni sustav ima particije podijeljene na
+			\begin{itemize}
+				\item / - vršni direktorij
+				\item /home - matični direktoriji svih korisnika
+				\item swap - particija korištena za straničenje (paging)
+			\end{itemize}
+			\item Ovakav raspored omogućuje očuvanje osobnih podataka kod reinstalacije sustava
+			\item Za particioniranje koristimo naredbe \textit{fdisk} i \textit{parted}
+			\begin{itemize}
+				\item Manipuliraju informacijama o particijama u MBR-u
+				\item Primjer: ispis particija na disku
+				\begin{lstlisting}
+				fdisk -l
+				\end{lstlisting}
+			\end{itemize}
+			\item \textit{fdisk} ispisuje i opće podatke od disku
+			\begin{itemize}
+				\item Uređaj, kapacitet, emulirana CHS vrijednost
+				\item tip i veličina particija\ldots
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{fdisk}
+		\begin{itemize}
+		\item \textit{fdisk} posjeduje interaktivni mod
+		\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+     p Ispisuje particijsku tablicu
+     n Dodaje novu particiju
+     t Mijenja tip particije
+     d Brise particiju
+     w Zapisuje novu tablicu particija i napusta fdisk
+     q Izlazi bez zapisivanja nove tablice particija
+		\end{lstlisting}
+		\item Stvaranje particije sastoji se od sljedećih koraka
+		\begin{itemize}
+			\item pokretanje \textit{fdisk} naredbe
+			\item stvaranje nove particije (primarne ili proširene)
+			\item upisivanje početnog sektora
+			\item upisivanje završnog sektora
+			\item postavljanje tipa particije (Linux, swap, RAID\ldots)
+			\item zapisivanje postavki
+		\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{parted}
+		\begin{itemize}
+			\item Po upotrebi je naredba \textit{parted} identična naredbi \textit{fdisk}
+			\item \textit{parted} podržava GPT  
+		\begin{lstlisting}[basicstyle={\tiny\ttfamily},language=bash]
+# parted -l
+Model: ATA HITACHI HTS72323 (scsi)
+Disk /dev/sda: 320GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start   End     Size    Type     File system     Flags
+ 1      1049kB  18.1GB  18.1GB  primary  ext4            boot
+ 3      18.1GB  20.1GB  1994MB  primary  linux-swap(v1)
+ 2      20.1GB  311GB   291GB   primary  ext4
+ 4      311GB   320GB   8984MB  primary  ext4
+		\end{lstlisting}
+			\item Naredba \textit{parted} ne nudi mogućnost mijenjanja tipa particije (koda)
+			\begin{itemize}
+				\item mijenja se tijekom stvaranje particija ili instalacijom datotečnog sustava
+				\item u ovom slučaju je naredba \textit{fdisk} fleksibilnija
+			\end{itemize}
+		\begin{lstlisting}[basicstyle={\tiny\ttfamily},language=bash]
+# parted /dev/sda
+GNU Parted 2.3
+Using /dev/sda
+Welcome to GNU Parted! Type 'help' to view a list of commands.
+(parted) help
+    .
+    .
+    .
+		\end{lstlisting}
+		\end{itemize}
+	\end{frame}	
+	
+	\section{Stvaranje datotečnog sustava}
+	\begin{frame}[fragile]
+	\frametitle{dd, mkfs}
+		\begin{itemize}
+			\item Linux sustavi najčešće koriste ext derivate 
+			\begin{itemize}
+				\item ext2, ext3, ext4
+				\item Veliki dodatak je \textit{journaling} promjena uz zapisivanje podataka
+			\end{itemize}
+			\item Za primjere će umjesto diska biti korištena datoteka
+			\item Prvo je potrebno stvoriti praznu datoteku
+			\begin{itemize}
+				\item Koristi se naredba \textit{dd} za stvaranje datoteke
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+				dd if=/dev/zero bs=4k count=8000 of=filesystem
+				\end{lstlisting}
+				\item Ovime je stvorena datoteka popunjena nulama veličine 32MB
+			\end{itemize}
+			\item Sljedeći korak je stvaranje datotečnog sustava
+			\item Naredba \textit{mkfs} je frontend za \textit{mkfs.ext4, mkfs.xfs} itd.
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			mkfs -t ext4 filesystem
+			\end{lstlisting}
+			\item Datoteka sada posjeduje superblock
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{Swap}
+		\begin{itemize}
+			\item Linux koristi swap particiju za paging – spremanje procesa na disk
+			\item swap particija/datoteka je obavezna pri instalaciji sustava
+			\item Swap particija se jednako montira kao ostale particije ali se posebno stvara i uključuje
+			\begin{itemize}
+				\item stvaranje swap particije
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+				mkswap <device>
+				\end{lstlisting}
+				\item isključivanje i uključivanje particije
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+				swapon/swapoff
+				\end{lstlisting}
+			\end{itemize}
+			\item U verzijama 2.6 i 3.x kernela, moguće je umjesto swap particije koristiti swap datoteku
+			\begin{itemize}
+				\item Kernel izravno a ne preko datotečnog sustava vodi evidenciju o položaju datoteke, time se smanjuje brzina čitanja
+				\item Moguć je neograničen broj swap datoteka
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{dumpe2fs, tune2fs, fsck}
+		\begin{itemize}
+			\item Na sustavu se rade njegove kopije superblocka jer je superblock zapis koji posjeduje glavne informacije o datotekama
+			\item \textit{dumpe2fs} Ispisuje postavke \textit{ext} datotečnih sustava
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			dumpe2fs -h filesystem
+			\end{lstlisting}
+			\item Postavke se mogu promijeniti
+			\begin{itemize}
+				\item Primjer: postavljanje labele
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+				tune2fs -L nkosl_image filesystem
+				\end{lstlisting}
+			\end{itemize}
+			\item Konzistentnost sustava je moguće narušiti tijekom ispada poput nestanka struje a naredba \textit{fsck} može popraviti sustav
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			fsck -y filesystem
+			\end{lstlisting}
+			\item Distribucije periodički rade provjeru sustava kod pokretanja
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Inode}
+		\begin{itemize}
+			\item Inode je opisnik datoteka na Unix sustavima
+			\begin{itemize}
+			\item Tip datoteke
+			\item Dopuštenja
+			\item Vlasnik datoteke
+			\item Grupa datoteke
+			\item Veličina podataka
+			\item Vrijeme zadnje modifikacije, pristupa i mijenjanja (engl. MACtimes)
+			\item Broj tvrdih poveznica (engl. hard links)
+			\item Atributi
+			\item Kontrolne liste - ACL (engl. Access Control Lists)
+			\item Struktura sa lokacijom blokova podataka
+			\end{itemize}
+			\item Podaci se gotovo nikada ne zapisuju na uzastopne sektore već se nalaze na različitim dijelovima diska
+			\item Datotečni sustav pomoću pokazivača na blokove može dohvatiti sve dijelove datoteke
+		\end{itemize}
+	\end{frame}
+	
+	\section{Montiranje}
+	\begin{frame}[fragile]
+	\frametitle{mount}
+		\begin{itemize}
+			\item Datotečnom sustavu nije moguće pristupiti prije montiranja tj. dodavanja u hijerarhiju datotečnog sustava
+			\begin{itemize}
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			mount -t <fstype> <device> <mountpoint>
+			\end{lstlisting}
+				\item ovime je na sustav montiran blok uređaj
+				\item ponekad naredba \textit{mount} sama prepoznaje vrstu datotečnog sustava pa opcija \textit{-t} nije potrebna
+			\end{itemize}
+			\item Montirati se mogu samo blok uređaji
+			\item Poseban modul omogućuje montiranje datoteka kao blok uređaja
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			modprobe loop
+			\end{lstlisting}
+			\item naredba \textit{mount} koristi \textit{loop} modul
+			\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+			mount -o loop <fstype> <device> <mountpoint>
+			\end{lstlisting}
+			\item Montirani pseudouređaji imaju naziv /dev/loopX, gdje je X broj 0-7
+		\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}[fragile]
+		\begin{itemize}
+			\item Neki parametri naredbe \textit{mount} (nastavak)
+			\begin{itemize}
+				\item Sprečavanje pisanja na particiju
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+					mount -o ro <particija> <direktorij>
+				\end{lstlisting}
+				\item Zabrana izvršavanja programa
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+					mount -o noexec <particija> <direktorij>
+				\end{lstlisting}
+				\item Promjena parametara ako je particija već montirana
+				\begin{lstlisting}[basicstyle={\footnotesize\ttfamily},language=bash]
+					mount -o remount,noexec <particija>
+				\end{lstlisting}
+			\end{itemize}
+			\item Što ako montiramo istu particiju više puta i/ili na istu lokaciju?
+			\item Postoji nekoliko kombinacija
+			\begin{itemize}
+				\item Ista particija na različite lokacije
+				\item Ista particija na iste lokacije
+				\item Različite particije na iste lokacije
+				\item Različite particije na različite lokacije
+			\end{itemize}
+			\item Zadatak: Isprobajte sve kombinacije
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{fstab}
+		\begin{itemize}
+			\item Montiranje je privremeno, vrijedi do sljedećeg gašenja računala ali je moguća automatizacija
+			\item Datoteka \textit{/etc/fstab} sadrži zapise particija sa datotečnim sustavima koje je potrebno montirati
+			\begin{itemize}
+				\item Također sadrži točke montiranja, tip datotečnog sustava i parametre
+			\end{itemize}
+			\item Svaka linija predstavlja jedan datotečni sustav
+			\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},language=bash]
+# <file system> <mount point>   <type>  <options>  <dump>  <pass>
+proc            /proc           proc    defaults   0       0
+			\end{lstlisting}
+			\item Naredba \textit{mount} bez argumenata ispisuje trenutno montirane uređaje
+			\item Napomena: nije moguće "montirati uređaje", samo datotečne sustave sa superblock zapisom
+			\begin{itemize}
+				\item Što ima smisla jer je superblock obilježje datotečnog sustava
+				\item Primjer: Nije moguće montirati disk /dev/sda ali je moguće jednu od njegovih particija /dev/sda1 sa ext4 sustavom
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{UUID}
+		\begin{itemize}
+			\item UUID se u datoteci /etc/fstab koristi kao jedinstven identifikator datotečnog sustava
+			\item Ako je navedeno ime datoteke uređaja, njeno ime nije jedinstveno na svakom sustavu
+			\item Primjer: Četiri identična SATA diska sa particijama i datotečnim sustavima su priključeni na matičnu ploču. U /etc/fstab datoteci su navedeni kao sdaX, sdbX, sdcX, sdeX gdje su X brojevi koji određuju particije. Ako zamijenimo matičnu ploču i ponovno priključimo diskove, postoji mogućnost da ih operacijski sustav prepozna drugim redoslijedom: sda je sada sdc, a sdb je sde.
+			\begin{itemize}
+				\item Sada je potrebno mijenjati /etc/fstab datoteku
+				\item Pogoditi ispravan raspored diskova može biti problem
+			\end{itemize} 
+			\item Problem se mogao izbjeći korištenjem UUID identifikatora umjesto imena datoteka
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+	\frametitle{umount}
+		\begin{itemize}
+			\item \textit{umount} odmontira datotečni sustav iz hijerarhije
+			\item Moguće je odmontirati po uređaju/particiji ili lokaciji
+			\begin{lstlisting}
+				umount /mnt
+				umount /dev/sda1
+			\end{lstlisting}
+			\item Kada direktorij/sustav nije moguće odmontirati?
+			\begin{itemize}
+				\item Direktorij nije moguće odmontirati ako mu pristupa proces
+				\item Direktorij nije moguće odmontirati ni ako je tekući direktorij onaj koji pokušavamo odmontirati
+			\end{itemize}
+			\item U drugom slučaju je potrebno izaći iz direktorija
+			\item U prvom je moguće pogledati koji proces pristupa direktoriju i terminirati ga ili pričekati da završi pomoću lazy opcije
+			\begin{lstlisting}
+				umount -l <mountpoint>
+			\end{lstlisting}
+		\end{itemize}
+	\end{frame}	
+	
+	\section{Bootloader}
+	\begin{frame}{GRUB/LILO}
+		\begin{itemize}
+			\item Bootloader je zadnja faza prije učitavanja operacijskog sustava u memoriju; on je zadužen za učitavanja OS-a
+			\begin{itemize}
+				\item CPU se pokrene i učita BIOS. BIOS učita MBR u kojem se nalazi \textit{bootloader}. Bootloader pročita zapis o lokaciji kernela i učita ga u memoriju. Operacijski sustav nakon toga ima potpuni nadzor.
+			\end{itemize}
+			\item Najčešće korišteni \emph{bootloaderi} su 
+			\begin{itemize}
+				\item GRUB - GRand Unified Bootloader
+				\item LILO - LInux LOader
+			\end{itemize}
+			\item Mi ćemo se baviti GRUB-om, standardnim bootloaderom na Debian, Ubuntu, Arch, Fedora i ostalim distribucijama 
+		\end{itemize}
+	\end{frame}	
+	
+	\begin{frame}{GRUB}
+		\begin{itemize}
+			\item Dvije verzije GRUB bootloadera su
+			\begin{itemize}
+				\item GRUB 2
+				\item GRUB - izlaskom GRUB 2 preimenovan u GRUB Legacy
+			\end{itemize}
+			\item GRUB 2 potpuno mijenja strukturu vlastitih konfiguracijskih datoteka
+			\item Najvažnije datoteke (lokacije mogu ovisiti o distribuciji):
+			\begin{itemize}
+				\item /boot/grub/grub.cfg
+				\item /etc/default/grub
+				\item /etc/grub.d/ (direktorij)
+			\end{itemize}
+			\item Naredba update-grub pročita /etc/default/grub i datoteke unutar grub.d direktorija te izgenerira datoteku grub.cfg
+			\begin{itemize}
+				\item bootloader čita grub.cfg tijekom učitavanja sustava
+				\item grub.cfg nije namijenjena da bude ručno modificirana
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{hdX}
+		\begin{itemize}
+			\item GRUB na različit način od operacijskog sustava označava uređaje
+			\item Svi diskovi su oblika hdX,Y
+			\begin{itemize}
+				\item X je oznaka diska, počinje od 0
+				\item Y je oznaka particije, počinje od 1 (Legacy broji od 0)
+			\end{itemize}
+			\item GRUB ponudi popis dostupnih "aplikacija" (ne moraju svi biti operacijski sustavi)
+			\item Primjer jedne stavke u konfiguracijskoj datoteci
+			\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},language=bash]
+menuentry "Ubuntu_10.04" {
+set root=(hd0,1)
+search --no-floppy --fs-uuid --set cb201140-52f8-4449-9a95-749b27b58ce8
+linux /boot/vmlinuz-2.6.31-11-generic root=UUID=cb201140-52f8-4449-9a95-749b27b58ce8 ro quiet splash
+initrd /boot/initrd.img-2.6.31-11-generic
+}
+			\end{lstlisting}		
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]
+	\frametitle{root, linux, initrd}
+		\begin{itemize}
+			\item GRUB zahtijeva nekoliko informacija kako bi uspješno podigao sustav
+			\begin{itemize}
+				\item root - particija na kojoj se nalazi operacijski sustav
+				\item linux - lokacija datoteke kernela sa parametrima
+				\item initrd - lokacija modula za prepoznavanje potrebnih uređaja
+			\end{itemize}
+			\item GRUB podržava nekoliko operacijskih sustava ali među njima nisu Microsoft Windows
+			\item Moguće je odgovornost prebaciti na drugi bootloader - \emph{chainloading}
+			\begin{itemize}
+				\item Umjesto potpunih informacija navede se lokacija drugog bootloadera
+			\end{itemize}
+			\item Ova metoda se koristi za podizanje Windows sustava
+			\begin{lstlisting}[basicstyle={\scriptsize\ttfamily},language=bash]
+menuentry "Windows_7" {
+set root=(hd0,8)
+chainloader +1
+}
+			\end{lstlisting}
+		\item Naredba \emph{chainloader} prebaci odgovornost na bootloader koji se nalazi na prvom sektoru particije (+1)
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}[fragile]
+	\frametitle{GRUB 2 vs GRUB Legacy}
+		\begin{itemize}
+			\item Naredbe (GRUB 2)
+			\begin{itemize}
+				\item grub-mkconfig
+				\item grub-update
+				\item grub-install
+				\item grub-mkdevicemap
+				\item ...
+			\end{itemize}
+			\item Podrška za LVM i RAID
+			\item Funkcionalnost je podijeljena po modulima
+			\begin{itemize}
+				\item moduli se nalaze u direktoriju /boot/grub
+			\end{itemize}
+			\item Datoteke potrebne za podizanje sustava su reorganizirane
+			\begin{itemize}
+				\item boot.img, diskboot.img core.img... (GRUB 2)
+				\item stage1, stage1.5, stage2 (GRUB Legacy)
+			\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\section{}
+	\begin{frame}{Literatura}
+		\begin{tiny}
+			\url{http://www.cyberciti.biz/tips/understanding-unixlinux-file-system-part-i.html} \\
+			\url{http://www.angelfire.com/myband/binusoman/Unix.html} \\
+			\url{http://sakafi.wordpress.com/2008/08/23/how-to-use-parted-for-creating-patition-larger-that-2-tb/} \\
+			\url{http://liquidat.wordpress.com/2007/10/15/short-tip-get-uuid-of-hard-disks/} \\
+			\url{https://help.ubuntu.com/community/Grub2} \\
+			\url{http://www.gnu.org/software/grub/manual/html_node/chainloader.html} \\
+			\url{http://www.gnu.org/software/grub/manual/grub.html} \\
+		\end{tiny}
+	\end{frame}
+\end{document}
