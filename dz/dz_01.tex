@@ -1,0 +1,38 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Domaća zadaća 1}
+	\date{\vspace{-5ex} 08.03.2015.}
+	\maketitle
+	Prije rješavanja DZ potrebno je osigurati sljedeće uvjete na računalu ili virtualnom stroju na kojem radite:
+	\begin{itemize}
+		\item Instaliran najmanje jedan tvrdi disk s jednom particijom tipa \texttt{ext2/ext3/ext4} te jednom tipa \texttt{swap}.\\ {\small (Na disku može biti i više particija koje nećete koristiti u ovoj DZ.)}
+		\item Na ext particiju instalirana neka distribucija Linuxa s jednim od bootloadera koji se spominjao na predavanju.
+	\end{itemize}
+	\section*{Zadatak}
+	Potrebno je osigurati bootanje i mountanje ext i swap particije koristeći jednu od metoda za \emph{persistent block device naming} opisanih na wiki stranicama \url{https://wiki.archlinux.org/index.php/Persistent_block_device_naming}. Kao rješenje domaće zadaće šaljete sljedeće datoteke:
+	\begin{itemize}
+		\item \texttt{/etc/fstab}\\
+			u kojoj ste prema jednoj od smjernica na gornjem linku osigurali mountanje ext i swap particije na ispravne lokacije i s ispravnim parametrima
+		\item Konfiguracijsku datoteku bootloadera\\
+			u kojoj se također vidi da koristite jednu od \emph{persistent naming} smjernica
+		\item[] Datoteka koju šaljete ovisi o bootloaderu kojeg koristite:
+		\item[] \begin{tabular}{p{4cm} p{5cm}}
+					\textbf{Bootloader} & \textbf{Datoteka za slanje} \\
+					GRUB 2 & \texttt{/boot/grub/grub.cfg}\\
+					GRUB Legacy & \texttt{/boot/grub/menu.lst}\\
+					Syslinux & \texttt{/boot/syslinux/syslinux.cfg}
+				\end{tabular}
+		\item Ispis naredbe \texttt{lsblk -f} spremljen na lokaciju \texttt{/var/block.log}
+	\end{itemize}
+	
+	Datoteke pospremite u tar arhivu pri tome čuvajući apsolutne staze datoteka. (Dakle, struktura tar arhive mora biti: \texttt{folder boot $\rightarrow$ folder grub/syslinux $\rightarrow$ datoteka} i tako za sve tražene datoteke.)\\
+	
+\end{document}
