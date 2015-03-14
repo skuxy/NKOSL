@@ -1,5 +1,6 @@
 lectures/*/*
 !lectures/*/*.tex
 !lectures/*/*.jpg
+!lectures/*/*.png
 dz/*
 !dz/*.tex
