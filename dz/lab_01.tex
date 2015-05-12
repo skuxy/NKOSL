@@ -1,0 +1,27 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Laboratorijska vježba 1\\{\large Napredno korištenje operacijskog sustava Linux}}
+	\date{\vspace{-5ex} 14.03.2015.}
+	\maketitle
+	John svom prezimenjaku Sherlocku svako malo treba poslati više datoteka povećeg sadržaja putem e-pošte. Oboje imaju GMail račun. Međutim, usluga ima ograničenje od 25 MB po privitku. Srećom, Holmesi su vrsni Linuxaši i dosjetili su se načina kako zaobići ograničenje.
+	
+	\section*{Zadatak}
+	Napisati Bash skriptu koja će izračunati veličinu direktorija predanog kao argument skripti te ga kopirati na LVM logički volumen formatiran na ext4 file system.\\
+	Logički volumen zauzima 100\% volumenske grupe u kojoj se nalazi više fizičkih volumena. Svaki fizički volumen je loopback uređaj napravljen od datoteke veličine 25 MiB.\\
+	
+	\subsection*{Primjer korištenja skripte}
+	\begin{verbatim}
+# ./lvm-store direktorij
+Direktorij "direktorij" ima 25 MiB.
+Napravljena su dva loopback uređaja s datotekama:
+   disk0.vol
+   disk1.vol
+	\end{verbatim}	
+\end{document}
