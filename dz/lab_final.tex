@@ -1,0 +1,28 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Završna laboratorijska vježba\\{\large Napredno korištenje operacijskog sustava Linux}}
+	\date{\vspace{-5ex} 14.03.2015.}
+	\maketitle
+	\section*{Zadatak}
+	Na virtualni ili fizički stroj treba instalirati Arch Linux. Konfiguracija instalacije mora biti sljedeća:
+	\begin{itemize}
+		\item Xorg s instaliranim openbox window managerom. Grafičko sučelje se automatski pokreće pri pokretanju računala i prikazuje login prompt.
+		\item Bootloader i fstab konfigurirani prema zahtjevima iz prve DZ
+		\item Instalirana podrška za zvuk s GUI alatima za podešavanje glasnoće
+		\item Pristup internetu preko eduroam bežične ili žičane mreže konfiguriran pomoću wpa\_supplicant
+		\item[] {\small Ako tehnički ne bude moguće spajanje na mrežu (loša pokrivenost, problemi s mrežnim sučeljem na virtualnom stroju, ...) morate objasniti konfiguraciju mrežnih postavki. Lozinku uklonite iz konfiguracije.}
+		\item Upravitelj paketa konfiguriran za dohvaćanje sa servera u Hrvatskoj
+		\item Sat sinkroniziran s NTP serverom u Hrvatskoj\\
+	\end{itemize}
+	Kod instalacije na virtualnom stroju alati za virtualni stroj moraju biti instalirani i podešeni, a kod instalacije na fizičkom stroju sva periferija mora ispravno raditi.\\
+	\,\\
+	Rješenja trebate demonstrirati na računalu u terminu laboratorijskih vježbi. Prethodno ne trebate ništa predavati.
+
+\end{document}
