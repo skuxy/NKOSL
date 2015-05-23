@@ -1,0 +1,423 @@
+\documentclass[t,table,usenames,dvipsnames]{beamer}
+
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[utf8]{inputenc}
+\usepackage[croatian]{babel}
+
+\usepackage{datetime}
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
+\date{\todayiso}
+
+\usepackage{listing}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{color}
+\definecolor{LightGray}{gray}{0.9}
+\captionsetup{compatibility=false}
+
+\title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
+\author[Dominik Barbarić]{Dominik Barbarić\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\subtitle{7. Serveri}
+\institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
+
+
+
+\begin{document}
+
+
+{
+	\setbeamertemplate{footline}{}
+	\begin{frame}
+		\maketitle
+	\end{frame}
+}
+
+	
+\begin{frame}
+	\frametitle{Server}
+
+	\begin{itemize}
+		\item Nudi usluge klijentima preko definiranih mrežnih protokola
+		\item \emph{Client-server} arhitektura
+		
+		\item IP mreža
+		\begin{itemize}
+			\item Serveru se pristupa preko \textit{socket}a
+			\item[] IP adresa i port
+			\item[] Prijenosni protokol (TCP, UDP, \ldots)
+		\end{itemize}
+		
+		\item Serverski programi se pokreću kao \emph{daemon}
+
+	\end{itemize}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+	\frametitle{ssh}
+	
+	TCP port 22\\
+	OpenSSH, Dropbear, \ldots
+
+	\begin{itemize}
+		\item Pristup udaljenoj sesiji
+		\item Enkriptirani protokol
+		
+		\item SFTP i SCP protokoli
+		\item SSH tunnel
+		\item[] X11 forwarding
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{ssh}
+	\framesubtitle{\texttt{/etc/ssh/sshd\_config}}
+	\scriptsize
+	\begin{verbatim}
+Port 22
+AddressFamily any
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+Protocol 2
+
+HostKey for protocol version 1
+HostKey /etc/ssh/ssh_host_key
+HostKeys for protocol version 2
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_dsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+SyslogFacility AUTH
+LogLevel INFO
+
+PidFile /run/sshd.pid
+	\end{verbatim}
+
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{ssh}
+	\framesubtitle{\texttt{/etc/ssh/sshd\_config}}
+	\scriptsize
+	\begin{verbatim}
+# Authentication:
+
+LoginGraceTime 2m
+PermitRootLogin yes
+StrictModes yes
+MaxAuthTries 6
+MaxSessions 10
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+
+AuthorizedKeysFile      .ssh/authorized_keys
+
+# For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
+RhostsRSAAuthentication no
+# similar for protocol version 2
+HostbasedAuthentication no
+	\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{ssh}
+	\framesubtitle{\texttt{/etc/ssh/sshd\_config}}
+	\scriptsize
+	\begin{verbatim}
+# To disable tunneled clear text passwords, change to no here!
+PasswordAuthentication no
+PermitEmptyPasswords no
+
+# Change to no to disable s/key passwords
+ChallengeResponseAuthentication no
+
+KerberosAuthentication no
+GSSAPIAuthentication no
+UsePAM yes
+
+X11Forwarding yes
+
+	\end{verbatim}
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+	\frametitle{telnet}
+
+	TCP port 23\\
+	xinetd
+	
+	\begin{itemize}
+		\item Udaljeni pristup konzoli
+		\item Nesiguran protokol
+		
+		\item Često korišten na ugradbenoj opremi
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{vnc}
+
+	TCP port 5900\\
+	tightvnc, tigervnc, realvnc
+
+	\begin{itemize}
+		\item Virtual Network Computing
+		\item Udaljeni pristup grafičkom sučelju
+		
+		\item Koristi Remote Framebuffer protokol
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{vnc}
+	\centering
+	\includegraphics[width=0.75\textwidth]{vnc-desktop.png}
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+	\frametitle{ftp}
+	
+	TCP port 21 (control)\\
+	vsftpd, proftpd, bftpd, \ldots
+
+	\begin{itemize}	
+		\item File Transfer Protocol
+		\item Varijante: SFTP (SSH FTP), FTPS (SSL/TLS FTP), TFTP
+		
+		\item Dva načina rada:
+		\begin{itemize}
+			\item Aktivni
+			\item Pasivni
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{ftp}
+	\framesubtitle{Način rada}
+	\centering
+	\includegraphics[width=0.85\textwidth]{ftp.jpg}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{ftp}
+	\framesubtitle{\texttt{/etc/vsftpd.conf}}
+	\scriptsize
+	\begin{verbatim}
+anonymous_enable=NO
+# Allow local users to log in.
+local_enable=YES
+# Allow per-user configuration for local users.
+user_config_dir=/etc/vsftpd_user_conf
+#
+#Enable FTP write commands – controlled with cmds_allowed list.
+write_enable=YES
+# Don’t allow recursive listing – prevents excessive I/O usage.
+ls_recurse_enable=NO
+# Activate logging of uploads/downloads, but not in xferlog format
+xferlog_enable=YES
+xferlog_std_format=NO
+log_ftp_protocol=YES
+#
+# Make sure PORT transfer connections originate from port 20 (ftp-data).
+connect_from_port_20=YES
+	\end{verbatim}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{ftp}
+	\framesubtitle{\texttt{/etc/vsftpd.conf}}
+	\scriptsize
+	\begin{verbatim}
+# Uploaded files are owned by the uploader.
+chown_uploads=NO
+#
+# You may change the default value for timing out an idle session.
+idle_session_timeout=600
+#
+# You may change the default value for timing out a data connection.
+data_connection_timeout=120
+#
+# Location of the RSA certificate to use for SSL encrypted connections.
+rsa_cert_file=/etc/ssl/private/vsftpd.pem
+#
+# Allow PASV (passive ftp)
+pasv_enable=YES
+pasv_min_port=12000
+pasv_max_port=12500
+port_enable=YES
+# enter your IP address on the line below – example: 184.37.445.210
+pasv_address=123.45.678.901
+pasv_addr_resolve=NO
+	\end{verbatim}
+
+
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}
+	\frametitle{http}
+	
+	TCP port 80, 443\\
+	Apache, Nginx
+	
+	\begin{itemize}
+		\item[] HyperText Transfer Protocol
+		
+		\item[] Port 80 - neenkriptirana veza
+		\item[] Port 443 - SSL veza
+	\end{itemize}
+	
+	\begin{itemize}
+		\item[] Apache konfiguracija \texttt{/etc/httpd/conf}
+		\item[] Nginx konfiguracija \texttt{/etc/nginx}
+	\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{Apache}
+	\framesubtitle{\texttt{/etc/httpd/conf/httpd.conf}}
+	\scriptsize
+	\begin{verbatim}
+Listen 80
+
+ServerRoot "/srv/apache"
+DocumentRoot "/www"
+
+ServerName localhost:80
+ServerAdmin admin@localhost
+
+ErrorLog logs/error.log
+LogLevel error
+
+LoadModule cgi_module modules/mod_cgi.so
+LoadModule dav_module modules/mod_dav.so
+LoadModule dav_fs_module modules/mod_dav_fs.so
+LoadModule dir_module modules/mod_dir.so
+LoadModule mime_module modules/mod_mime.so
+
+DefaultType text/plain
+	\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Apache}
+	\framesubtitle{\texttt{/etc/httpd/conf/httpd.conf}}
+	\tiny
+	\begin{verbatim}
+<IfModule dir_module>
+   DirectoryIndex index.html index.php index.aspx
+</IfModule>
+
+IndexIgnore .htaccess
+
+<FilesMatch "^.ht">
+   Order allow,deny
+   Deny from all
+</FilesMatch>
+
+<Directory />
+   Options FollowSymLinks
+   AllowOverride all
+   Order deny,allow
+   Allow from all
+   Satisfy all
+</Directory>
+
+<Directory "/www/phpMyAdmin">
+   Options None
+   AllowOverride None
+   order deny,allow
+   deny from all
+   allow from 127.0.0.1
+</Directory>
+	\end{verbatim}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+
+\frametitle{DHCP, DNS}
+
+DHCP serveri
+\begin{itemize}
+	\item dhcpd, dnsmasq
+\end{itemize}
+
+DNS serveri
+\begin{itemize}
+	\item BIND, pdnsd, dnsmasq
+\end{itemize}
+
+\vfill
+
+Primjer konfiguracije \texttt{/etc/dhcpd.conf}	
+	\scriptsize
+	\begin{verbatim}
+option domain-name-servers 8.8.8.8, 8.8.4.4;
+option subnet-mask 255.255.255.0;
+option routers 139.96.30.100;
+subnet 139.96.30.0 netmask 255.255.255.0 {
+    range 139.96.30.150 139.96.30.250;
+	
+    host racunalo1 {
+        hardware ethernet 70:56:81:22:33:44;
+        fixed-address 139.96.30.199;
+    }
+}
+	\end{verbatim}
+
+\end{frame}
+
+
+
+\begin{frame}
+	\frametitle{Literatura}
+	\url{https://wiki.archlinux.org/index.php/Server}
+	\vfill
+	\url{https://wiki.archlinux.org/index.php/vsftpd}\\
+	\url{https://wiki.archlinux.org/index.php/OpenSSH}\\
+	\url{https://wiki.archlinux.org/index.php/tightvnc}\\
+	\url{https://wiki.archlinux.org/index.php/Dhcpd}
+\end{frame}
+
+\end{document}
