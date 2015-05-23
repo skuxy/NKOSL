@@ -192,6 +192,35 @@ $ cgexec   -g memory,cpu:groupname/foo bash
 
 \begin{frame}
 	\frametitle{KVM}
+	\begin{columns}[T]
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item Kernel-based Virtual Machine
+			\item Hypervisor
+			\item U Linux kernelu od 2007.
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{kvm.png}
+	\end{column}
+	\end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{QEMU}
+	\begin{itemize}
+		\item Quick Emulator
+	\end{itemize}
+	\begin{itemize}
+		\item Emulira različite arhitekture neovisno o arhitekturi hosta
+		\item Userspace virtualizator za KVM i Xen
+	\end{itemize}
+	\vfill
+	\begin{verbatim}
+$ qemu-img create -f raw disk.img 4G
+$ qemu-system-i386 -cdrom fedora.iso -boot order=d disk.img
+	\end{verbatim}
 \end{frame}
 
 
