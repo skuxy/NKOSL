@@ -9,14 +9,15 @@
 
 \begin{document}
 	\title{Laboratorijska vježba 4}
-	\date{\vspace{-5ex} 24.05.2015.}
+	\date{\vspace{-5ex} 26.05.2015.}
 	\maketitle
 
 \section*{Zadatak}
 
 Napisati bash skriptu koja provjerava je li na izlaz VGA1 grafičke kartice spojen uređaj. Ako je onda je potrebno proširiti Screen0 na VGA1 izlaz uz najvišu rezoluciju i refresh rate koju projektor omogućuje. VGA1 izlaz je potrebno pozicionirati u odnosu na ekran laptopa (LVDS1) u skladu s argumentom predanim skripti.\\
 
-Ako je zadan argument \texttt{ftp} ili \texttt{scp} potrebno je nakon uključivanja projektora i proširenja Screen0 ispravnost projektora dojaviti na server. Izlaz naredbe \texttt{xrandr -q} se šalje putem zadanog protokola na server iz 4. domaće zadaće u datoteku \texttt{/var/projektori/<prostorija>}.\\
+Ako je zadan argument \texttt{ftp} ili \texttt{scp} potrebno je nakon uključivanja projektora i proširenja Screen0 ispravnost projektora dojaviti na server. Izlaz naredbe \texttt{xrandr -q} se šalje putem zadanog protokola na server konfiguriran u DZ4 u datoteku \texttt{/var/projektori/<prostorija>}. (Putanja se odnosi na server)\\
+
 Korisničko ime za SCP i FTP je \texttt{studenti}. Za autentifikaciju na SCP koristi se RSA kljuc spremljen u \texttt{\textasciitilde/studenti.key}, a za autentifikaciju na FTP lozinka koju smijete hardkodirati u skriptu.\\
 
 Primjer pozivanja skripte:
