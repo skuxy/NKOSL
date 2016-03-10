@@ -69,7 +69,7 @@
 		\begin{itemize}
 			\item Partition table
 			\item \textbf{Bootstrap code} - minimalni podaci potrebni za nastavak boot procesa
-			\item Dodatno ...
+			\item ...
 		\end{itemize}
 		\item Podržava 4 \emph{primarne} particije
 		\item Za veći broj particija koriste se \emph{logičke} particije koje se upisuju u jednu primarnu particiju tipa \emph{extended}
@@ -87,104 +87,6 @@
 		\item \emph{Protective MBR} - omogućuje kompatibilnost s BIOS sustavima
 		\item UEFI sustavi mogu izravno pozivati bootloadere iz particija
 	\end{itemize}
-\end{frame}
-
-\section{Datotečni sustavi}
-\begin{frame}
-	\frametitle{Datotečni sustavi}
-	\begin{itemize}
-		\item Određuju način zapisivanja i čitanja podataka na mediju
-	\end{itemize}
-	Karakteristike datotečnih sustava
-	\begin{itemize}
-		\item Normiranje imena datoteka i upravljanje direktorijima
-		\item Metadata na datotekama
-		\item Upravljanje prostorom na mediju
-		\item \dots
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Neki datotečni sustavi}
-	ext - \emph{extended filesystem}
-	\begin{itemize}
-		\item Osmišljen za Linux sustave
-		\item ext2 najkorišteniji
-		\item Struktura metadata iz Unix file systema (permissions, timestamps)
-		\item Datoteke predstavljene strukturom \emph{inode}
-		\item ext3 i ext4 - Nadogradnje na ext2
-		\item ext3 uvodi \emph{journal} - struktura file systema se čuva u izvanrednim okolnostima
-	\end{itemize}
-	FAT (vfat)\
-	\begin{itemize}
-		\item Masovna podrška
-		\item Najveća veličina datoteke 4 GiB (FAT16)
-		\item exFAT - naprednija verzija
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{swap i tmpfs}
-	\begin{itemize}
-		\item Posebne strukture u Linuxu
-	\end{itemize}
-	swap
-	\begin{itemize}
-		\item \emph{Paging} particija
-		\item Dio virtualne memorije
-	\end{itemize}
-	tmpfs
-	\begin{itemize}
-		\item Spremanje podataka na RAM
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}[fragile]
-	\frametitle{\texttt{/etc/fstab}}
-\begin{verbatim}
-# <filesys>  <dir>  <type>  <options>          <dump> <pass>
-/dev/sda1    /      ext4    defaults,noatime   0      1
-/dev/sda2    none   swap    defaults           0      0
-/dev/sdb1    /home  ext4    defaults,noatime   0      2
-tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
-\end{verbatim}
-\end{frame}
-
-\section{Struktura direktorija}
-\begin{frame}
-	\frametitle{UNIX directory structure}
-	\begin{itemize}
-		\item Hijerarhijski raspored datoteka dostupnih na UNIX sustavu
-	\end{itemize}
-	\vfill
-	\emph{Everything is a file}
-	\vfill
-	\begin{itemize}
-		\item Diskovne particije se \emph{montiraju (mount)} na lokacije u sustavu
-		\item Raspored direktorija određen je Filesystem Hierarchy Standardom
-	\end{itemize}
-	\vfill
-\end{frame}
-
-\begin{frame}
-	\frametitle{FHS struktura}
-	\texttt{/} - root\\
-	\begin{tabular}{p{3cm} l}
-		\texttt{bin} & \emph{Osnovne} korisničke izvršne datoteke \\
-		\texttt{boot} & Datoteke bootloadera \\
-		\texttt{dev} & Device datoteke \\
-		\texttt{etc} & Konfiguracija sustava \\
-		\texttt{home} & Matični direktoriji korisnika \\
-		\texttt{lib} & Biblioteke i kernel moduli \\
-		\texttt{opt} & Razni softver \\
-		\texttt{root} & Matični direktorij korisnika \texttt{root} \\
-		\texttt{sbin} & Sistemske izvršne datoteke \\
-		\texttt{srv} & Podaci servisa na računalu \\
-		\texttt{tmp} & Privremeni podaci \\
-		\texttt{usr} & Dijeljeni dio strukture \\
-		\texttt{var} & Često mijenjani i privremeni podaci 
-	\end{tabular}
 \end{frame}
 
 \section{Bootloader}
@@ -256,15 +158,19 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \begin{frame}
 	\frametitle{initrd / initramfs}
 	\begin{itemize}
-		\item \emph{initial ramdisk}
+		\item Kernel prepoznaje sve uređaje na sustavu i učitava
+		\item[] \emph{initial ramdisk}
+		\item[]
 		\item Omogućuje kernelu učitavanje osnovnih modula kako bi došao do \emph{root} filesystema
 		\begin{itemize}
 			\item moduli
-			\item mreža
 			\item enkripcija
-			\item RAID
+			\item RAID / LVM
 			\item \dots
 		\end{itemize}
+		\item[]
+		\item initrd se po završetku briše iz memorije
+		\item Pokreće se init
 	\end{itemize}
 \end{frame}
 
@@ -278,13 +184,29 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 		\item U Linuxu definirano nekoliko runlevel-a
 		\begin{description}
 			\item[0] - Sustav se isključuje
-			\item[1] - Single user mode
+			\item[1 / S] - Single user mode
 			\item[2 - 5] - Multi user mode (ili nešto drugo)
 			\item[6] - Ponovno pokretanje
 		\end{description}
-		\item Kod ulaska u svaki runlevel pokreću se skripte
-		\item[] \texttt{/etc/rc*}
+		\item Stvarni \textit{startup} level je određen u datoteci \texttt{/etc/inittab}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{init}
+	\begin{itemize}
+		\item Kod ulaska u svaki runlevel pokreću se skripte
+		\item[] \texttt{/etc/rc.d/rc?.d}
+		\item[]
+		\item Poredak izvođenja skripti je određen imenom skripte u folderu:
+		\begin{itemize}
+			\item[] \textbf{K01-K99} - skripta gasi servis pri ulasku u runlevel
+			\item[] \textbf{S01-S99} - skripta pokreće servis pri ulasku u runlevel
+		\end{itemize}
+		\item Nakon izvođenja svih skripti u folderu pokreće se i \texttt{/etc/rc.local}
+		\item[]
+	\end{itemize}
+	Sve što se nalazi u direktorijima \texttt{/etc/rc.d} je obično samo symlink na skripte u \texttt{/etc/init.d}
 \end{frame}
 
 \begin{frame}
