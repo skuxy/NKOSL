@@ -246,7 +246,7 @@
 \frametitle{kompajliranje kernela na Centosu}
 \begin{frame}
     \begin{itemize}
-    \item Instalirati potrebne alate i preuzeti izvorni kod kernele:
+    \item Instalirati potrebne alate i preuzeti izvorni kod kernela:
     \item yum -y groupinstall 'Development tools'
     \item yum -y install ncurses-devel rpm-build qt-devel
     \item cd /usr/src/kernels
@@ -256,7 +256,7 @@
     \item Izmijeniti konfiguraciju (promjeniti verziju u Makefile):
     \item cp /boot/config`-uname -r` .config
     \item make menuconfig ili make xconfig
-    \item spremiti .config i kopajlirati
+    \item Spremiti .config i kopajlirati
     \item make; mke modules\_install; make install;
     \item vi /boot/grub/grub.conf (default=1 to default=0)
     \item Restart i pokrenuti novi kernel
