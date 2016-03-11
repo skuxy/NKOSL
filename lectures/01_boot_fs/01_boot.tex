@@ -37,6 +37,20 @@
 	\tableofcontents
 \end{frame}
 
+\section{Boot}
+\begin{frame}
+    \frametitle{Od uključivanja do /bin/bash}
+    \begin{itemize}
+        \item BIOS 
+        \item MBR ili UEFI
+        \item Bootloader i odabir OS-a
+        \item Učitavanje initram i kernela
+        \item Init proces 
+        \item Bash
+    \end{itemize}
+\end{frame}
+
+
 \section{BIOS}
 \begin{frame}
 	\frametitle{BIOS}
@@ -226,6 +240,27 @@
 	\end{itemize}
 	\vfill
 	\texttt{systemctl} \\ \texttt{journalctl}
+\end{frame}
+
+\section{Kernel domesticus}
+\frametitle{kompajliranje kernela na Centosu}
+\begin{frame}
+    \begin{itemize}
+    \item Instalirati potrebne alate i preuzeti izvorni kod kernela:
+    \item yum -y groupinstall 'Development tools'
+    \item yum -y install ncurses-devel rpm-build qt-devel
+    \item cd /usr/src/kernels
+    \item wget \url{https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.6.tar.bz2}
+    \item tar xvjf linux-3.12.6.tar.bz2
+    \item cd /usr/src/kernels/linux-3.12.6
+    \item Izmijeniti konfiguraciju (promjeniti verziju u Makefile):
+    \item cp /boot/config`-uname -r` .config
+    \item make menuconfig ili make xconfig
+    \item Spremiti .config i kopajlirati
+    \item make; mke modules\_install; make install;
+    \item vi /boot/grub/grub.conf (default=1 to default=0)
+    \item Restart i pokrenuti novi kernel
+	\end{itemize}
 \end{frame}
 
 \section*{}
