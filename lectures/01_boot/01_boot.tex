@@ -19,7 +19,7 @@
 
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Dominik Barbarić]{Dominik Barbarić\\{\small Nositelj: Stjepan Groš}}
+\author[Dominik Barbarić, Josip Domšić]{Dominik Barbarić, Josip Domšić\\{\small Nositelj: Stjepan Groš}}
 \subtitle{1. Boot proces i datotečni sustavi}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
@@ -90,19 +90,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{GPT}
-	\begin{itemize}
-		\item Dio UEFI standarda
-		\item Podržava velike diskove 
-		\item Proizvoljan broj particija
-	\end{itemize}
-	\begin{itemize}
-		\item \emph{Protective MBR} - omogućuje kompatibilnost s BIOS sustavima
-		\item UEFI sustavi mogu izravno pozivati bootloadere iz particija
-	\end{itemize}
-\end{frame}
-
 \section{Bootloader}
 \begin{frame}
 	\frametitle{Bootloader}
@@ -118,8 +105,7 @@
 	\begin{itemize}
 		\item GPT diskovi
 		\begin{itemize}
-	 		\item Protective MBR - isto kao i kod MBR diskova
-			\item UEFI-GPT boot
+	 		\item Drugi pristup bootloaderu na UEFI sustavima
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -145,7 +131,7 @@
 		\end{itemize}
 	\end{itemize}
 	\vfill
-	Syslinux
+	\textbf{Syslinux}
 	\begin{itemize}
 		\item \emph{Lightweight} bootloader
 		\item Jednostavna konfiguracija
@@ -154,7 +140,7 @@
 
 \begin{frame}
 	\frametitle{Druge platforme}
-	Linux pokreće bootloader ili firmware
+	Linux pokreće bootloader koji je često ugrađen u firmware platforme
 	\begin{figure}
 		\centering
 		\begin{subfigure}[f]{0.55\textwidth}
@@ -167,6 +153,44 @@
 			\caption*{HTC Android Hboot}
 		\end{subfigure}
 	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{UEFI}
+	\textbf{U}nified \textbf{E}xtensible \textbf{F}irmware \textbf{I}nterface
+	\begin{itemize}
+		\item Specifikacija sučelja između OS-a i firmware-a
+		\item Razvijen 2005 iz Intelovog EFI sustava
+		\item Zamjena za BIOS
+		\item Servisi, aplikacije, driveri ...
+		\begin{itemize}
+			\item EFI system partition
+		\end{itemize}
+	\end{itemize}
+	\vfill
+	\begin{itemize}
+		\item \textbf{GUID partition table} (GPT)
+		\begin{itemize}
+			\item Najveći doprinos specifikacije
+			\item Podržavaju ga i mnogi BIOS-i
+			\item Legacy MBR / Protective MBR omogućuje ograničeni \textit{backward compatibility} s MBR (BIOS sustavima)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{UEFI}
+	\begin{itemize}
+		\item Boot manager je dio UEFI specifikacije
+		\item Traži i izvršava bootloader sa neke od particija
+		\item Detekcija UEFI bootloadera na sustavu
+	\end{itemize}
+	\begin{itemize}
+		\item \textit{Compatibility support module (CSM)}
+		\begin{itemize}
+			\item Omogućuje \textit{backward compatibility} s klasičnim bootloaderima
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -242,36 +266,60 @@
 	\texttt{systemctl} \\ \texttt{journalctl}
 \end{frame}
 
-\section{Kernel domesticus}
-\frametitle{kompajliranje kernela na Centosu}
-\begin{frame}
-    \begin{itemize}
-    \item Instalirati potrebne alate i preuzeti izvorni kod kernela:
-    \item yum -y groupinstall 'Development tools'
-    \item yum -y install ncurses-devel rpm-build qt-devel
-    \item cd /usr/src/kernels
-    \item wget \url{https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.6.tar.bz2}
-    \item tar xvjf linux-3.12.6.tar.bz2
-    \item cd /usr/src/kernels/linux-3.12.6
-    \item Izmijeniti konfiguraciju (promjeniti verziju u Makefile):
-    \item cp /boot/config`-uname -r` .config
-    \item make menuconfig ili make xconfig
-    \item Spremiti .config i kopajlirati
-    \item make; mke modules\_install; make install;
-    \item vi /boot/grub/grub.conf (default=1 to default=0)
-    \item Restart i pokrenuti novi kernel
+\section{Kernel}
+\begin{frame}[fragile]
+	\frametitle{Kernel moduli}
+	Kernel modules are pieces of code that can be loaded and unloaded into the kernel upon demand. They extend the functionality of the kernel without the need to reboot the system.
+	\begin{itemize}
+		\item Moduli su spremljeni na lokaciji
+		\item[] \verb|/usr/lib/modules/kernel_release|
 	\end{itemize}
+	\begin{itemize}
+		\item \texttt{lsmod} - trenutno učitani moduli
+		\item \texttt{modprobe module\_name parameter\_name=parameter\_value} - učitavanje modula
+		\item \texttt{modprobe -r module\_name} - \textit{unload} modula
+	\end{itemize}
+	\begin{itemize}
+		\item[] \verb|/etc/modprobe.d/|
+		\item[] \verb|  options module_name parameter_name=parameter_value|
+	\end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+	\frametitle{Kernel domesticus}
+	\framesubtitle{Kompajliranje kernela (CentOS)}
+    \footnotesize
+    \begin{verbatim}
+	yum -y groupinstall 'Development tools'
+	yum -y install ncurses-devel rpm-build qt-devel
+	\end{verbatim}
+	\begin{verbatim}
+	cd /usr/src/kernels
+	wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.12.6.tar.bz2
+	tar xvjf linux-3.12.6.tar.bz2
+	cd /usr/src/kernels/linux-3.12.6
+	\end{verbatim}
+	Izmijeniti konfiguraciju (promjeniti verziju u Makefile):
+	\begin{verbatim}
+	cp /boot/config`-uname -r` .config
+	make menuconfig # ili make xconfig
+	\end{verbatim}
+	Spremiti .config i kopajlirati
+	\begin{verbatim}
+	make; make modules_install; make install;
+	vi /boot/grub/grub.conf # (default=1 to default=0)
+	\end{verbatim}
 \end{frame}
 
 \section*{}
 \begin{frame}
 	\frametitle{Literatura}
-	\url{http://en.wikipedia.org/wiki/Comparison_of_file_systems}\\
-	\url{http://www.pathname.com/fhs/}\\
-	\vfill
 	\url{https://wiki.archlinux.org/index.php/GRUB_Legacy}\\
 	\url{https://wiki.archlinux.org/index.php/GRUB}\\
 	\url{http://wiki.gentoo.org/wiki/GRUB2_Quick_Start}\\
+	\url{https://wiki.archlinux.org/index.php/Syslinux}
+	\vfill
+	\url{https://wiki.archlinux.org/index.php/Kernel_parameters}
+	\url{https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface}
 	\vfill
 	\url{http://users.cecs.anu.edu.au/~okeefe/p2b/power2bash/power2bash.html}\\
 \end{frame}
