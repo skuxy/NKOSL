@@ -12,14 +12,14 @@
 \newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
 \date{\todayiso}
 
-\usepackage{listing}
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Josip Domšić]{Josip Domšić\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
-\subtitle{2. Filesystems, RAID, LVM}
+\author[Dominik Barbarić]{Josip Domšić i Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\subtitle{2. Filesystems, RAID, LVM, Quotas}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
 
@@ -52,6 +52,7 @@
 		\item Upravljanje prostorom na mediju
 		\item \dots
     \end{itemize}
+\end{frame}
 
 \begin{frame}
 	\frametitle{FHS struktura}
@@ -92,7 +93,8 @@
 	\end{itemize}
 \end{frame}
 
-    Ostali tipovi:
+\begin{frame}
+	\frametitle{Ostali tipovi}
     \begin{itemize}
         \item NTFS
         \item ISO 9660
@@ -101,13 +103,7 @@
         \item specijalni: swap, tmpfs
     \end{itemize}
 
-\end{frame}
-
-\begin{frame}
-	\frametitle{swap i tmpfs}
-	\begin{itemize}
-		\item Posebne strukture u Linuxu
-	\end{itemize}
+    Posebne strukture u Linuxu
 	swap
 	\begin{itemize}
 		\item \emph{Paging} particija
@@ -162,7 +158,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \end{verbatim}
 \end{frame}
 
-
+\begin{frame}
 	Diskovi se u sustavu prikazuju kao logičke jedinice:
 	{\ttfamily
 		\begin{itemize}
@@ -244,7 +240,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\frametitle{RAID 1}
 	
 	\begin{columns}[T]
-	\begin{column}{0.6\textwidth}
+        \begin{column}{0.6\textwidth}
 		\textbf{Mirror}
 		\begin{itemize}
 			\item Podaci se kopiraju na više diskova
@@ -309,7 +305,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \end{frame}
 
 \subsection{Ugniježđeni RAID leveli}
-\begin{frame}
+        \begin{frame}
 	\frametitle{RAID 0+1}
 	
 	\begin{columns}[T]
