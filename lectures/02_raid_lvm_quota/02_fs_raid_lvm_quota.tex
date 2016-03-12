@@ -114,7 +114,7 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
     Stvaranje ext2 FS:
     \begin{itemize}
         \item Stvoriti particiju
@@ -122,15 +122,15 @@
         \item Mount FS
     \end{itemize}
 
-    \shell{lvcreate myVolumeGroup --size 20GB  --name my20GB}
-
-    \shell{mkfs.ext2 /dev/myVolumeGroup/my20GB}
-  
-    \shell{mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup}
-
-    \shell{chmod --recursive 755 /media/backup}
+    \begin{verbatim}
+lvcreate myVolumeGroup --size 20GB  --name my20GB 
+mkfs.ext2 /dev/myVolumeGroup/my20GB 
+mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup 
+chmod --recursive 755 /media/backup
+    \end{verbatim}
     
 \end{frame}
+
 
 \begin{frame}
     Ispod povrsine ext2 FS:
