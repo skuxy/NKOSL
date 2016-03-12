@@ -103,8 +103,7 @@
         \item specijalni: swap, tmpfs
     \end{itemize}
 
-    Posebne strukture u Linuxu
-	swap
+    swap
 	\begin{itemize}
 		\item \emph{Paging} particija
 		\item Dio virtualne memorije
@@ -123,13 +122,13 @@
         \item Mount FS
     \end{itemize}
 
-    lvcreate myVolumeGroup --size 20GB  --name my20GB
+    \shell{lvcreate myVolumeGroup --size 20GB  --name my20GB}
 
-    mkfs.ext2 /dev/myVolumeGroup/my20GB
+    \shell{mkfs.ext2 /dev/myVolumeGroup/my20GB}
   
-    mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup
+    \shell{mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup}
 
-    chmod --recursive 755 /media/backup
+    \shell{chmod --recursive 755 /media/backup}
     
 \end{frame}
 
