@@ -19,7 +19,7 @@
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
 \author[Dominik Barbarić]{Josip Domšić i Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
-\subtitle{2. Filesystems, RAID, LVM, Quotas}
+\subtitle{2. Datotečni sustav, RAID, LVM, kvote}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
 
@@ -139,7 +139,7 @@ chmod --recursive 755 /media/backup
         \item FS je podijeljen u blokove, 1-4KiB
         \item Blokovi su povezani u blok grupe, velicine 8-512MiB. 
         \item 1 superblock, podaci o FS
-        \item File je inode, index node. dozvole, velicina, \ldots
+        \item File je inode, index node. dozvole, veličina, \ldots
         \item ext2 ima 15 pointera na podatke
         \item maksimalna velicina datoteke je 4-32TiB
     \end{itemize}
