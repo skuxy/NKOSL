@@ -12,15 +12,16 @@
 \newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
 \date{\todayiso}
 
-\usepackage{listing}
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Dominik Barbarić]{Dominik Barbarić\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
-\subtitle{2. RAID, LVM i kvote}
+\author[Dominik Barbarić]{Josip Domšić i Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\subtitle{2. Datotečni sustav, RAID, LVM, kvote}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
+
 
 \begin{document}
 
@@ -36,8 +37,127 @@
 	\tableofcontents
 \end{frame}
 
+\section{Filesystem}
 \begin{frame}
-	\frametitle{Uobičajene diskovne arhitekture}
+	\frametitle{Datotečni sustav}
+    Filesystem je struktura slična stablu. / (root) je korijen te strukture. Čita se prilikom boot-a.
+
+	\begin{itemize}
+		\item Određuju način zapisivanja i čitanja podataka na mediju
+	\end{itemize}
+	Karakteristike datotečnih sustava
+	\begin{itemize}
+		\item Normiranje imena datoteka i upravljanje direktorijima
+		\item Metadata na datotekama
+		\item Upravljanje prostorom na mediju
+		\item \dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{FHS struktura}
+	\texttt{/} - root\\
+	\begin{tabular}{p{3cm} l}
+		\texttt{bin} & \emph{Osnovne} korisničke izvršne datoteke \\
+		\texttt{boot} & Datoteke bootloadera \\
+		\texttt{dev} & Device datoteke \\
+		\texttt{etc} & Konfiguracija sustava \\
+		\texttt{home} & Matični direktoriji korisnika \\
+		\texttt{lib} & Biblioteke i kernel moduli \\
+		\texttt{opt} & Razni softver \\
+		\texttt{root} & Matični direktorij korisnika \texttt{root} \\
+		\texttt{sbin} & Sistemske izvršne datoteke \\
+		\texttt{srv} & Podaci servisa na računalu \\
+		\texttt{tmp} & Privremeni podaci \\
+		\texttt{usr} & Dijeljeni dio strukture \\
+		\texttt{var} & Često mijenjani i privremeni podaci 
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Neki datotečni sustavi}
+	ext - \emph{extended filesystem}
+	\begin{itemize}
+		\item Osmišljen za Linux sustave
+		\item ext2 najkorišteniji
+		\item Struktura metadata iz Unix file systema (permissions, timestamps)
+		\item Datoteke predstavljene strukturom \emph{inode}
+		\item ext3 i ext4 - Nadogradnje na ext2
+		\item ext3 uvodi \emph{journal} - struktura file systema se čuva u izvanrednim okolnostima
+	\end{itemize}
+	FAT (vfat)\
+	\begin{itemize}
+		\item Masovna podrška
+		\item Najveća veličina datoteke 4 GiB (FAT16)
+		\item exFAT - naprednija verzija
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Ostali tipovi}
+    \begin{itemize}
+        \item NTFS
+        \item ISO 9660
+        \item Linear Tape FS
+        \item GlusterFS, BGFS
+        \item specijalni: swap, tmpfs
+    \end{itemize}
+
+    swap
+	\begin{itemize}
+		\item \emph{Paging} particija
+		\item Dio virtualne memorije
+	\end{itemize}
+	tmpfs
+	\begin{itemize}
+		\item Spremanje podataka na RAM
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    Stvaranje ext2 FS:
+    \begin{itemize}
+        \item Stvoriti particiju
+        \item Stvoriti FS
+        \item Mount FS
+    \end{itemize}
+
+    \begin{verbatim}
+lvcreate myVolumeGroup --size 20GB  --name my20GB 
+mkfs.ext2 /dev/myVolumeGroup/my20GB 
+mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup 
+chmod --recursive 755 /media/backup
+    \end{verbatim}
+    
+\end{frame}
+
+
+\begin{frame}
+    Ispod povrsine ext2 FS:
+
+    \begin{itemize}
+        \item FS je podijeljen u blokove, 1-4KiB
+        \item Blokovi su povezani u blok grupe, velicine 8-512MiB. 
+        \item 1 superblock, podaci o FS
+        \item File je inode, index node. dozvole, veličina, \ldots
+        \item ext2 ima 15 pointera na podatke
+        \item maksimalna velicina datoteke je 4-32TiB
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	\frametitle{\texttt{/etc/fstab}}
+\begin{verbatim}
+# <filesys>  <dir>  <type>  <options>          <dump> <pass>
+/dev/sda1    /      ext4    defaults,noatime   0      1
+/dev/sda2    none   swap    defaults           0      0
+/dev/sdb1    /home  ext4    defaults,noatime   0      2
+tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
+\end{verbatim}
+\end{frame}
+
+\begin{frame}
 	Diskovi se u sustavu prikazuju kao logičke jedinice:
 	{\ttfamily
 		\begin{itemize}
@@ -119,7 +239,7 @@
 	\frametitle{RAID 1}
 	
 	\begin{columns}[T]
-	\begin{column}{0.6\textwidth}
+        \begin{column}{0.6\textwidth}
 		\textbf{Mirror}
 		\begin{itemize}
 			\item Podaci se kopiraju na više diskova
@@ -184,7 +304,7 @@
 \end{frame}
 
 \subsection{Ugniježđeni RAID leveli}
-\begin{frame}
+        \begin{frame}
 	\frametitle{RAID 0+1}
 	
 	\begin{columns}[T]
@@ -438,6 +558,9 @@ Disk quotas for user cetko (uid 1001):
 \section*{}
 \begin{frame}
 	\frametitle{Literatura}
+    \url{http://www.srce.unizg.hr/fileadmin/Srce/proizvodi_usluge/obrazovanje/tecajevi/linux-akademija/L110.pdf}
+    \url{http://www.nongnu.org/ext2-doc/ext2.html}
+    \url{https://www.linux.com/news/software/applications/8208-all-about-linux-swap-space}
 	\texttt{man mdadm}
 	\url{http://www.ducea.com/2009/03/08/mdadm-cheat-sheet/}
 	\vfill
