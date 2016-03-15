@@ -18,7 +18,7 @@
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Dominik Barbarić]{Josip Domšić i Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\author[Josip Domšić, Dominik Barbarić]{Josip Domšić, Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
 \subtitle{2. Datotečni sustav, RAID, LVM, kvote}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
@@ -111,28 +111,35 @@
 	tmpfs
 	\begin{itemize}
 		\item Spremanje podataka na RAM
+		\item Obično montiran na \texttt{/tmp}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
+	\frametitle{Upravljanje particijama}
     Stvaranje ext2 FS:
     \begin{itemize}
         \item Stvoriti particiju
         \item Stvoriti FS
         \item Mount FS
     \end{itemize}
-
-    \begin{verbatim}
-lvcreate myVolumeGroup --size 20GB  --name my20GB 
-mkfs.ext2 /dev/myVolumeGroup/my20GB 
-mount --types ext2 /dev/myVolumeGroup/my20GB /media/backup 
-chmod --recursive 755 /media/backup
-    \end{verbatim}
-    
+	\vfill
+	\texttt{fdisk}
+	\begin{itemize}
+		\item Alat za uređivanje particija na disku
+		\item fdisk \textbf{ne formatira} particije
+		\item Interaktivni način rada
+	\end{itemize}
+	\vfill
+	\texttt{mkfs} \, odnosno \, \verb|mkfs.<type>|
+	\begin{itemize}
+		\item Kreira filesystem
+	\end{itemize}
 \end{frame}
 
 
 \begin{frame}
+	\frametitle{ext2}
     Ispod povrsine ext2 FS:
 
     \begin{itemize}
@@ -145,9 +152,35 @@ chmod --recursive 755 /media/backup
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]
+	\frametitle{Mountanje}
+	Postupak dodijeljivanja adrese u strukturi sustava nekom filesystemu
+	\vfill
+	\verb|mount <device> <mountpoint>|
+	\begin{itemize}
+		\item Bez argumenata - popis mountanih filesystema
+	\end{itemize}
+	\verb/umount <mountpoint>|<device>/
+	\vfill
+	Identifikacija particije
+	\begin{itemize}
+		\item \verb|/dev/sda1|, \verb|/dev/sda2|, ...
+		\begin{itemize}
+			\item Moguća promjena oznaka
+		\end{itemize}
+		\item \textit{Labela} filesystema
+		\item[] \verb|LABEL="Debian"|, ...
+		\item \textbf{UUID} (\textbf{U}niversally \textbf{U}nique \textbf{I}dentifier)
+		\item[] \verb|UUID="de305d54-75b4-431b-adb2-eb6b9e546014"|
+	\end{itemize}
+\end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{\texttt{/etc/fstab}}
+	\begin{itemize}
+		\item Sadrži informacije o filesystemima koji se mogu \textit{mountati}
+		\item Pokretanjem \texttt{mount -a} mountaju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
+	\end{itemize}
 \begin{verbatim}
 # <filesys>  <dir>  <type>  <options>          <dump> <pass>
 /dev/sda1    /      ext4    defaults,noatime   0      1
@@ -157,7 +190,9 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \end{verbatim}
 \end{frame}
 
+\section{RAID}
 \begin{frame}
+	\frametitle{Konfiguracije diskova}
 	Diskovi se u sustavu prikazuju kao logičke jedinice:
 	{\ttfamily
 		\begin{itemize}
@@ -180,7 +215,6 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\end{itemize}
 \end{frame}
 
-\section{RAID}
 \begin{frame}
 	\frametitle{RAID}
 	\begin{itemize}
@@ -444,7 +478,7 @@ vgscan
 vgdisplay vg-name
 
 lvcreate -l 100%FREE -n lvm0 vg-name
-mkfs -t ext3 /dev/lvm-disk/lvm0
+mkfs.ext3 /dev/lvm-disk/lvm0
 	\end{verbatim}
 \end{frame}
 
