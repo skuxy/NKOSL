@@ -633,7 +633,6 @@ Disk quotas for user cetko (uid 1001):
 		\item[] Uobičajene naredbe za kopiranje ne čuvaju extended atribute
 		\item Proučiti man stranice
 	\end{itemize}
-	\vspace{1em}
 	Klase atributa
 	\begin{multicols}{2}
 		\begin{itemize}
@@ -649,6 +648,29 @@ Disk quotas for user cetko (uid 1001):
 		# file: file.txt
 		user.test="podatak"
 		\end{verbatim}}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Napredne mogućnosti filesystema}
+	\frametitle{Extended attributes}
+	Capabilities
+	\begin{itemize}
+		\item Koncept ograničavanja mogućnosti izvršnih datoteka
+		\item Cilj je izbjeći korištenje \textit{setuid} bita ostavljajući izvršnoj datoteci privilegirani pristup nekim dijelovima sustava
+	\end{itemize}
+	\vspace{1em}
+	{\footnotesize \begin{verbatim}
+	$ getcap /bin/ping
+	/bin/ping = cap_net_raw+ep
+	\end{verbatim}}
+	\begin{itemize}
+		\item Capabilities se zapisuju kao extended atributi
+	\end{itemize}
+	{\footnotesize \begin{verbatim}
+	$ getfattr -d -m "^security\\." /bin/ping
+	# file: bin/ping
+	security.capability=0sAQAAAgAgAAAAAAAAAAAAAAAAAAA=
+	\end{verbatim}}
 \end{frame}
 
 \begin{frame}[fragile]
