@@ -16,6 +16,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
+\usepackage{multicol}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
 \author[Josip Domšić, Dominik Barbarić]{Josip Domšić, Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
@@ -482,28 +483,6 @@ mkfs.ext3 /dev/lvm-disk/lvm0
 	\end{verbatim}
 \end{frame}
 
-\section{Loop devices}
-\begin{frame}[fragile]
-	\frametitle{Loop devices}
-	\begin{itemize}
-		\item Interpretacija običnih datoteka kao uređaja
-		\item Datoteci se dodjeljuje \emph{loop} uređaj u \texttt{/dev} folderu kojem se pristupa kao običnom disku
-	\end{itemize}
-	\begin{itemize}
-		\item Datoteka može sadržavati datotečni sustav
-	\end{itemize}
-	\vfill
-	\textbf{Primjer stvaranja loop device-a}:
-	\begin{verbatim}
-# Prazna 100MiB datoteka
-dd if=/dev/zero of=device.img bs=512 count=2048
-
-losetup /dev/loop0 device.img
-mkfs -t ext3 /dev/loop0
-mount -t ext3 /dev/loop0 /mnt/image
-	\end{verbatim}
-\end{frame}
-
 \section{Kvote}
 \begin{frame}
 	\frametitle{Kvote}
@@ -589,6 +568,110 @@ Disk quotas for user cetko (uid 1001):
 	\end{verbatim}}
 \end{frame}
 
+\section{Napredne mogućnosti}
+\begin{frame}
+	\frametitle{Napredne mogućnosti filesystema}
+	\framesubtitle{File attributes}
+	File attributes
+	\begin{itemize}
+		\item Određuju poseban režim rada filesystema kod određenih datoteka / direktorija
+		\item Vrste atributa određene su odabirom filesystema
+		\item Za ext2 sustav (i novije ext) postoje naredbe za upravljanje atributima
+		\item[] \texttt{lsattr}, \texttt{chattr}
+	\end{itemize}
+	\vspace{1em}
+	Neki od ext2 atributa
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item[a] Append only
+			\item[A] No atime updates
+			\item[c] Compressed
+			\item[i] Immutable
+			\item[s] Secure deletion
+			\item[u] Undeletable
+			\item[S] Synchronous updates
+			\item[] ...
+		\end{itemize}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Napredne mogućnosti filesystema}
+	\textbf{Primjer}\\
+	\vspace{1em}
+	Kreirajte datoteku koju korisnik \texttt{root} neće moći izbrisati korištenjem naredbe\\
+	\verb|# rm -f file.txt|\\
+	\vspace{1em}
+	{\footnotesize Rješenje se nalazi na bijeloj pozadini ovoga slidea}\\
+	\vfill
+	\textcolor{white}{Postaviti immutable atribut}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Napredne mogućnosti filesystema}
+	\framesubtitle{Access Control Lists (ACL)}
+	Access Control Lists (ACL)
+	\begin{itemize}
+		\item Proširenje UNIX dozvola
+		\item Dodjeljivanje različitih dozvola različitim korisnicima i grupama
+	\end{itemize}
+	\vspace{1em}
+	\texttt{setfacl}, \texttt{getacl}
+	\vspace{1em}
+	\begin{itemize}
+		\item Filesystem mora biti mountan s opcijom \texttt{acl}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Napredne mogućnosti filesystema}
+	\framesubtitle{Extended attributes}
+	Extended attributes
+	\begin{itemize}
+		\item Parovi \texttt{kljuc:vrijednost} koji se mogu po volji pridijeliti datotekama
+		\item Oprez prilikom kopiranja datoteka
+		\item[] Uobičajene naredbe za kopiranje ne čuvaju extended atribute
+		\item Proučiti man stranice
+	\end{itemize}
+	\vspace{1em}
+	Klase atributa
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item security
+			\item system
+			\item trusted
+			\item user
+		\end{itemize}
+	\end{multicols}
+	{\footnotesize \begin{verbatim}
+		$ setfattr -n user.test -v "podatak" file.txt
+		$ getfattr -d file.txt
+		# file: file.txt
+		user.test="podatak"
+		\end{verbatim}}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Loop devices}
+	\begin{itemize}
+		\item Interpretacija običnih datoteka kao uređaja
+		\item Datoteci se dodjeljuje \emph{loop} uređaj u \texttt{/dev} folderu kojem se pristupa kao običnom disku
+	\end{itemize}
+	\begin{itemize}
+		\item Datoteka može sadržavati datotečni sustav
+	\end{itemize}
+	\vfill
+	\textbf{Primjer stvaranja loop device-a}:
+	\begin{verbatim}
+	# Prazna 100MiB datoteka
+	dd if=/dev/zero of=device.img bs=512 count=2048
+	
+	losetup /dev/loop0 device.img
+	mkfs -t ext3 /dev/loop0
+	mount -t ext3 /dev/loop0 /mnt/image
+	\end{verbatim}
+\end{frame}
+
 \section*{}
 \begin{frame}
 	\frametitle{Literatura}
@@ -601,8 +684,6 @@ Disk quotas for user cetko (uid 1001):
 	\url{http://debian-handbook.info/browse/wheezy/advanced-administration.html}\\
 	\url{https://wiki.archlinux.org/index.php/Software_RAID_and_LVM}\\
 	\url{http://www.tuxradar.com/content/lvm-made-easy}
-	\vfill
-	\texttt{man losetup}
 	\vfill
 	\url{https://wiki.archlinux.org/index.php/disk_quota}
 \end{frame}
