@@ -1,0 +1,35 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Domaća zadaća 2}
+	\date{\vspace{-5ex} 22.03.2015.}
+	\maketitle
+	Bryan Matthew se zaposlio na praksi u tvrtci Sevilla Ltd. Njihov sistem administrator je shvatio da Bryan provodi puno vremena na chatu i njegovoj IP adresi zabranio pristup IRC protokolu. Međutim, Bryan je zadnji vikend puno toga naučio o mrežama i shvatio da može napraviti virtualni interface \texttt{eth0:0} kojeg će moći koristiti za IRC.
+	\section*{Zadatak}
+	Na sučelju \texttt{eth0} je potrebno napraviti novi virtual interface i konfigurirati ga na sljedeći način:
+	\begin{itemize}
+		\item Sučelje pripada mreži 172.16.92.64/26
+		\item Osigurajte pristup mreži 172.16.0.0/16 preko novog interfacea i routera na adresi 172.16.92.120
+		\item Sučelje odbacuje sve dolazne pakete osim onih na TCP portu 6667 (za IRC protokol)
+	\end{itemize}
+	Konfiguracija mora biti trajna - nakon reboota sučelje i dalje mora ispravno raditi.\\
+	{\small Ovisno o distribuciji, moguće da se fizičko mrežno sučelje ne zove \texttt{eth0}. Koristite nazive koje vrijede na vašem sustavu.}\\
+	\,\\
+	Kao rješenje domaće zadaće šaljete sljedeće datoteke:
+	\begin{itemize}
+		\item Bash skriptu kojom ste ostvarili traženu konfiguraciju
+		\item \texttt{ifconfig.log} - datoteka koja sadrži ispis naredbe \texttt{ifconfig}
+		\item \texttt{route.log} - datoteka koja sadrži ispis naredbe \texttt{route -n}
+		\item \texttt{iptables.log} - datoteka koja sadrži ispis naredbe \texttt{iptables -nvL}
+		\item[] {\small Umjesto predloženih naredbi možete koristiti bilo koje druge naredbe iz koje je vidljiva konfiguracija sučelja. Promijenite ime datoteke tako da odgovara korištenoj naredbi.}
+	\end{itemize}
+	Tražene datoteke upakirajte u .tar arhivu.
+	
+\end{document}
