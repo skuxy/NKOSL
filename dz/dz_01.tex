@@ -8,31 +8,28 @@
 \pagenumbering{gobble}
 
 \begin{document}
-	\title{Domaća zadaća 1}
-	\date{\vspace{-5ex} 08.03.2015.}
+	\title{Domaća zadaća 2}
+	\date{\vspace{-5ex} 22.03.2015.}
 	\maketitle
-	Prije rješavanja DZ potrebno je osigurati sljedeće uvjete na računalu ili virtualnom stroju na kojem radite:
-	\begin{itemize}
-		\item Instaliran najmanje jedan tvrdi disk s jednom particijom tipa \texttt{ext2/ext3/ext4} te jednom tipa \texttt{swap}.\\ {\small (Na disku može biti i više particija koje nećete koristiti u ovoj DZ.)}
-		\item Na ext particiju instalirana neka distribucija Linuxa s jednim od bootloadera koji se spominjao na predavanju.
-	\end{itemize}
+	Bryan Matthew se zaposlio na praksi u tvrtci Sevilla Ltd. Njihov sistem administrator je shvatio da Bryan provodi puno vremena na chatu i njegovoj IP adresi zabranio pristup IRC protokolu. Međutim, Bryan je zadnji vikend puno toga naučio o mrežama i shvatio da može napraviti virtualni interface \texttt{eth0:0} kojeg će moći koristiti za IRC.
 	\section*{Zadatak}
-	Potrebno je osigurati bootanje i mountanje ext i swap particije koristeći jednu od metoda za \emph{persistent block device naming} opisanih na wiki stranicama \url{https://wiki.archlinux.org/index.php/Persistent_block_device_naming}. Kao rješenje domaće zadaće šaljete sljedeće datoteke:
+	Na sučelju \texttt{eth0} je potrebno napraviti novi virtual interface i konfigurirati ga na sljedeći način:
 	\begin{itemize}
-		\item \texttt{/etc/fstab}\\
-			u kojoj ste prema jednoj od smjernica na gornjem linku osigurali mountanje ext i swap particije na ispravne lokacije i s ispravnim parametrima
-		\item Konfiguracijsku datoteku bootloadera\\
-			u kojoj se također vidi da koristite jednu od \emph{persistent naming} smjernica
-		\item[] Datoteka koju šaljete ovisi o bootloaderu kojeg koristite:
-		\item[] \begin{tabular}{p{4cm} p{5cm}}
-					\textbf{Bootloader} & \textbf{Datoteka za slanje} \\
-					GRUB 2 & \texttt{/boot/grub/grub.cfg}\\
-					GRUB Legacy & \texttt{/boot/grub/menu.lst}\\
-					Syslinux & \texttt{/boot/syslinux/syslinux.cfg}
-				\end{tabular}
-		\item Ispis naredbe \texttt{lsblk -f} spremljen na lokaciju \texttt{/var/block.log}
+		\item Sučelje pripada mreži 172.16.92.64/26
+		\item Osigurajte pristup mreži 172.16.0.0/16 preko novog interfacea i routera na adresi 172.16.92.120
+		\item Sučelje odbacuje sve dolazne pakete osim onih na TCP portu 6667 (za IRC protokol)
 	\end{itemize}
-	
-	Datoteke pospremite u tar arhivu pri tome čuvajući apsolutne staze datoteka. (Dakle, struktura tar arhive mora biti: \texttt{folder boot $\rightarrow$ folder grub/syslinux $\rightarrow$ datoteka} i tako za sve tražene datoteke.)\\
+	Konfiguracija mora biti trajna - nakon reboota sučelje i dalje mora ispravno raditi.\\
+	{\small Ovisno o distribuciji, moguće da se fizičko mrežno sučelje ne zove \texttt{eth0}. Koristite nazive koje vrijede na vašem sustavu.}\\
+	\,\\
+	Kao rješenje domaće zadaće šaljete sljedeće datoteke:
+	\begin{itemize}
+		\item Bash skriptu kojom ste ostvarili traženu konfiguraciju
+		\item \texttt{ifconfig.log} - datoteka koja sadrži ispis naredbe \texttt{ifconfig}
+		\item \texttt{route.log} - datoteka koja sadrži ispis naredbe \texttt{route -n}
+		\item \texttt{iptables.log} - datoteka koja sadrži ispis naredbe \texttt{iptables -nvL}
+		\item[] {\small Umjesto predloženih naredbi možete koristiti bilo koje druge naredbe iz koje je vidljiva konfiguracija sučelja. Promijenite ime datoteke tako da odgovara korištenoj naredbi.}
+	\end{itemize}
+	Tražene datoteke upakirajte u .tar arhivu.
 	
 \end{document}
