@@ -38,13 +38,13 @@
 	\tableofcontents
 \end{frame}
 
-\section{Filesystem}
+\section{Datotečni sustav}
 \begin{frame}
 	\frametitle{Datotečni sustav}
-    Filesystem je struktura slična stablu. / (root) je korijen te strukture. Čita se prilikom boot-a.
-
+    Datotečni sustav određuje način spremanja i dohvaćanja podataka s medija. 
 	\begin{itemize}
-		\item Određuju način zapisivanja i čitanja podataka na mediju
+		\item Na tvrdom disku određen za svaku particiju
+		\item Inicijalizacija \textit{formatiranjem}
 	\end{itemize}
 	Karakteristike datotečnih sustava
 	\begin{itemize}
@@ -79,10 +79,9 @@
 	\frametitle{Neki datotečni sustavi}
 	ext - \emph{extended filesystem}
 	\begin{itemize}
-		\item Osmišljen za Linux sustave
-		\item ext2 najkorišteniji
-		\item Struktura metadata iz Unix file systema (permissions, timestamps)
-		\item Datoteke predstavljene strukturom \emph{inode}
+		\item Razvijen za Linux sustave
+		\item ext2 najčešća inačica
+		\item Struktura metapodataka prilagođena Unix file systemu		\item Datoteke predstavljene strukturom \emph{inode}
 		\item ext3 i ext4 - Nadogradnje na ext2
 		\item ext3 uvodi \emph{journal} - struktura file systema se čuva u izvanrednim okolnostima
 	\end{itemize}
@@ -97,10 +96,10 @@
 \begin{frame}
 	\frametitle{Ostali tipovi}
     \begin{itemize}
-        \item NTFS
         \item ISO 9660
         \item Linear Tape FS
         \item GlusterFS, BGFS
+		\item NTFS
         \item specijalni: swap, tmpfs
     \end{itemize}
 
@@ -112,7 +111,7 @@
 	tmpfs
 	\begin{itemize}
 		\item Spremanje podataka na RAM
-		\item Obično montiran na \texttt{/tmp}
+		\item Obično \textit{mountan} na \texttt{/tmp}
 	\end{itemize}
 \end{frame}
 
@@ -147,9 +146,13 @@
         \item FS je podijeljen u blokove, 1-4KiB
         \item Blokovi su povezani u blok grupe, velicine 8-512MiB. 
         \item 1 superblock, podaci o FS
-        \item File je inode, index node. dozvole, veličina, \ldots
-        \item ext2 ima 15 pointera na podatke
-        \item maksimalna velicina datoteke je 4-32TiB
+        \item File je predstavljen strukturom inode (\textit{index node})
+        \item indode ima 15 pointera na podatke
+        \item Ovisno o veličini blokova restrikcije su
+        \item[] \begin{tabular}{l l}
+        	Max file size & 16 GiB - 2 TiB \\
+        	Max FS size & 4 TiB - 32 TiB
+        	\end{tabular}
     \end{itemize}
 \end{frame}
 
@@ -179,7 +182,7 @@
 \begin{frame}[fragile]
 	\frametitle{\texttt{/etc/fstab}}
 	\begin{itemize}
-		\item Sadrži informacije o filesystemima koji se mogu \textit{mountati}
+		\item Sadrži opcije pri \textit{mountanju} filesystema
 		\item Pokretanjem \texttt{mount -a} mountaju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
 	\end{itemize}
 \begin{verbatim}
@@ -211,7 +214,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 		\end{itemize}
 		\item \textbf{Spanned}
 		\begin{itemize}
-			\item Prazan prostor na više diskova se koristi kao jedan logički disk
+			\item Više diskova se proširuje u jedan logički disk
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -410,17 +413,17 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\frametitle{RAID boot}
 	\textbf{Hardverski RAID}
 	\begin{itemize}
-		\item[] OS vidi RAID polja kao logičke diskove. Ne može pristupiti fizičkim diskovima.
+		\item[] OS vidi RAID polja kao i fizičke diskove. Nema izravni pristup fizičkim diskovima.
 		\item[$\rightarrow$] Bootloader radi kao u konfiguraciji bez RAID-a.
 	\end{itemize}
 	\vfill
 	\textbf{Softverski RAID}
 	\begin{itemize}
-		\item[] OS vidi fizičke diskove i iz njih gradi logičke.
+		\item[] OS vidi fizičke diskove i iz njih gradi polje i logičke diskove.
 		\item[$\rightarrow$] Bootloader mora imati podršku za takva polja.
 	\end{itemize}
 	\vfill
-	\textbf{Fake RAID}
+	\textbf{Hardware assisted / \textit{Fake} RAID}
 	\begin{itemize}
 		\item[] Hibridni model. Kontroler ima ograničenu RAID podršku.
 		\item[$\rightarrow$] Bootloader vidi RAID polja kako logičke diskove. Ovisno o hardveru može bootati i bez dodatnih modula.
@@ -436,7 +439,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 		\item Implementacija kroz \textbf{device mapper} (dm)
 	\end{itemize}
 	\begin{itemize}
-		\item Moguće dodavanje, uklanjanje i zamjena diskova za vrijeme rada sustava (čak i bez unmount-a)
+		\item Moguće dodavanje, uklanjanje i zamjena fizičkih i logičkih diskova za vrijeme rada sustava (čak i bez unmount-a)
 	\end{itemize}
 \end{frame}
 
@@ -448,6 +451,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 		\item Koriste se particije tipa \emph{Linux LVM}
 		\item LVM ih dijeli na manje jedinice - \textbf{Physical extent} (PE)
 	\end{itemize}
+	\vfill
 	\textbf{Logical volumes} (LV)
 	\begin{itemize}
 		\item Logički disk (particija)
