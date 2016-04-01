@@ -5,15 +5,21 @@
 
 \usepackage[margin=2cm]{geometry}
 \usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\usepackage{datetime}
 \pagenumbering{gobble}
 
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
+
 \begin{document}
-	\title{Domaća zadaća 4}
-	\date{\vspace{-5ex} 24.05.2015.}
+	\title{Domaća zadaća 1}
+    
+    \date{\todayiso}
+	\date{\vspace{-5ex} }
 	\maketitle
 	
 
-\section*{Zadatak}
+\section{Zadatak}
 
 Instalirati i konfigurirati SSH i FTP server.\\
 
@@ -21,6 +27,20 @@ Pristup SSH serveru je dozvoljen iz lokalne mreže 10.0.0.0/8 i s localhosta 127
 Stvoriti nove korisnike \texttt{dino}, \texttt{dominik}, \texttt{nino} i \texttt{studenti}. Korisnici moraju imati home folder. Za svakog korisnika generirati RSA ključeve i konfigurirati ih za pristup SSH serveru.\\
 
 Podesiti FTP server za anonimni pristup za čitanje direktorija \texttt{/var/ftp/public}. Lokalni korisnici \texttt{dino}, \texttt{dominik}, \texttt{nino} i \texttt{studenti} se mogu autentificirati lozinkom i pristupiti cijelom filesystemu. FTP server ih nakon autentifikacije postavlja u home folder. Ostalim korisnicima na računalu treba onemogućiti autentificirani pristup. Pristup serveru je dozvoljen s bilo koje adrese kroz port 21 u pasivnom načinu rada.\\
+
+Kao rješenje šaljete tar arhivu sa svim korištenim konfiguracijskim datotekama i eventualnim dodatnim skriptama koje ste napisali.
+
+
+\section{Zadatak}
+
+Instalirati i konfigurirati NGINX, WSGI and Python stack. \\
+
+Uz zadatak je priložena python poslužiteljska aplikacija HelloWorldServer.py. \\
+Direktno korištenje aplikacije je \textbf{python HelloWorldServer.py} te iz drugog terminala pozvati \textbf{curl localhost:8888}.
+Napomena: Potrebno je instalirati python-flask paket. \\
+
+Potrebno je konfigurirati Nginx da se aplikaciji može pristupiti na \url{https://localhost/aplikacija}. 
+Za povezivanje nginx-a i python flask aplikacije koristite uwsgi program. \\
 
 Kao rješenje šaljete tar arhivu sa svim korištenim konfiguracijskim datotekama i eventualnim dodatnim skriptama koje ste napisali.
 
