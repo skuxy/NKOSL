@@ -12,7 +12,7 @@
 \newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
 \date{\todayiso}
 
-\usepackage{listing}
+\usepackage{listings}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{multirow}
@@ -21,49 +21,95 @@
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Dominik Barbarić]{Dominik Barbarić\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
-\subtitle{7. Serveri}
+\author[Dominik Barbarić, Josip Domšić]{Dominik Barbarić, Josip Domšić\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\subtitle{3. Protokoli}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
-
-
 \begin{document}
-
-
 {
-	\setbeamertemplate{footline}{}
+    \setbeamertemplate{footline}{}
 	\begin{frame}
 		\maketitle
 	\end{frame}
 }
 
-	
 \begin{frame}
-	\frametitle{Server}
+    \frametitle{OSI RM}
+	\framesubtitle{\texttt{Open Systems Interconnection Reference Model}}
+    \begin{itemize}
+        \item Fizički sloj - Ethernet, USB, ISDN, 802.11, Bluetooth
+        \item Podatkovni sloj - Ethernet, PPP, CSMA/CA 
+        \item Mrežni sloj - ICMP, IPsec, IPv4, IPv6, AppleTalk
+        \item Transportni sloj - UDP, TCP
+        \item Sjednički sloj - HTTP, SMTP, SIP, Telnet
+        \item Prezentacijski sloj - MIME
+        \item Aplikacijski sloj - NFS
+    \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+    \frametitle{TCP/IP}
+	\framesubtitle{\texttt{Transmission Contral Protocol over Internet Protocol}}
+    Najrasprostranjenija implementacija
+    \begin{itemize}
+        \item Podatkovni sloj (Fizički i Podatkovni)
+        \item Mrežni sloj
+        \item Transportni sloj
+        \item Aplikacijski sloj (Sjednički, Prezentacijski, Aplikacijski)
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{TCP/IP}
+    \includegraphics[width=0.75\textwidth]{tftp.jpg}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Komunikacija}
+    \begin{itemize}
+        \item IP protokol sadrži podatke o adresi, veličini paketa, \ldots
+        \item TCP održava vezu između 2 subjekta / računala / hosta
+        \item Jedinstveno definirano s: parom IP adresa i port
+        \item Alternativa je socket file
+        \item Definira se i tip komunikacije: Stream, Datagram, RAW, ...
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Klijent-Server arhitektura}
 	\begin{itemize}
-		\item Nudi usluge klijentima preko definiranih mrežnih protokola
-		\item \emph{Client-server} arhitektura
-		
-		\item IP mreža
+		\item Server pruža usluge klijentima preko definiranih mrežnih protokola
+        \item Alternativa je peer-to-peer
 		\begin{itemize}
 			\item Serveru se pristupa preko \textit{socket}a
 			\item[] IP adresa i port
 			\item[] Prijenosni protokol (TCP, UDP, \ldots)
 		\end{itemize}
-		
 		\item Serverski programi se pokreću kao \emph{daemon}
-
 	\end{itemize}
-
 \end{frame}
 
 
+\begin{frame}
+    \frametitle{Protokoli}
+    \begin{itemize}
+        \item INETD / XINETD 
+        \item SSH
+        \item HTTP
+        \item FTP
+        \item NFS, SMB
+        \item DNS
+    \end{itemize}
+\end{frame}
 
 
 \begin{frame}
 	\frametitle{ssh}
-	
+
 	TCP port 22\\
 	OpenSSH, Dropbear, \ldots
 
@@ -154,10 +200,6 @@ X11Forwarding yes
 \end{frame}
 
 
-
-
-
-
 \begin{frame}
 	\frametitle{telnet}
 
@@ -196,10 +238,6 @@ X11Forwarding yes
 	\includegraphics[width=0.75\textwidth]{vnc-desktop.png}
 
 \end{frame}
-
-
-
-
 
 
 \begin{frame}
@@ -286,12 +324,6 @@ port_enable=YES
 
 
 \end{frame}
-
-
-
-
-
-
 
 \begin{frame}
 	\frametitle{http}
