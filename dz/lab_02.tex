@@ -31,14 +31,16 @@ Podesiti FTP server za anonimni pristup za čitanje direktorija \texttt{/var/ftp
 
 \section{Zadatak}
 
-Instalirati i konfigurirati NGINX, WSGI and Python stack. \\
+Instalirati i konfigurirati Nginx Web server. \\
 
 Uz zadatak je priložena python poslužiteljska aplikacija HelloWorldServer.py. \\
 Direktno korištenje aplikacije je \textbf{python HelloWorldServer.py} te iz drugog terminala pozvati \textbf{curl localhost:8888}.
 Napomena: Potrebno je instalirati python-flask paket. \\
 
-Potrebno je konfigurirati Nginx da se aplikaciji može pristupiti na lokaciji \url{https://localhost/aplikacija}. 
-Za povezivanje nginx-a i python-flask aplikacije koristite uwsgi program. \\
+Potrebno je konfigurirati Nginx da se aplikaciji može pristupiti na lokaciji \url{https://localhost}. 
+Napomena: Kako koristimo HTTPS protokol, trebate generirati self-signed certifikat.
+\texttt{openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/cert/nkosl.key -out /etc/nginx/cert/nkosl.crt}
+
 
 Kao rješenje, bit će potrebno pokazati sve korištene konfiguracijske datoteke i eventualne dodatne skripte koje ste napisali.
 
