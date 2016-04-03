@@ -4,32 +4,44 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\usepackage{datetime}
 \pagenumbering{gobble}
 
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
+
 \begin{document}
-	\title{Laboratorijska vježba 2\\{\large Napredno korištenje operacijskog sustava Linux}}
-	\date{\vspace{-5ex} 30.03.2015.}
+    \title{Laboratorijska vježba 2\\{\large Napredno korištenje operacijskog sustava Linux}}
+    \date{\todayiso}
+	\date{\vspace{-5ex} }
 	\maketitle
 	
-	U tvrtki Sevilla Ltd. se zaposlio Randy Spears. Ubrzo je zamijetio Bryanovo rješenje problema s mrežom. Odlučio je uz Bryanovu pomoć napraviti sustav koji ima spremnu konfiguraciju i koji kod svakog gašenja zapiše svoje postavke u log datoteku.
-	
-	\section*{Zadatak}
-	
-	Napisati Bash skriptu \texttt{generate-system.sh} koja će napraviti prazan disk image, formatirati ga na ext4 datotečni sustav i na njemu kreirati osnovni Debian testing sustav 32-bitne arhitekture. Skripta mora na novom sustavu podesiti mrežne postavke tako da odgovaraju onima iz 2. domaće zadaće.\\
-	
-	Napisati Bash skriptu \texttt{logger.sh} koja na kraj datoteke \texttt{/var/log/nkosl/shutdown.log} na novom sustavu dopisuje sljedeće informacije: 
-	\begin{itemize}
-		\item verzija kernela
-  		\item popis učitanih kernel modula s njihovom putanjom
-  		\item svi mrežni uređaji s pripadajućom IP adresom i maskom u CIDR notaciji
-  		\item ispis sadržaja iptables-a
-  	\end{itemize}
-	Skripta \texttt{generate-system.sh} mora osigurati da se \texttt{logger.sh} pokreće svaki put kada gasimo računalo. Put do \texttt{logger.sh} skripte se predaje u argumentu.\\
-	
-	Kao rješenje šaljete tar arhivu sa skriptama \texttt{generate-system.sh} i \texttt{logger.sh}. Ako ste koristili dodatne skripte i njih uključite u tar arhivu.
-	
-	\subsection*{Primjer korištenja skripte}
-	\begin{verbatim}
-# ./generate-system.sh logger.sh
-	\end{verbatim}	
+
+\section{Zadatak}
+
+Instalirati i konfigurirati SSH i FTP server.\\
+
+Pristup SSH serveru je dozvoljen iz lokalne mreže 10.0.0.0/8 i s localhosta 127.0.0.1/32 na portu 1001. Lokalni korisnici se autentificiraju RSA ključevima, a autentifikaciju lozinkom je potrebno onemogućiti. SSH server mora imati omogućen X11 forwarding.\\
+Stvoriti nove korisnike \texttt{dino}, \texttt{dominik}, \texttt{nino} i \texttt{studenti}. Korisnici moraju imati home folder. Za svakog korisnika generirati RSA ključeve i konfigurirati ih za pristup SSH serveru.\\
+
+Podesiti FTP server za anonimni pristup za čitanje direktorija \texttt{/var/ftp/public}. Lokalni korisnici \texttt{dino}, \texttt{dominik}, \texttt{nino} i \texttt{studenti} se mogu autentificirati lozinkom i pristupiti cijelom filesystemu. FTP server ih nakon autentifikacije postavlja u home folder. Ostalim korisnicima na računalu treba onemogućiti autentificirani pristup. Pristup serveru je dozvoljen s bilo koje adrese kroz port 21 u pasivnom načinu rada.\\
+
+
+
+\section{Zadatak}
+
+Instalirati i konfigurirati Nginx Web server. \\
+
+Uz zadatak je priložena python poslužiteljska aplikacija HelloWorldServer.py. \\
+Direktno korištenje aplikacije je \textbf{python HelloWorldServer.py} te iz drugog terminala pozvati \textbf{curl localhost:8888}.
+Napomena: Potrebno je instalirati python-flask paket. \\
+
+Potrebno je konfigurirati Nginx da se aplikaciji može pristupiti na lokaciji \url{https://localhost}. 
+Napomena: Kako koristimo HTTPS protokol, trebate generirati self-signed certifikat.
+\texttt{openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/cert/nkosl.key -out /etc/nginx/cert/nkosl.crt} \\
+
+
+Kao rješenje, bit će potrebno pokazati sve korištene konfiguracijske datoteke i eventualne dodatne skripte koje ste napisali.
+
 \end{document}
