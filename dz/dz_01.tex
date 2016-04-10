@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Domaća zadaća 1}
+	\date{\vspace{-5ex} 10.04.2016.}
+	\maketitle
+    Domaća zadaća sastoji se od 3 zadatka. Potrebno je rješenja svih zadataka zapakirati u tar.gz arhivu i poslati na NKOSL mailing listu.
+
+	\section{Zadatak}
+	Potrebno je napisati dijelove konfiguracije za program Syslog, tj. dijelove \texttt{/etc/syslog.conf} datoteke.
+	\begin{itemize}
+        \item Zapisivanje isključivo \texttt{warning} poruka u datoteku /var/log/messages.warning
+        \item Zapisivanje \texttt{user error} poruka na /dev/tty9
+        \item Zapisivanje svih \texttt{emergency} poruka na 192.168.0.200.
+        \item Prokomentirajte: na kojem portu Syslog daemon slusa vanjske log poruke?
+        \item Prokomentirajte: kako omogućiti prihvaćanje log poruka s drugog računala?
+    \end{itemize}
+
+    \section{Zadatak}
+    Potrebno je napisati logrotate konfiguraciju za imaginarni program Program.
+    Program tijekom svog izvođenja zapisuje log poruke u \texttt{/var/log/program/} direktorij.
+    Kao rješenje priložite konfiguraciju i navedite punu putanju do nje. \\
+    Za konfiguraciju treba uzeti u obzir slijedeće pretpostavke:
+    \begin{itemize}
+        \item Pregled logova po danima 
+        \item Program generira puno zapisa unutar jednog dana
+        \item Potrebno je čuvati 2 godine logova
+        \item Memorijski prostor je ograničen
+        \item Samo Root korisnik i grupa Firma smiju čitati i pisati u log datoteku
+        \item Program otpušta log file descriptor primitkom HUP signala
+    \end{itemize}
+        
+    \section{Zadatak}
+    
+    Za potrebe upoznavanja s programima za nadzor računala i rješavanje sljedećeg zadatka, potrebno je instalirati program Zabbix.
+    Konfigurirajte Zabbix agent da prati iskorištenost vaših procesora kroz vrijeme.
+    Kao rješenje priložite slike grafova iz Zabbix programa.
+	
+\end{document}
