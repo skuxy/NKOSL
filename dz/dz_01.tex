@@ -7,40 +7,47 @@
 \usepackage[colorlinks=true,urlcolor=black]{hyperref}
 \pagenumbering{gobble}
 
+\renewcommand*{\familydefault}{\sfdefault}
+\renewcommand*{\sfdefault}{lmss}
+
 \begin{document}
 	\title{Domaća zadaća 1}
-	\date{\vspace{-5ex} 10.04.2016.}
+	\date{\vspace{-5ex} 11.04.2016.}
 	\maketitle
-    Domaća zadaća sastoji se od 3 zadatka. Potrebno je rješenja svih zadataka zapakirati u tar.gz arhivu i poslati na NKOSL mailing listu.
 
 	\section{Zadatak}
-	Potrebno je napisati dijelove konfiguracije za program Syslog, tj. dijelove \texttt{/etc/syslog.conf} datoteke.
+	Potrebno je napisati dijelove \texttt{syslog} konfiguracije, tj. dijelove \texttt{/etc/syslog.conf} datoteke tako da se ostvare sljedeće funkcionalnosti:
 	\begin{itemize}
-        \item Zapisivanje isključivo \texttt{warning} poruka u datoteku /var/log/messages.warning
-        \item Zapisivanje \texttt{user error} poruka na /dev/tty9
-        \item Zapisivanje svih \texttt{emergency} poruka na 192.168.0.200.
-        \item Prokomentirajte: na kojem portu Syslog daemon slusa vanjske log poruke?
-        \item Prokomentirajte: kako omogućiti prihvaćanje log poruka s drugog računala?
+        \item Sve \textit{warning} poruke se zapisuju u datoteku \texttt{/var/log/messages.warning}.
+        \item Sve \textit{user error} poruke se ispisuju na terminal \texttt{/dev/tty9}.
+        \item Sve \textit{emergency} poruke se prosljeđuju \texttt{syslog} serveru na adresi \texttt{192.168.0.200}.
     \end{itemize}
+    U konfiguracijskoj datoteci u komentarima odgovorite na pitanja:
+    \begin{enumerate}
+        \item Na kojem portu \texttt{syslog} daemon sluša vanjske log poruke?
+        \item Kako omogućiti prihvaćanje log poruka s drugog računala?
+    \end{enumerate}
 
     \section{Zadatak}
-    Potrebno je napisati logrotate konfiguraciju za imaginarni program Program.
-    Program tijekom svog izvođenja zapisuje log poruke u \texttt{/var/log/program/} direktorij.
-    Kao rješenje priložite konfiguraciju i navedite punu putanju do nje. \\
-    Za konfiguraciju treba uzeti u obzir slijedeće pretpostavke:
+    Potrebno je napisati \texttt{logrotate} konfiguraciju za program čija se izvršna datoteka zove \texttt{user1}.
+    Program tijekom svog izvođenja zapisuje log poruke u \texttt{/var/log/user1/} direktorij.
+    Kao rješenje priložite tar arhivu u kojoj se nalazi konfiguracijska datoteka s punom putanjom do nje.\\
+    (\textit{Dakle, primjer strukture tar arhive je} \verb|var -> conf -> file.conf|)\\
+    
+    \noindent Konfiguracija treba ostvariti sljedeće funkcionalnosti:
     \begin{itemize}
-        \item Pregled logova po danima 
-        \item Program generira puno zapisa unutar jednog dana
-        \item Potrebno je čuvati 2 godine logova
-        \item Memorijski prostor je ograničen
-        \item Samo Root korisnik i grupa Firma smiju čitati i pisati u log datoteku
-        \item Program otpušta log file descriptor primitkom HUP signala
+        \item Logovi moraju biti odvojeni po danima.
+        \item Logovi se rotiraju prilikom dostizanja limita veličine datoteke. Limit uzmite proizvoljno.
+        \item Logovi se čuvaju 2 godine.
+        \item Svi rotirani logovi moraju biti kompresirani.
+        \item Samo \texttt{root} korisnik i grupa \texttt{firma} smiju čitati i pisati u log datoteku.
     \end{itemize}
+    Prilikom rotiranja logova imati na umu da program \texttt{user1} otpušta log file descriptor primitkom \texttt{SIGHUP} signala.
         
     \section{Zadatak}
     
-    Za potrebe upoznavanja s programima za nadzor računala i rješavanje sljedećeg zadatka, potrebno je instalirati program Zabbix.
+    Za potrebe upoznavanja s programima za nadzor računala i rješavanje sljedećeg zadatka potrebno je instalirati program \texttt{Zabbix}.
     Konfigurirajte Zabbix agent da prati iskorištenost vaših procesora kroz vrijeme.
-    Kao rješenje priložite slike grafova iz Zabbix programa.
+    Kao rješenje priložite slike proizvoljnih grafova iz Zabbix programa.
 	
 \end{document}
