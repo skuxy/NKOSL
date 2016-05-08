@@ -21,7 +21,7 @@
 
 Potrebno je napisati skriptu \texttt{ping-log.sh} koja će svakih 10 sekundi pokrenuti naredbu \\
 \indent \texttt{ping -c 1 8.8.8.8}\\
-Ako se na naredbu vrati ping reply potrebno je u datoteku \texttt{/var/log/nkosl/ping.log} zapisati cijelu liniju koju naredba ispisuje na stdout. Ako ping naredba iz bilo kojeg razloga ne dobije odgovor informaciju o tomu treba zapisati u systemd journal. Na početku svakog zapisa mora postojati timestamp u formatu koji je dan primjerom: \\
+Ako se na naredbu vrati ping reply potrebno je u datoteku \texttt{/var/log/nkosl/ping.log} zapisati cijelu liniju koju naredba ispisuje na stdout. Ako ping naredba iz bilo kojeg razloga ne dobije odgovor, informaciju o tomu treba zapisati u systemd journal. Na početku svakog zapisa mora postojati timestamp u formatu koji je dan primjerom: \\
 \indent \texttt{[2015-05-15 13:37:00+02:00]}\\
 Napišite systemd service file za skriptu i omogućite njeno pokretanje i prekidanje kroz systemd.\\
 
