@@ -1,0 +1,338 @@
+\documentclass[a4paper,11pt]{exam}
+\usepackage[left=1.5cm, right=1.5cm, top=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\shell}[1]{\texttt{#1}}
+
+\printanswers
+
+\usepackage{xpatch}
+\xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
+\xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
+
+\begin{document}
+\firstpageheader
+	{}
+	{{\large \textbf{Napredno korištenje OS Linux}}\\
+		\textbf{Prijemni ispit - 9. ožujka 2016.}}
+	{}
+\footer
+	{}{}{\thepage}
+	
+Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
+
+\begin{questions}
+	\question
+	Jezgra operacijskog sustava je 
+	
+	\begin{oneparchoices}
+		\choice ljuska (\textit{shell})
+		\CorrectChoice kernel 
+		\choice bootloader  
+		\choice terminal 
+	\end{oneparchoices}
+	
+	\question
+	Što ne vrijedi za operacijski sustav Linux?
+	
+	\begin{oneparchoices}
+		\choice Višekorisnički je
+		\choice Pripada Unix obitelji
+		\choice Otvorenog je koda
+		\CorrectChoice Baziran je na NT kernelu
+	\end{oneparchoices}
+	
+	\question
+	Koji sustav za upravljanje paketa se nalazi na distribucijama baziranima na Debianu?
+	
+	\begin{oneparchoices}
+		\choice pacman 
+		\choice RPM 
+		\CorrectChoice dpkg 
+		\choice upkg 
+	\end{oneparchoices}
+	
+	\question
+    Naredba \shell{cd \textasciitilde/..} mijenja radni direktorij u
+    
+	\begin{oneparchoices}
+		\choice direktorij naziva \shell{..} \\
+        \CorrectChoice direktorij \textit{iznad} matičnog direktorija u hijerarhijskoj strukturi \\
+        \choice korijenski (\textit{root}) direktorij \\
+        \choice matični direktorij 
+	\end{oneparchoices}
+
+	\question
+    Pretpostavite da ste \shell{root}. Nalazite se u korijenskom direktoriju \shell{/} i izvršavate naredbu \shell{cd ..} 
+	
+	\begin{oneparchoices}
+        \choice Naredba se ne može izvršiti \\
+        \CorrectChoice Naredba će se izvršiti i radni direktorij ostaje nepromijenjen \\
+        \choice Naredba će se izvršiti i matični direktorij postaje radni direktorij \\
+        \choice \shell{root} može sve pa će se naredba izvršiti i korisnik će se pomaknuti u nepostojeći direktorij
+	\end{oneparchoices}
+	
+	\question
+	Datoteka čiji naziv počinje s \shell{.} predstavlja
+	
+	\begin{oneparchoices}
+		\choice obrisanu datoteku
+		\choice novu datoteku
+		\CorrectChoice skrivenu datoteku
+		\choice privremenu datoteku
+	\end{oneparchoices}
+	
+	\question	
+	Naredba \shell{file} određuje tip datoteke iz
+	
+	\begin{oneparchoices}
+		\choice ekstenzije 
+		\choice veličine datoteke 
+		\CorrectChoice sadržaja datoteke 
+		\choice podatka o zadnjem korištenju 
+	\end{oneparchoices}
+	
+	\question
+	\shell{\$ ls -l file1} \\
+	\shell{-rw-r--r-- 1 user users 0 Jan 4 23:19 datoteka.txt} \\
+	Koje je značenje prvog polja u gornjem ispisu? (\textit{moda} datoteke)
+	
+	\begin{oneparchoices}
+		\choice Vlasnici datoteke
+		\choice Lokacija datoteke
+		\choice Prva 3 okteta sadržaja
+		\CorrectChoice Dozvole pristupa
+	\end{oneparchoices}
+	
+	\question
+	\shell{\$ ls -l file1} \\
+	\shell{-rw-r--r-- 1 user users 0 Jan 4 23:19 datoteka.txt} \\
+	Što predstavlja broj iza moda datoteke u gornjem ispisu?
+	
+	\begin{oneparchoices}
+		\choice Ukupan broj linkova 
+		\CorrectChoice Broj hard linkova 
+		\choice Broj pristupa datoteci 
+		\choice Broj kopija datoteke 
+	\end{oneparchoices}
+	
+	\question
+	Koja od sljedećih naredbi kopira direktorij \shell{izvorno} i sav njegov sadržaj na lokaciju \shell{novo}?
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{cp -R izvorno novo} \\
+		\choice \shell{cp izvorno novo} \\
+		\choice \shell{mv izvorno novo} \\
+		\choice \shell{cp -S izvorno novo}
+	\end{oneparchoices}
+	
+	\question
+	Naredba \shell{ln dir1 file1}
+	
+	\begin{oneparchoices}
+		\choice kopira \shell{dir1} na lokaciju \shell{file1} \\
+		\CorrectChoice stvara hard link \shell{file1} na direktorij \shell{dir1} \\
+		\choice mijenja dozvole za \shell{dir1} i \shell{file1} \\
+		\choice stvara symbolic link \shell{file1} na direktorij \shell{dir1}
+	\end{oneparchoices}
+	
+	\question
+	Koji od sljedećih modova će omogućiti vlasniku - korisniku datoteke da je \textit{izvrši}?
+	
+	\begin{oneparchoices}
+		\choice 4400
+		\choice 440
+		\CorrectChoice 540
+		\choice 640 
+	\end{oneparchoices}
+	
+	\question
+	Što općenito ne vrijedi za TAR arhivski format?
+	
+	\begin{oneparchoices}
+		\CorrectChoice Komprimira sadržaj datoteka \\
+		\choice Čuva dozvole pristupa \\
+		\choice Čuva strukturu direktorija \\
+		\choice Čuva MAC vremena
+	\end{oneparchoices}
+
+	\question
+	Direktorij \shell{/etc/skel} sadrži
+	
+	\begin{oneparchoices}
+		\choice informacije o korisnicima 
+		\choice konfiguraciju mreže 
+		\choice predložak korijenskog direktorija \\
+		\CorrectChoice predložak matičnih direktorija 
+	\end{oneparchoices}
+	
+	\question
+	Datoteka \shell{/etc/passwd} na modernim sustavima sadrži
+	
+	\begin{oneparchoices}
+		\choice korisničke lozinke 
+		\CorrectChoice popis korisnika na sustavu
+		\choice popis računala kojima korisnik smije pristupiti
+		\choice datoteka je obično prazna 
+	\end{oneparchoices}
+	
+	\question
+	Koji podatak se sigurno neće naći u datoteci \shell{/etc/passwd}?
+	
+	\begin{oneparchoices}
+		\choice Broj telefona korisnika
+		\CorrectChoice Popis grupa kojima korisnik pripada
+		\choice Putanja do login ljuske \\
+		\choice UID korisnika
+	\end{oneparchoices}
+	
+	\question
+	Želite instalirati MATLAB 2015a na računalo i instalacijski program vam nudi odabir odredišnog direktorija za programske datoteke. Instalacija MATLAB-a zauzima oko 9 GB. Koju zadanu lokaciju je program predložio?
+	
+	\begin{oneparchoices}
+		\choice \shell{/home/ivica/MATLAB} 
+		\CorrectChoice \shell{/opt/MATLAB} 
+		\choice \shell{/usr/lib/MATLAB} 
+		\choice \shell{/usr/share/MATLAB} 
+	\end{oneparchoices}
+	
+	\question
+	Izmjenjivi diskovi (npr. USB memorije) se najčešće montiraju (\textit{mountaju}) na lokaciji
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{/media}
+		\choice \shell{/usr}
+		\choice \shell{/home}
+		\choice \shell{/etc} 
+	\end{oneparchoices}
+
+	\question
+	Naredba \shell{ls -l /dev/sd?} popisuje datoteke koje na modernim distribucijama predstavljaju
+	
+	\begin{oneparchoices}
+		\CorrectChoice SCSI i SATA diskove 
+		\choice floppy uređaje 
+		\choice zvučne kartice 
+		\choice IDE diskove
+	\end{oneparchoices}
+
+	\question
+	Blok datoteka \shell{/dev/sda1} predstavlja montiranu particiju. Koja će naredba dati informaciju o zauzeću datotečnog sustava na toj particiji?
+	
+	\begin{oneparchoices}
+		\choice \shell{du -s /dev/sda1}
+		\choice \shell{ls -ls /dev/sda1}
+		\CorrectChoice \shell{df}
+		\choice \shell{stat /dev/sda1}
+	\end{oneparchoices}
+	
+	\question
+	U matičnom direktoriju se nalazi direktorij \shell{data}. Koja naredba vraća ukupno diskovno zauzeće datoteka unutar tog direktorija i svih njegovih poddirektorija?
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{du -s \textasciitilde/data}
+		\choice \shell{ls -ls \textasciitilde/data}
+		\choice \shell{df}
+		\choice \shell{stat \textasciitilde/data}
+	\end{oneparchoices}
+	
+	\question
+	Putanje u kojima ljuska traži izvršne datoteke programa koje korisnik poziva nalaze se u varijabli okruženja
+	
+	\begin{oneparchoices}
+		\choice \shell{\$PROGRAMS}
+		\choice \shell{\$LIST}
+		\CorrectChoice \shell{\$PATH}
+		\choice \shell{\shell{\$SHELL}}
+	\end{oneparchoices}
+	
+	\question
+	Dokumentacija programa \shell{ln} dobiva se pozivanjem
+	
+	\begin{oneparchoices}
+		\choice \shell{support ln}
+		\choice \shell{ln -?}
+		\choice \verb|ln --all|
+		\CorrectChoice \shell{man ln}
+	\end{oneparchoices}
+	
+	\question
+	Izbaci uljeza  
+	
+	\begin{oneparchoices}
+		\choice nano 
+		\choice vim  
+		\choice emacs 
+		\CorrectChoice gcc 
+	\end{oneparchoices}
+	
+	\question
+	Kojom naredbom biste projerili sve aktivne procese na sustavu 
+	
+	\begin{oneparchoices}
+		\choice info 
+		\CorrectChoice ps 
+		\choice jobs 
+		\choice stat 
+	\end{oneparchoices}
+	
+	\question
+	Kombinacija tipki CTRL + c na uobičajenim konfiguracijama šalje signal
+	
+	\begin{oneparchoices}
+		\choice SIGHUP (1) 
+		\CorrectChoice SIGINT (2) 
+		\choice SIGKILL (9) 
+		\choice SIGUSR1 (10) 
+	\end{oneparchoices}
+	
+	\question
+	Koji signal bez odgode prekida rad procesa?
+	
+	\begin{oneparchoices}
+		\choice SIGHUP (1) 
+		\choice SIGINT (2) 
+		\CorrectChoice SIGKILL (9) 
+		\choice SIGUSR1 (10) 
+	\end{oneparchoices}
+	
+	\question
+	Cjevovod \shell{2>} preusmjerava
+	
+	\begin{oneparchoices}
+		\choice \shell{stdout} na \shell{stderr}
+		\choice \shell{stderr} na \shell{stdout}
+		\choice \shell{stdout} u datoteku
+		\CorrectChoice \shell{stderr} u datoteku
+	\end{oneparchoices}
+	
+    
+\vspace{1em}
+\uplevel{
+	Za sljedeća pitanja odredite naredbu koja se prosljeđuje naredbi \shell{sed -r} kako bi se postigla zadana promjena nad stringovima.
+	
+	\textbf{Primjer:} \, \shell{acd12a} $\longrightarrow$ \shell{acdaaa}\\
+	Odgovor: \shell{'s/[[:digit:]]/a/'}
+}
+
+	\question Jedan samoglasnik s kraja retka se briše; \shell{Minervae} $\longrightarrow$ \shell{Minerva}
+	
+	\begin{choices}
+		\choice \verb|'s/^(.*)[aeiouAEIOU]/\1/'|
+		\choice \verb|'s/^(.*)[aeiouAEIOU]./\1/'|
+		\CorrectChoice \verb|'s/^(.*)[aeiouAEIOU]$/\1/'|
+		\choice \verb|'s/^(.*)[aeiouAEIOU]*/\1/'| 
+	\end{choices}
+	
+	\question Znakovi na 3. i 4. poziciji postaju veliki; \shell{iowa} $\longrightarrow$ \shell{ioWA}
+
+	\begin{choices}
+		\CorrectChoice \verb|'s/^(..)(.{2})/\1\U\2/'|
+		\choice \verb|'s/(..)(..)/\1\U\2/'|
+		\choice \verb|'s/^..(..)/\1\U\2/'|
+		\choice \verb|'s/$(..)(..)/\1\U\2'|
+	\end{choices}
+\end{questions}
+\end{document}

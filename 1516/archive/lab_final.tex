@@ -1,0 +1,44 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Završna laboratorijska vježba\\{\large Napredno korištenje operacijskog sustava Linux}}
+	\date{\vspace{-5ex} 26.05.2015.}
+	\maketitle
+	
+	Marcus želi znati instalirati Linux na virtualnu mašinu i pri tome naučiti puno o Linuxu. Želi isprobati razne konfiguracije i servise te vidjeti kako stvari funkcioniraju na nižoj razini. Odlučili ste mu pomoći i pokazati na instalaciji Arch Linuxa.
+	
+	\section*{Zadatak}
+	
+	Instalirati Arch Linux po sljedećim uputama:
+	
+	\hfill
+	\hfill
+	\begin{itemize}
+		\item Virtualna mašina neka ima 2 hard diska proizvoljnih veličina (ukupno najmanje 20GB) i barem 1GB RAM-a. Particije postaviti tako da na prvom hard disku bude /boot particija, a ostatak prvog i cijeli drugi disk staviti u LVM (spojiti u jednu volume grupu). U volume grupi napravite tri logička volumena - za swap, / i /home:\\
+		\,\\
+		\begin{tabular}{l l}
+			/boot & 500MB\\
+			/ & 10GB\\
+			swap & 4GB\\
+			/home & preostali prostor na disku
+  		\end{tabular}
+  		
+  		\item Kreirati korisničku grupu nkosl i u nju dodati korisnika \texttt{linux} i sve korisnike iz DZ4. Korisnik \texttt{linux} mora imati sudo ovlasti.
+  		
+  		\item Nakon instalacije osnovnog sustava instalirati pakete potrebne za rad grafičkog sučelja (X11). Instalirati dva desktop okruženja, Xfce i LXDE i omogućiti odabir okruženja pri logiranju korisnika.
+  		
+  		\item Iskonfigurirati mrežu kao u DZ2. Podesiti iptables tako da na glavnom mrežnom sučelju propušta dolazne konekcije samo za SSH, FTP i web server koje konfigurirate dalje u zadatku.
+  		
+  		\item Podesiti pulseaudio za reprodukcija zvuka. Kontrola glasnoće mora raditi iz grafičkog sučelja.
+  		
+  		\item Podesiti SSH i FTP servere kao u DZ4. 
+  		
+  		\item Instalirati Apache ili Nginx (po želji) web server. U home direktoriju korisnika linux kreirati direktorij www i u njemu napraviti jednostavnu HTML datoteku index.html koja prikazuje tekst "14 is not a random number". Iskonfigurirati Apache/Nginx tako da se upisivanjem http://localhost:1337 u browser otvara index.html stranica.
+  	\end{itemize}
+\end{document}

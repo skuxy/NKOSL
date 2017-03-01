@@ -1,0 +1,8 @@
+dodat screenshot GRUB-a u prezentaciju
+
+dodat skicu MBR-a u prezentaciju
+
+pripremit demonstraciju boota?
+
+
+kontaktirat onog CS-ovca
