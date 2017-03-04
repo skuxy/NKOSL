@@ -342,7 +342,15 @@
 	\begin{itemize}
 		\item Servisi se dodaju u direktorij /etc/systemd/system/
 		\item Primjer: /etc/systemd/system/moj-program.service
+		\item Unit fajl opisuje servis i sastoji se od nekoliko glavnih dijelova:
+		\begin{itemize}
+			\item [Unit] - opis jedinice i ovisnosti o ostalim jedinicama
+			\item [Service] - implementacijski detalji servisa - tip servisa, korisnik, okolina, program za pokretanje...
+			\item [Install] 
+		\end{itemize}
 		\item Na sljedećem je slajdu primjer systemd unit fajla koji opisuje servis
+		\item Nakon dodavanja user fajla potrebno je pokrenuti naredbu \textit{systemctl daemon-reload}
+		\item Nakon toga je za pokretanje servisa dovoljno pokrenuti \textit{systemctl start moj\_program}
 	\end{itemize}
 \end{frame}
 
@@ -350,28 +358,34 @@
 	\footnotesize
 	\begin{verbatim}
 			[Unit]
-				Description=moj super kul program
-				After=network.target \# kao ovisi o mrezi pa kazes da se prvo digne mreza
+			Description=The Nice and Accurate Prophecies
+			After=network.target # ne pokreći prije dizanja mreže
 	\end{verbatim}
 	\begin{verbatim}
 			[Service]
-				ExecStart=/opt/program.sh
-				\# tu se mogu dodati stvari poput
-				\# ExecStop=/opt/program.sh --stop \# ako postoji neki poseban nacin za zaustaviti program
-				\# ExecReload=/opt/program.sh --reload \# ako postoji neki poseban nacin za restartati program
-				\# systemd ima defaultan nacin za gasenje programa (signali) tako da nije potrebno eksplicitno pisati to
-				\# i po defaultu restart smatra gasenjem i paljenjem
+			Type=simple
+			User=my_username		
+			ExecStart=/opt/my_program.sh
+			# tu se mogu dodati stvari poput
+			# ExecStop=/opt/program.sh --stop # ako postoji 
+			# neki poseban način za zaustaviti program
+			# ExecReload=/opt/program.sh --reload # ako postoji 
+			# neki poseban način za restartati program
+			# systemd ima defaultan način za gašenje programa (signali) 
+			# tako da nije potrebno eksplicitno pisati to
+			# i po defaultu restart smatra gašenjem i paljenjem
 	\end{verbatim}
 	\begin{verbatim}
-				\# ovdje mogu doci fajlovi koji specificiraju environment varijable
-				Restart=always
-				\# systemd ce sada pratiti je li program ziv i ako nije, restartati ce ga
+			# ovdje mogu doći fajlovi koji specificiraju environment varijable
+			Restart=always
+			# systemd sada prati je li program živ i restarta ga ako nije
 	\end{verbatim}
 	\begin{verbatim}
 			[Install]
-				WantedBy=default.target \# u kojoj grupi se pokrece servis
+			WantedBy=default.target # u kojoj grupi se pokreće servis
 	\end{verbatim}
 \end{frame}
+
 
 
 \section{Kernel}
@@ -430,7 +444,7 @@
 			\item S diska se pokreće bootloader
 			\item Bootloader pokreće odabrani OS
 			\item OS prvo učitava initrd/initramfs da može učitati ostatak kernela
-			\item Kada se učita kernel, on pokreće init proces s PID-om 1 (SysVinit ili sve češće systemd)
+			\item Kada se učita kernel, on pokreće init proces s PID-om 1 (nekad SysVinit, danas uglavnom systemd)
 			\item init proces pokreće sve potrebne pozadinske procese
 			\item Korisnik pali terminal i u svojem omiljenom \textit{shellu} pokreće naredbu \textit{sl} i zadovoljan je
 		\end{itemize}

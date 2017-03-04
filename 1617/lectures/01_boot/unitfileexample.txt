@@ -1,3 +1,11 @@
+Upute:
+
+dodaj unitfile u /etc/systemd/system
+dodaj svoj program ("brojevi" u ovom primjeru) u /usr/bin/
+systemctl daemon-reload; systemctl start moj_service ("test" u ovom primjeru)
+
+
+
 [Unit]
 Description=moj super kul program
 After=network.target # kao ovisi o mrezi pa kazes da se prvo digne mreza
@@ -17,3 +25,4 @@ Restart=always
 
 [Install]
 WantedBy=default.target # u kojoj grupi se pokrece servis
+

@@ -1,0 +1,14 @@
+[Unit]
+Description=It just might be a one shot deal
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+User=rincewind
+ExecStart=/usr/bin/brojevi
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
