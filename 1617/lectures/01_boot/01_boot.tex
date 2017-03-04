@@ -300,7 +300,8 @@
 	\frametitle{systemd}
 	\begin{itemize}
 		\item Moderni sustav upravljanja procesima i cijelim sustavom
-		\item Zamjenjuje init na sve više distribucija
+		\item Istiskuje iz uporabe monolitni i glomazni init 
+		\item systemd koristi svaka popularna moderna distribucija
 	\end{itemize}
 	\begin{itemize}
 		\item Konfiguracija zasnovana na \emph{unit} datotekama
@@ -318,7 +319,7 @@
 	\begin{itemize}
 		\item Upravljanje systemd sustavom: naredba \textit{systemctl}
 			\begin{itemize}
-				\item \textit{systemctl list-units} - ispis svih jedinica
+				\item \textit{systemctl} - ispis svih jedinica
 				\item \textit{systemctl status ime} - ispis trenutnog stanja jedinice \textit{ime}
 				\item \textit{systemctl enable httpd} - pokretanje httpd daemona pri pokretanju sustava
 				\item \textit{systemctl start httpd} - instantno pokretanje httpd daemona
@@ -334,6 +335,43 @@
 			\end{itemize}
 		
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Primjer dodavanja systemd servirsa}
+	\begin{itemize}
+		\item Servisi se dodaju u direktorij /etc/systemd/system/
+		\item Primjer: /etc/systemd/system/moj-program.service
+		\item Na sljedećem je slajdu primjer systemd unit filea
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\footnotesize
+	\begin{verbatim}
+			[Unit]
+				Description=moj super kul program
+				After=network.target \# kao ovisi o mrezi pa kazes da se prvo digne mreza
+	\end{verbatim}
+	\begin{verbatim}
+			[Service]
+				ExecStart=/opt/program.sh
+				\# tu se mogu dodati stvari poput
+				\# ExecStop=/opt/program.sh --stop \# ako postoji neki poseban nacin za zaustaviti program
+				\# ExecReload=/opt/program.sh --reload \# ako postoji neki poseban nacin za restartati program
+				\# systemd ima defaultan nacin za gasenje programa (signali) tako da nije potrebno eksplicitno pisati to
+				\# i po defaultu restart smatra gasenjem i paljenjem
+	\end{verbatim}
+	\begin{verbatim}
+				\# jos tu mozes stavljati fileove koji specificiraju environment varijable
+				\# kul je ovaj restart
+				Restart=always
+				\# systemd ce sada pratiti je li program ziv i ako nije, restartati ce ga
+	\end{verbatim}
+	\begin{verbatim}
+			[Install]
+				WantedBy=default.target \# u kojoj grupi se pokrece servis
+	\end{verbatim}
 \end{frame}
 
 
