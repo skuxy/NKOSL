@@ -1,9 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\select@language {croatian}
-\beamer@sectionintoc {1}{Boot}{3}{0}{1}
-\beamer@sectionintoc {2}{BIOS/UEFI}{4}{0}{2}
-\beamer@sectionintoc {3}{Particije; MBR/GPT}{7}{0}{3}
-\beamer@sectionintoc {4}{Bootloader}{10}{0}{4}
-\beamer@sectionintoc {5}{initrd, kernel}{12}{0}{5}
-\beamer@sectionintoc {6}{init, systemd}{14}{0}{6}
-\beamer@sectionintoc {7}{Kernel}{20}{0}{7}
