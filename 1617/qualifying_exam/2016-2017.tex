@@ -6,7 +6,8 @@
 \renewcommand{\familydefault}{\sfdefault}
 \newcommand{\shell}[1]{\texttt{#1}}
 
-%\printanswers
+\CorrectChoiceEmphasis{\bfseries\itshape}
+\printanswers
 
 \usepackage{xpatch}
 \xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
@@ -138,9 +139,9 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	Kojim znakom označavamo početak reda u regularnim izrazima? 
 	
 	\begin{oneparchoices}
-		\choice \textasciicircum
+		\CorrectChoice \textasciicircum
 		\choice '
-		\CorrectChoice <
+		\choice <
 		\choice \$ 
 	\end{oneparchoices}
 	
@@ -248,10 +249,10 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	Izvorni proces koji je proces-roditelj svim procesima naziva se:
 	
 	\begin{oneparchoices}
-		\choice \shell{init} 
+		\CorrectChoice \shell{init} 
 		\choice \shell{root}  
 		\choice \shell{parent} 
-		\CorrectChoice \shell{start}
+		\choice \shell{start}
 	\end{oneparchoices}
 	
 	\question
