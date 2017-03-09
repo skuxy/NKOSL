@@ -19,7 +19,7 @@
 \usepackage{multicol}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Josip Domšić, Dominik Barbarić]{Josip Domšić, Dominik Barbarić\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\author[Leonard Volarić Horvat]{Leonard Volarić Horvat\\ {\small Nositelj: doc.dr.sc. Stjepan Groš}}
 \subtitle{2. Datotečni sustav, RAID, LVM, kvote}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
@@ -39,21 +39,241 @@
 \end{frame}
 
 \section{Datotečni sustav}
+
 \begin{frame}
-	\frametitle{Datotečni sustav}
-    Datotečni sustav određuje način spremanja i dohvaćanja podataka s medija. 
+	\topskip0pt
+	\vspace*{\fill}
+		\begin{center}
+			\Huge{Datotečni sustav}
+		\end{center}
+	\vspace*{\fill}
+\end{frame}
+
+\begin{frame}
+	\frametitle{File system}
 	\begin{itemize}
-		\item Na tvrdom disku određen za svaku particiju
-		\item Inicijalizacija \textit{formatiranjem}
+	    \item Datotečni sustav (\textit{file system}) određuje način spremanja i dohvaćanja podataka s medija
+		\begin{itemize}
+			\item na tvrdom disku određen za svaku particiju
+			\item inicijalizacija \textit{formatiranjem}
+		\end{itemize}
+		\vfill
+		\item Funkcionalnosti \textit{file systema}:
+		\begin{itemize}
+			\item normiranje imena datoteka i upravljanje direktorijima
+			\item metadata na datotekama
+			\item upravljanje prostorom na mediju:
+			\begin{itemize}
+				\item smještanje podataka u sektore
+				\item grupiranje sektora u blokove
+				\item briga o fragmentiranim fajlovima
+			\end{itemize}
+	    \end{itemize}
 	\end{itemize}
-	Karakteristike datotečnih sustava
+\end{frame}
+
+\begin{frame}
+	\frametitle{File system}
 	\begin{itemize}
-		\item Normiranje imena datoteka i upravljanje direktorijima
-		\item Metadata na datotekama
-		\item Upravljanje prostorom na mediju
-		\item \dots
+		\item \textit{File system} sadrži:
+		\begin{itemize}
+			\item opisnike fajlova (veličina, lokacija, fragmentacija...)
+			\item imena fajlova
+			\item hijerarhiju direktorija (npr. FHS)
+			\item svoje parametre (npr. veličina bloka)
+		\end{itemize}
+		\vfill
+	    \item Dakle, \textit{file system} je:
+	    \begin{itemize}
+	    	\item sučelje između bajtova na disku i njihovog grupiranja u smislene cjeline
+	    	\item skup metapodataka koji opisuju pohranjene podatke
+	    \end{itemize}
     \end{itemize}
 \end{frame}
+
+
+
+
+\begin{frame}
+	\frametitle{Neki datotečni sustavi}
+	\begin{itemize}
+		\item FAT - \emph{File Allocation Table}\
+		\begin{itemize}
+			\item Masovna podrška
+			\item FAT12 -\textgreater VFAT -\textgreater FAT16 -\textgreater FAT32 -\textgreater exFAT
+			\item Najveća veličina datoteke 4 GiB (FAT32)
+		\end{itemize}
+		\item ext - \emph{extended filesystem}
+		\begin{itemize}
+			\item Razvijen za Linux sustave
+			\item ext2, ext3, ext4
+			\item ext4 danas najčešće korišten
+			\item Struktura metapodataka prilagođena Unix file systemu	
+			\item Datoteke predstavljene strukturom \emph{inode}
+			\item ext3 uvodi \emph{journaling}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Ostali tipovi}
+    \begin{itemize}
+        \item ISO 9660
+        \item Linear Tape FS
+        \item GlusterFS, BGFS
+		\item NTFS - danas najčešći FS na modernim Windows verzijama
+        \item posebni: swap, tmpfs
+    \end{itemize}
+
+    swap
+	\begin{itemize}
+		\item \emph{Paging} particija
+		\item Dio virtualne memorije
+	\end{itemize}
+	tmpfs
+	\begin{itemize}
+		\item Spremanje podataka na RAM
+		\item Obično montiran na \texttt{/tmp}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Journaling}
+	\begin{itemize}
+		\item Bilježenje promjena u FS-u
+		\item Drastično se pospješuje robusnost sustava u slučaju kvara:
+		\begin{itemize}
+			\item veća vjerojatnost uspješnog vraćanja izgubljenih podataka
+			\item lakša i puno brža dijagnoza i popravljanje kvara
+		\end{itemize}
+		\item Konfigurabilna granulacija logova
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{inode}
+	\begin{itemize}
+		\item Struktura koja pohranjuje metapodatke o fajlu
+		\item Dozvole, ID vlasnika, GID, veličina, broj hard linkova, MAC vremena
+		\item Opaska: ime fajla \textbf{nije} zapisana u inodeu nego u direktoriju
+		\begin{itemize}
+			\item \emph{Everything is a file!}
+			\item direktorij je poseban fajl koji sadrži imena svih fajlova koje (konceptualno) sadrži
+		\end{itemize}
+		\item Ovakav zapis omogućuje efikasno kopiranje i premještanje fajlova
+		\begin{itemize}
+			 \item kopiranje: dodavanje novog para (ime,inode) u ciljani direktorij
+			 \item premještanje: dodavanje novog para u ciljani i brisanje starog para iz izvornog direktorija
+			 \item \textbf{nema potrebe za stvarnim potencijalno dugotrajnim premještanjem sadržaja fajla}
+		\end{itemize}
+		\item Ispis inodeova: \textit{ls -i}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{ext2}
+    Ispod površine ext2fs:
+
+    \begin{itemize}
+        \item FS je podijeljen u blokove, 1-4KiB
+        \item Blokovi su povezani u blok-grupe, veličine 8-512MiB. 
+        \item Svaka grupa sadrži:
+        \begin{itemize}
+        	\item jedan superblok - podaci o FS
+        	\item FS opisnik (sigurnosna redundancija)
+        	\item podatke
+        \end{itemize}
+        \item File je predstavljen strukturom inode (\textit{index node})
+        \item indode ima 15 pointera na podatke
+        \item Ovisno o veličini blokova restrikcije su
+        \item[] \begin{tabular}{l l}
+        	Max file size & 16 GiB - 2 TiB \\
+        	Max FS size & 4 TiB - 32 TiB
+        	\end{tabular}
+    \end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Upravljanje particijama}
+    Stvaranje ext2 FS:
+    \begin{itemize}
+        \item stvoriti particiju
+        \item stvoriti FS
+        \item montirati FS
+    \end{itemize}
+	\vfill
+	\texttt{fdisk}
+	\begin{itemize}
+		\item Alat za uređivanje particija na disku
+		\item fdisk \textbf{ne formatira} particije
+		\item Interaktivni način rada
+	\end{itemize}
+	\vfill
+	\texttt{mkfs} \, odnosno \, \verb|mkfs.<type>|
+	\begin{itemize}
+		\item Kreira filesystem
+		\item \textbf{Formatira ciljani uređaj!}
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+	\frametitle{Montiranje}
+	\begin{itemize}
+		\item Postupak dodijeljivanja adrese u strukturi sustava nekom filesystemu
+		\item FS na nekom uređaju (npr. /dev/sdb1) se uvrštava u datotečnu hijerarhiju sustava (FHS)
+		\vfill
+		\verb|mount <device> <mountpoint>|
+		\begin{itemize}
+			\item Bez argumenata - popis montiranih filesystema
+		\end{itemize}
+		\verb/umount <mountpoint>|<device>/
+		\vfill
+		\item Particija se može identificirati na nekoliko načina: 
+		\begin{itemize}
+			\item \verb|/dev/sda1|, \verb|/dev/sda2|, ...
+			\begin{itemize}
+				\item Moguća promjena oznaka
+			\end{itemize}
+			\item \textit{Labela} filesystema
+			\item[] \verb|LABEL="Debian"|, ...
+			\item \textbf{UUID} (\textbf{U}niversally \textbf{U}nique \textbf{I}dentifier)
+			\item[] \verb|UUID="de305d54-75b4-431b-adb2-eb6b9e546014"|
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{\texttt{/etc/fstab}}
+	\begin{itemize}
+		\item \textbf{F}ile \textbf{S}ystem \textbf{Tab}le
+		\item Sadrži opcije za automatsko mountanje filesystema
+		\item Pokretanjem \texttt{mount -a} mountaju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
+	\end{itemize}
+	\begin{verbatim}
+	# <filesys>  <dir>  <type>  <options>          <dump> <pass>
+	/dev/sda1    /      ext4    defaults,noatime   0      1
+	/dev/sda2    none   swap    defaults           0      0
+	/dev/sdb1    /home  ext4    defaults,noatime   0      2
+	tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
+	\end{verbatim}
+
+	\vfill
+	Neke korisne naredbe za rad s diskovima:
+	\begin{itemize}
+		\item df - ispis zauzeća uređaja s FS-om
+		\item lsblk - ispis blok-uređaja
+	\end{itemize}
+\end{frame}
+
+
+
 
 \begin{frame}
 	\frametitle{FHS struktura}
@@ -75,126 +295,20 @@
 	\end{tabular}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Neki datotečni sustavi}
-	ext - \emph{extended filesystem}
-	\begin{itemize}
-		\item Razvijen za Linux sustave
-		\item ext2 najčešća inačica
-		\item Struktura metapodataka prilagođena Unix file systemu		\item Datoteke predstavljene strukturom \emph{inode}
-		\item ext3 i ext4 - Nadogradnje na ext2
-		\item ext3 uvodi \emph{journal} - struktura file systema se čuva u izvanrednim okolnostima
-	\end{itemize}
-	FAT (vfat)\
-	\begin{itemize}
-		\item Masovna podrška
-		\item Najveća veličina datoteke 4 GiB (FAT16)
-		\item exFAT - naprednija verzija
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Ostali tipovi}
-    \begin{itemize}
-        \item ISO 9660
-        \item Linear Tape FS
-        \item GlusterFS, BGFS
-		\item NTFS
-        \item specijalni: swap, tmpfs
-    \end{itemize}
-
-    swap
-	\begin{itemize}
-		\item \emph{Paging} particija
-		\item Dio virtualne memorije
-	\end{itemize}
-	tmpfs
-	\begin{itemize}
-		\item Spremanje podataka na RAM
-		\item Obično \textit{mountan} na \texttt{/tmp}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{Upravljanje particijama}
-    Stvaranje ext2 FS:
-    \begin{itemize}
-        \item Stvoriti particiju
-        \item Stvoriti FS
-        \item Mount FS
-    \end{itemize}
-	\vfill
-	\texttt{fdisk}
-	\begin{itemize}
-		\item Alat za uređivanje particija na disku
-		\item fdisk \textbf{ne formatira} particije
-		\item Interaktivni način rada
-	\end{itemize}
-	\vfill
-	\texttt{mkfs} \, odnosno \, \verb|mkfs.<type>|
-	\begin{itemize}
-		\item Kreira filesystem
-	\end{itemize}
-\end{frame}
 
 
-\begin{frame}
-	\frametitle{ext2}
-    Ispod povrsine ext2 FS:
-
-    \begin{itemize}
-        \item FS je podijeljen u blokove, 1-4KiB
-        \item Blokovi su povezani u blok grupe, velicine 8-512MiB. 
-        \item 1 superblock, podaci o FS
-        \item File je predstavljen strukturom inode (\textit{index node})
-        \item indode ima 15 pointera na podatke
-        \item Ovisno o veličini blokova restrikcije su
-        \item[] \begin{tabular}{l l}
-        	Max file size & 16 GiB - 2 TiB \\
-        	Max FS size & 4 TiB - 32 TiB
-        	\end{tabular}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{Mountanje}
-	Postupak dodijeljivanja adrese u strukturi sustava nekom filesystemu
-	\vfill
-	\verb|mount <device> <mountpoint>|
-	\begin{itemize}
-		\item Bez argumenata - popis mountanih filesystema
-	\end{itemize}
-	\verb/umount <mountpoint>|<device>/
-	\vfill
-	Identifikacija particije
-	\begin{itemize}
-		\item \verb|/dev/sda1|, \verb|/dev/sda2|, ...
-		\begin{itemize}
-			\item Moguća promjena oznaka
-		\end{itemize}
-		\item \textit{Labela} filesystema
-		\item[] \verb|LABEL="Debian"|, ...
-		\item \textbf{UUID} (\textbf{U}niversally \textbf{U}nique \textbf{I}dentifier)
-		\item[] \verb|UUID="de305d54-75b4-431b-adb2-eb6b9e546014"|
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{\texttt{/etc/fstab}}
-	\begin{itemize}
-		\item Sadrži opcije pri \textit{mountanju} filesystema
-		\item Pokretanjem \texttt{mount -a} mountaju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
-	\end{itemize}
-\begin{verbatim}
-# <filesys>  <dir>  <type>  <options>          <dump> <pass>
-/dev/sda1    /      ext4    defaults,noatime   0      1
-/dev/sda2    none   swap    defaults           0      0
-/dev/sdb1    /home  ext4    defaults,noatime   0      2
-tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
-\end{verbatim}
-\end{frame}
 
 \section{RAID}
+
+\begin{frame}
+	\topskip0pt
+	\vspace*{\fill}
+		\begin{center}
+			\Huge{RAID}
+		\end{center}
+	\vspace*{\fill}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Konfiguracije diskova}
 	Diskovi se u sustavu prikazuju kao logičke jedinice:
@@ -208,13 +322,13 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\textbf{Problem:} Pronaći metode za efikasno upravljanje raspoloživim diskovnim prostorom
 	\vfill
 	\begin{itemize}
-		\item \textbf{JBOD} - Just a bunch of disks
+		\item \textbf{JBOD} - Just a Bunch Of Disks
 		\begin{itemize}
 			\item Diskovi se koriste neovisno
 		\end{itemize}
 		\item \textbf{Spanned}
 		\begin{itemize}
-			\item Više diskova se proširuje u jedan logički disk
+			\item Više se diskova proširuje u jedan logički disk
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -222,7 +336,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \begin{frame}
 	\frametitle{RAID}
 	\begin{itemize}
-		\item \textbf{RAID} - Redundant array of independent disks
+		\item \textbf{RAID} - \textbf{R}edundant \textbf{A}rray of \textbf{I}ndependent \textbf{D}isks
 	\end{itemize}
 	\begin{itemize}
 		\item \emph{RAID polje} - logička jedinica sastavljena od više fizičkih diskova
@@ -245,11 +359,7 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{RAID kontroler}
-	\framesubtitle{RAID ROM}
-	\includegraphics[width=\textwidth]{Intel_RAID.png}
-\end{frame}
+
 
 \subsection{Osnovni RAID leveli}
 \begin{frame}
@@ -381,6 +491,13 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\end{columns}
 \end{frame}
 
+\subsection{Hardverski RAID}
+\begin{frame}
+	\frametitle{RAID kontroler}
+	\framesubtitle{RAID ROM}
+	\includegraphics[width=\textwidth]{Intel_RAID.png}
+\end{frame}
+
 \subsection{Softverski RAID}
 \begin{frame}
 	\frametitle{Softverski RAID}
@@ -431,34 +548,43 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \end{frame}
 
 \section{LVM}
+
+\begin{frame}
+	\topskip0pt
+	\vspace*{\fill}
+		\begin{center}
+			\Huge{LVM}
+		\end{center}
+	\vspace*{\fill}
+\end{frame}
+
 \begin{frame}
 	\frametitle{LVM}
-	\textbf{Logical volume manager}
+	\textbf{Logical Volume Manager}
 	\begin{itemize}
 		\item Fleksibilnije upravljanje diskovnim prostorom
 		\item Implementacija kroz \textbf{device mapper} (dm)
 	\end{itemize}
 	\begin{itemize}
-		\item Moguće dodavanje, uklanjanje i zamjena fizičkih i logičkih diskova za vrijeme rada sustava (čak i bez unmount-a)
+		\item Moguće dodavanje, uklanjanje i zamjena fizičkih i logičkih diskova za vrijeme rada sustava (čak i bez unmounta)
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{LVM arhitektura}
-	\textbf{Physical volume} (PV)
+	\textbf{Physical Volume} (PV)
 	\begin{itemize}
 		\item Particije na fizičkim diskovima
-		\item Koriste se particije tipa \emph{Linux LVM}
 		\item LVM ih dijeli na manje jedinice - \textbf{Physical extent} (PE)
 	\end{itemize}
 	\vfill
-	\textbf{Logical volumes} (LV)
+	\textbf{Logical Volume} (LV)
 	\begin{itemize}
 		\item Logički disk (particija)
 		\item LVM ih dijeli da manje jedinice - \textbf{Logical extent} (LE)
 	\end{itemize}
 	\vfill
-	\textbf{Volume group} (LV)
+	\textbf{Volume Group} (VG)
 	\begin{itemize}
 		\item Grupira više PV i LV u jednu skupinu radi mogućnosti upravljanja
 	\end{itemize}
@@ -468,6 +594,12 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 \begin{frame}
 	\frametitle{LVM arhitektura}
 	\includegraphics[width=\textwidth]{lvm_arch.png}
+	\vfill
+	\begin{itemize}
+		\item Fizičke particije \textbf{sda1} i \textbf{sdb1} grupirane su u \textbf{systemvg}, a u grupi su stvorene dvije logičke particije: \textbf{rootlv} i \textbf{swaplv}
+		\item Particija \textbf{sdc1} je sama u grupi \textbf{datavg}
+		\item Particija \textbf{sdb2} zaobilazi LVM i montirana je direktno na \textbf{/home}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -475,19 +607,47 @@ tmpfs        /tmp   tmpfs   nodev,nosuid       0      0
 	\framesubtitle{Primjer}
 	\textbf{Kreiranje LVM logičke particije korištenjem dviju fizičkih particija}\\
 	\begin{verbatim}
-pvcreate /dev/sda1 /dev/sdb2
-vgcreate vg-name /dev/sda1 /dev/sdb2
+# stvaranje fizičkih particija
+pvcreate /dev/sda1 /dev/sdb2 
+
+# stvaranje grupe moja_grupa i dodavanje navedenih particija
+vgcreate moja_grupa /dev/sda1 /dev/sdb2 
 
 # Informacije o VG
 vgscan
-vgdisplay vg-name
+vgdisplay moja_grupa
 
-lvcreate -l 100%FREE -n lvm0 vg-name
+lvcreate -l 100%FREE -n lvm0 moja_grupa
 mkfs.ext3 /dev/lvm-disk/lvm0
 	\end{verbatim}
 \end{frame}
 
+\begin{frame}[fragile]
+	\frametitle{Zašto LVM?}
+	\begin{itemize}
+		\item Sloj apstrakcije između fizičkih diskova i smještanja podataka u logičke cjeline
+		\item Jednostavnije dodavanje i uklanjanje fizičkih diskova
+		\item Jednostavnija briga o veličinama i zauzeću particija
+		\begin{itemize}
+			\item npr. ako je particija premala, bez problema možemo proširiti particiju na drugi disk
+		\end{itemize}
+		\item Općenito drastično jednostavnija administracija fizičkih diskova
+	\end{itemize}
+\end{frame}
+
+
+
 \section{Kvote}
+
+\begin{frame}
+	\topskip0pt
+	\vspace*{\fill}
+		\begin{center}
+			\Huge{Kvote}
+		\end{center}
+	\vspace*{\fill}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Kvote}
 	\begin{itemize}
@@ -498,7 +658,7 @@ mkfs.ext3 /dev/lvm-disk/lvm0
 		\item[grpquota] Grupne kvote
 	\end{description}
 	\begin{itemize}
-		\item \emph{Obične} kvote
+		\item Obične kvote
 		\item \emph{Journaled} kvote
 		\begin{itemize}
 			\item Vode zapise o promjenama na disku što povećava pouzdanost
@@ -573,6 +733,16 @@ Disk quotas for user cetko (uid 1001):
 \end{frame}
 
 \section{Napredne mogućnosti}
+
+\begin{frame}
+	\topskip0pt
+	\vspace*{\fill}
+		\begin{center}
+			\Huge{Napredne mogućnosti filesystema}
+		\end{center}
+	\vspace*{\fill}
+\end{frame}
+
 \begin{frame}
 	\frametitle{Napredne mogućnosti filesystema}
 	\framesubtitle{File attributes}
@@ -580,23 +750,20 @@ Disk quotas for user cetko (uid 1001):
 	\begin{itemize}
 		\item Određuju poseban režim rada filesystema kod određenih datoteka / direktorija
 		\item Vrste atributa određene su odabirom filesystema
-		\item Za ext2 sustav (i novije ext) postoje naredbe za upravljanje atributima
+		\item Za ext2 i novije ext sustave postoje naredbe za upravljanje atributima
 		\item[] \texttt{lsattr}, \texttt{chattr}
 	\end{itemize}
 	\vspace{1em}
-	Neki od ext2 atributa
-	\begin{multicols}{2}
-		\begin{itemize}
-			\item[a] Append only
-			\item[A] No atime updates
-			\item[c] Compressed
-			\item[i] Immutable
-			\item[s] Secure deletion
-			\item[u] Undeletable
-			\item[S] Synchronous updates
-			\item[] ...
-		\end{itemize}
-	\end{multicols}
+	Neki od ext2 atributa:
+	\begin{itemize}
+		\item[a] Append only - dopušta samo dodavanje sadržaja fajlu
+		\item[A] No atime updates
+		\item[c] Compressed - automatska kompresija fajla
+		\item[i] Immutable - brani svaku promjenu fajla (\textbf{čak i od roota!})
+		\item[s] Secure deletion - pri brisanju prebriše prostor nulama
+		\item[u] Undeletable - omogućuje vraćanje obrisanih podataka
+		\item[] ...
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -606,7 +773,7 @@ Disk quotas for user cetko (uid 1001):
 	Kreirajte datoteku koju korisnik \texttt{root} neće moći izbrisati korištenjem naredbe\\
 	\verb|# rm -f file.txt|\\
 	\vspace{1em}
-	{\footnotesize Rješenje se nalazi na bijeloj pozadini ovoga slidea}\\
+	{\footnotesize Rješenje je napisano bijelim slovima}\\
 	\vfill
 	\textcolor{white}{Postaviti immutable atribut}
 \end{frame}
@@ -634,7 +801,9 @@ Disk quotas for user cetko (uid 1001):
 	\begin{itemize}
 		\item Parovi \texttt{kljuc:vrijednost} koji se mogu po volji pridijeliti datotekama
 		\item Oprez prilikom kopiranja datoteka
-		\item[] Uobičajene naredbe za kopiranje ne čuvaju extended atribute
+		\begin{itemize} 
+			\item uobičajene naredbe za kopiranje ne čuvaju extended atribute
+		\end{itemize}
 		\item Proučiti man stranice
 	\end{itemize}
 	Klase atributa
@@ -701,13 +870,15 @@ Disk quotas for user cetko (uid 1001):
 \section*{}
 \begin{frame}
 	\frametitle{Literatura}
-    \url{http://www.srce.unizg.hr/fileadmin/Srce/proizvodi_usluge/obrazovanje/tecajevi/linux-akademija/L110.pdf}
+    \url{http://www.ufsexplorer.com/und_fs.php}
+    \url{http://www.tldp.org/HOWTO/Filesystems-HOWTO-6.html}
     \url{http://www.nongnu.org/ext2-doc/ext2.html}
     \url{https://www.linux.com/news/software/applications/8208-all-about-linux-swap-space}
 	\texttt{man mdadm}
 	\url{http://www.ducea.com/2009/03/08/mdadm-cheat-sheet/}
 	\vfill
 	\url{http://debian-handbook.info/browse/wheezy/advanced-administration.html}\\
+	\url{https://www.howtoforge.com/linux_lvm}
 	\url{https://wiki.archlinux.org/index.php/Software_RAID_and_LVM}\\
 	\url{http://www.tuxradar.com/content/lvm-made-easy}
 	\vfill
