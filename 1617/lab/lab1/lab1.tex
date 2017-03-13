@@ -1,0 +1,89 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Laboratorijska vježba 1}
+	\date{\vspace{-5ex} 18.03.2017.}
+	\maketitle
+
+Sve je zadatke potrebno raditi na virtualnom stroju dostupnom na linku: \url{https://marvin.kset.org/~leonard.volaric.horvat/debian.7z}
+
+\section*{1. zadatak - GRUB}
+
+Sherlock je svojemu bratu Johnu na nekoliko dana posudio svoje računalo na kojem se nalazi Debian distribucija. Međutim, Sherlock je dobio od kolege na kratku posudbu novi album svoje omiljene pjevačice i želi ga kopirati\footnotemark[1] na svoje računalo čim prije, stoga je prijevremeno od brata zatražio svoje računalo natrag. U međuvremenu, John je računalo uspio pokvariti. Tako pokvarenog ga je vratio Sherlocku. Pomozite Sherlocku da popravi svoje računalo! \\
+
+Računalo ima problema kod \textit{bootanja} OS-a - ne može pronaći Linux kernel. Sve su potrebne datoteke za bootanje prisutne na disku, ali je konfiguracijska datoteka \textit{bootloadera} krivo namještena. \\
+
+\underline{\textbf{Potrebno je:}}
+\begin{itemize}
+	\item promijeniti trenutne „pokvarene“ postavke \textit{bootanja} da bi se omogućilo privremeno \textit{bootanje} sustava
+	\item ažurirati postavke \textit{bootloadera} da bi se omogućilo normalno \textit{bootanje} sustava \\
+\end{itemize}
+
+\underline{\textbf{Dodatne upute:}}
+\begin{itemize}
+	\item na računalu postoje dva diska: sda i sdb. Disk sdb u ovom zadatku ignoriramo.
+	\item na sda disku nalaze se tri particije:
+	\begin{itemize}
+		\item \texttt{sda1 - /boot}
+		\item \texttt{sda2 - /home}
+		\item \texttt{sda3 - /}
+	\end{itemize}
+	\item u GRUB komandnoj liniji postoji naredba \texttt{ls}
+	\item u GRUB komandnoj liniji pripaziti na \textit{environment} varijable
+	\item Informacije za prijavu:
+	\begin{itemize}
+		\item korisničko ime: student
+		\item lozinka: student
+	\end{itemize}
+\end{itemize}
+
+\footnotetext[1]{Album je, naravno, legalno nabavljen i dostupan za besplatno preuzimanje na internetu, ali Sherlock je htio vježbati prebacivanje fajlova s USB \textit{stickova} na svojoj Linux distribuciji.}
+
+\newpage
+
+
+\section*{2. zadatak - LVM}
+
+Sada kada je Sherlockovo računalo uspješno popravljeno, može prekopirati album u svoj matični direktorij\footnotemark[1]. Međutim, pojavi se pogreška: nedovoljno prostora na disku. Uvidom u sažetak prostora, vidio je da je najveća moguća veličina particije montirane na \texttt{/home} 10 MB, a njemu treba barem 50 MB za cijeli album.\footnotemark[2] Ostatak diska zauzet je ostatkom OS-a i ne može se nikako promijeniti veličina particije osim reinstalacijom kompletnog OS-a, a to Sherlock želi izbjeći pod svaku cijenu, pa nam se opet obratio za pomoć. Srećom, nedavno je pronašao još jedan prazan hard disk veličine 5 GB, pa ste se zajedno sjetili se da možete riješiti problem korištenjem pronađenog (drugog) diska u adekvatnoj LVM konfiguraciji. \\
+
+Potrebno je:
+\begin{itemize}
+	\item stvoriti LVM grupu naziva „homegroup“ koja sadrži particiju veličine 1GB s drugog diska
+	\item stvoriti \textit{logical volume} naziva „homedir“ u gorenavedenoj grupi koji ima veličinu 100MB
+	\item kopirati sadržaj \texttt{/home} direktorija u „homedir“
+	\item namjestiti da „homedir“ bude novi \texttt{/home} direktorij
+	\item proširiti „homegroup“ originalnom \texttt{/home} particijom
+	\item proširiti „homedir“ na maksimalnu moguću veličinu grupe
+	\item osigurati da se montiranje novog rasporeda particija ostvari \textit{on-boot} \\
+\end{itemize}
+
+Sad kad ste uspješno riješili problem s \texttt{/home} direktorijem i omogućili Sherlocku da uživa u melemu za svoje uši, Sherlock se sjetio da je htio instalirati svoju omiljenu igru na računalo. Međutim, ubrzo je naletio na sličan problem kao i s glazbom - nema dovoljno prostora na prvom disku. Ipak, Sherlock nije "od jučer" - zna da ima na raspolaganju još dosta prostora na drugom disku, pa bi htio taj prostor iskoristiti za igru. Opet vam se, zlu ne trebalo, obratio za pomoć. \\
+
+Potrebno je:
+\begin{itemize}
+	\item koristeći već postojeću LVM grupu „homegroup“\footnotemark[3] i postupak sličan prethodnom, iskoristiti ostatak pronađenog diska za stvaranje zasebne particije namijenjene samo \texttt{/opt} direktoriju
+	\item isto kao i u prethodnom slučaju, osigurati da se montiranje ostvari \textit{on-boot}\\
+\end{itemize}
+
+Napomene: 
+\begin{itemize}
+	\item Grafičko sučelje može stvoriti neke naizgled čudne i nerješive probleme. Razmislite koje!
+	\item Nakon ispravnog konfiguriranja LVM-a, pokušajte prebaciti neke datoteke adekvatne veličine da se uvjerite da sve radi kako bi trebalo!
+	%\item Neke točke moguće je izvesti unaprijed ili u kombinaciji s nekim drugim točkama. Od vas ćemo tražiti točan redoslijed rješavanja točaka bez skraćivanja posla!
+\end{itemize}
+
+
+\footnotetext[1]{U ovom slučaju virtualni stroj ima samo dva korisnika: root (bez njega ne može) i student (čiji račun koristimo kao Sherlockov u vježbi).}
+
+\footnotetext[2]{Veličine diskova i particija su za današnje gigabajtno i terabajtno doba očito prilično nerealne. Namjerno su reducirane samo za potrebe labosa za jednostavniju demonstraciju mogućih problema s kojima se ljudi susreću, kao i za demonstraciju jednog od rješenja za navedene probleme. Tko bi htio skinuti 10-gigabajtni virtualni stroj za običan labos?}
+
+\footnotetext[3]{Ako želite, grupi možete promijeniti ime.}
+
+\end{document}
