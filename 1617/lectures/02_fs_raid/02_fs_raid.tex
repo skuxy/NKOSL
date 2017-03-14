@@ -121,7 +121,8 @@
     \begin{itemize}
         \item ISO 9660
         \item Linear Tape FS
-        \item GlusterFS, BGFS
+        \item GlusterFS, BeeGFS
+        \item zfs, btrfs
 		\item NTFS - danas najčešći FS na modernim Windows verzijama
         \item posebni: swap, tmpfs
     \end{itemize}
@@ -157,7 +158,7 @@
 	\begin{itemize}
 		\item Struktura koja pohranjuje metapodatke o fajlu
 		\item Dozvole, ID vlasnika, GID, veličina, broj hard linkova, MAC vremena
-		\item Opaska: ime fajla \textbf{nije} zapisana u inodeu nego u direktoriju
+		\item Opaska: ime fajla \textbf{nije} zapisano u inodeu nego u direktoriju
 		\begin{itemize}
 			\item \emph{Everything is a file!}
 			\item direktorij je poseban fajl koji sadrži imena svih fajlova koje (konceptualno) sadrži
@@ -186,7 +187,7 @@
         	\item podatke
         \end{itemize}
         \item File je predstavljen strukturom inode (\textit{index node})
-        \item indode ima 15 pointera na podatke
+        \item inode ima 15 pointera na podatke
         \item Ovisno o veličini blokova restrikcije su
         \item[] \begin{tabular}{l l}
         	Max file size & 16 GiB - 2 TiB \\
@@ -200,7 +201,7 @@
 
 \begin{frame}[fragile]
 	\frametitle{Upravljanje particijama}
-    Stvaranje ext2 FS:
+    Stvaranje ext2fs:
     \begin{itemize}
         \item stvoriti particiju
         \item stvoriti FS
@@ -210,7 +211,7 @@
 	\texttt{fdisk}
 	\begin{itemize}
 		\item Alat za uređivanje particija na disku
-		\item fdisk \textbf{ne formatira} particije
+		\item fdisk u općenitom slučaju \textbf{ne formatira} particije
 		\item Interaktivni način rada
 	\end{itemize}
 	\vfill
