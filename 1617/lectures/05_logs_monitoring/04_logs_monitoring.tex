@@ -1,0 +1,251 @@
+\documentclass[t,table,usenames,dvipsnames]{beamer}
+
+\usetheme{CambridgeUS}
+\usecolortheme{beaver}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage[utf8]{inputenc}
+\usepackage[croatian]{babel}
+
+\usepackage{datetime}
+\renewcommand{\dateseparator}{.}
+\newcommand{\todayiso}{\twodigit\day \dateseparator \twodigit\month \dateseparator \the \year}
+\date{\todayiso}
+\newcommand{\shell}[1]{\texttt{#1}}
+
+
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{color}
+\definecolor{LightGray}{gray}{0.9}
+\captionsetup{compatibility=false}
+
+\title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
+\author[Leonard Volarić Horvat, Marin Petričević]{Leonard Volarić Horvat, Marin Petričević\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\subtitle{4. Sistemski logovi i nadziranje}
+\institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
+
+\begin{document}
+{
+    \setbeamertemplate{footline}{}
+	\begin{frame}
+		\maketitle
+	\end{frame}
+}
+
+\begin{frame}
+    \frametitle{Sadržaj}
+    \tableofcontents
+\end{frame}
+
+\section{Logging}
+
+\begin{frame}
+    \topskip0pt
+    \vspace*{\fill}
+        \begin{center}
+            \Huge{Logging}
+        \end{center}
+    \vspace*{\fill}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Logovi}
+    \begin{itemize}
+        \item Dnevničke datoteke 
+        \begin{itemize}
+            \item tekstualne
+            \item binarne (systemd dnevnički sustav: journald; journalctl)
+        \end{itemize}
+        \item Zapisuju radnje vezane za praćeni proces
+        \item Primjena: dijagnoza kvarova, praćenje stanja sustava, kronologija događaja, sigurnosni zapisi...
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{/var/log direktorij}
+    \begin{itemize}
+        \item Direktorij s glavninom log datoteka na sustavu
+        \item Primjeri:
+        \begin{itemize}
+            \item boot.log - boot poruke
+            \item auth.log - poruke o autentikacijama korisnika
+            \item dpkg.log - poruke vezane uz dpkg (npr. \shell{apt install paket})
+        \end{itemize}
+        \item S dolaskom systemd-a dio logova prelazi iz /var/log u journalctl
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Syslog}
+    \begin{itemize}
+        \item Sustav koji hvata sve poruke u Linux sustavu
+        \item Vrlo slozena arhitektura, ugradena u sve distribucije
+        \item rsyslog (Reliable Syslog) - moderna verzija sysloga
+        \item Daemon proces, jednostavan za koristenje
+        \item Konfiguracija u /etc/\textbf{[r]}syslog.conf
+    \end{itemize}
+        \vfill
+    \begin{itemize}
+        \item Danas dijelom zasjenjen journald-om
+        \item I dalje moguće paralelno koristiti oba
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{/etc/syslog.conf}
+    \begin{itemize}
+        \item item.priority [; item.priority]   /path/to/file
+    \end{itemize}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+           Vrsta: \\
+            \begin{itemize}
+                \item auth, authpriv (general and private auth)
+                \item cron
+                \item kern (kernel)
+                \item mail
+                \item news
+                \item user (user process)
+                \item uucp
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}  %%<--- here
+            Prioritet: \\
+            \begin{itemize}
+                \item emerg
+                \item alert
+                \item crit
+                \item err
+                \item warning
+                \item notice
+                \item info
+                \item debug
+                \item *
+                \item none
+            \end{itemize}
+        \end{column}
+        \end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{/etc/syslog.conf}
+    \begin{itemize}
+        \item item.priority [; item.priority]   /path/to/file
+    \end{itemize}
+    \begin{verbatim}
+
+    # All info, none mail nor privat auth
+    *.info; mail.none; authpriv.none    /var/log/messages
+
+    # Everybody gets emergency messages
+    *.emerg                             *
+    *.emerg                             @10.1.1.254
+    
+    # " = " will force ONYL specific priorty
+    news.=crit                          /var/log/news/critical
+
+    \end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Logger utilty - API to syslog}
+
+    \begin{itemize}
+        \item Koristenje iz drugih programa
+
+        \item \shell{logger [options] message}
+        \item Ispisuje poruku u /var/log/messages
+
+        \item \shell{Apr  8 21:24:26 g550 ulicar: message}
+
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Logrotate}
+    \begin{itemize}
+        \item Odrzavanje logova
+        \item \shell{/etc/logrotate.conf} \shell{/etc/logrotate.d/}
+    \end{itemize}
+
+    \begin{verbatim}
+
+    # rotate
+    weekly
+    # keep [weeks]
+    rotate 4
+    # create new after rotation
+    create
+    # compress
+    compress
+    # additional
+    include /etc/logrotate.d
+
+    \end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Logrotate}
+    \begin{itemize}
+        \item Specificna datoteka
+    \end{itemize}
+    \begin{verbatim}
+    # /etc/logrotate.d/nginx
+    /var/log/nginx/*.log {
+        daily
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        create 640 nginx adm
+        sharedscripts
+        postrotate
+                [ -f /var/run/nginx.pid ] && 
+                    kill -USR1 `cat /var/run/nginx.pid`
+        endscript
+    }
+
+    \end{verbatim}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Nadzor procesa i sustava}
+
+    \begin{itemize}
+        \item Ossec - Nadzor logova + mail
+        \item Sentry - Ossec + akumulacija
+        \item Zabbix - agent + server + vizualizacija
+        \item Sentry - agent + server + plugins
+        \item Kibana - vizualizacijski alat
+        \item Sentry - Ossec + akumulacija
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Literatura}
+	\url{http://www.srce.unizg.hr/fileadmin/Srce/proizvodi_usluge/obrazovanje/tecajevi/linux-akademija/L120.pdf}
+	\vfill
+	\url{http://www.linuxcommand.org/man_pages/logrotate8.html}\\
+	\url{http://man7.org/linux/man-pages/man3/syslog.3.html}\\
+	\vfill
+	\url{http://www.zabbix.com}\\
+	\vfill
+	\url{https://www.elastic.co/products/kibana}\\
+\end{frame}
+
+\end{document}
