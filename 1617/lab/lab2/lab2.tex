@@ -1,0 +1,107 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Laboratorijska vježba 2}
+	\date{\vspace{-5ex} 29.03.2017.}
+	\maketitle
+
+Zadatke je potrebno napraviti proizvoljno na vlastitom računalu, virtualnom stroju ili serveru. Preporučamo distribucije bazirane na Debianu.
+
+\section*{1. Zadatak - mreža}
+
+Saznali ste da će zbog radova na žičnoj mreži uskoro prestati raditi DHCP server.
+Kako bi izbjegli potencijalan gubitak veze s internetom u to vrijeme,
+odlučili ste postaviti \textbf{statičku IP adresu} svom mrežnom uređaju.
+Ne želite uzrokovati probleme drugim korisnicima mreže pa ste mu odlučili dodijeliti
+istu IP adresu koju vam je automatski dodjeljena od DHCP servera pri spajanju na mrežu.
+Također za svaki slučaj odlučujete koristiti Google javni DNS server dostupan na adresi \textbf{8.8.8.8} i \textbf{8.8.4.4} \\
+
+\underline{\textbf{Potrebno je:}}
+\begin{itemize}
+	\item konfigurirati \textit{/etc/network/interfaces} tako da mrežni uređaj koristi statičku IP adresu
+  \item eksplicitno osim IP adrese navesti: subnet masku, adresu gateway uređaja, adrese primarnog i sekundarnog DNS servera
+  \item kopirati konfiguracijsku datoteku u svoj home direktorij za laganu demonstraciju
+\end{itemize}
+
+
+\newpage
+
+
+\section*{2. Zadatak - systemd}
+
+Vaš kolega je razvio vrlo impresivnu web aplikaciju čiji je izvorni kod dostupan na: \\ \url{https://pastebin.com/KwGiKByi}. \\
+Ona sluša na portu 1337 i s obzirom što upišete u URL, aplikacija odgovara. \\
+Recimo, ako aplikaciji pristupite uz URL \textit{http://localhost:1337/hello-world}, ona odgovori odgovarajućom porukom.
+Aplikacija također ispisuje odgovarajuću informaciju na \textit{stdout}. \\
+\\
+Kolega, iako vrsan developer je tek počeo proučavati Linux pa traži vašu pomoć.
+Do sada je aplikaciju pokretao iz naredbenog retka pomoću \textit{python webserver.py},
+međutim ne zna kako da drži svoju aplikaciju uključenu izvan terminala, kako da se aplikacija pali pri pokretanu računala. \\
+Sram ga je priznati ali ima i bug koji ne zna popraviti. Ako koji korisnik slučajno posjeti \textit{/crash}, aplikacija mu crasha! \\
+Htio bi privremeno, dok ne popravi bug, da se aplikacija automatski restarta u slučaju crasha. \\
+Kolega je čuo da je systemd dobar alat za ovaj posao i traži vašu pomoć. \\
+Razmišljajući veselo na putu do vas o svojoj aplikaciji, sjetio se da je inače mogao pratiti ponašanje korisnika u svojoj aplikaciji direktno iz terminala.
+Zabrinulo ga je to na trenutak, ali se sjetio da systemd ima ugrađen logging sustav - journal \\
+Zamolio vas je da se pobrinete i da može kroz journalctl promatrati uporabu svoje aplikacije. \\
+
+\underline{\textbf{Potrebno je:}}
+\begin{itemize}
+	\item napraviti systemd unit (service) file koji pali danu python skriptu
+	\item pobrinuti se da se aplikacija automatski restarta u slučaju crasha
+	\item postaviti unit tako da se pali pri pokretanu računala
+  \item ali nikako prije nego što se podigne mreža
+	\item pratiti korištenje aplikacije (logove) kroz journalctl
+\end{itemize}
+
+
+\newpage
+
+
+\section*{3. Zadatak - nginx}
+
+Ambiciozni kolega iz prošlog zadatka je odlučio podići svoj sustav na novu razinu dodajući u njega nginx.
+Neki od korisnika su mu javili da im se ne sviđa to što moraju upisivati port 1337 na kraju adrese kako bi pristupili aplikaciji.
+Kolega zna da browseri implicitno koriste port 80 i odlučio je prebaciti svoju aplikaciju baš na taj port! Ali nije sve tako lako.
+Uz spomenutu aplikaciju, kolega želi kroz browser posluživati i neke datoteke, isto na portu 80. \\
+Ne sviđa mu se ideja dodavanja logike za posluživanje datoteka u svoju aplikaciju jer to nije njena poanta.
+Dodatno, kolegica mu je na kavi rekla da je python nije baš najbrži jezik i da bi takvo posluživanje datoteka moglo biti sporo.\\
+Zato se kolega odlučio dodati fleksibilnost i brzinu u svoj sustav u obliku nginx web servera. I tražiti vašu pomoć. \\
+\\
+Zamislio je to ovako... Na njegovoj adresi će na portu 80 slušati nginx
+i nginx će s obzirom na putanju http zahtjeva raditi različite stvari. \\
+\\
+Ako putanja počinje sa \textit{/app}, nginx će proslijediti zahtjev aplikaciji
+koju ste mu pomogli pretvoriti u servis u drugom zadatku na portu 1337 \\
+\\
+Ako putanja počinje sa \textit{/public}, nginx će sam poslužiti datoteke iz datotečnog sustava na lokaciji \textit{/home/USERNAME/public/}.
+Npr. ako je napravljen zahtjev \textit{http://localhost/public/slika.jpg}, nginx treba, ako postoji, odgovoriti s datotekom \textit{/home/USERNAME/public/slika.jpg} \\
+\\
+Oduševljen zamišljenom fleksibilnošću, kolega se odlučuje malo zabaviti i podesiti nginx
+tako da na \textit{/kset} odgovara sa privremenim http redirectom na \textit{https://www.kset.org}. \\
+\\
+Kolega nije zaboravio na važnost logova, pa planira informacije o posjetima spremati na lokaciju
+\textit{/home/USER/public/nginx-access.log} jer je ljubitelj transparentnog poslovanja,
+a informacije o greškama iz sigurnosnih razloga na \textit{/var/log/nginx/nginx-error.log} \\
+\\
+
+Napomene:
+\begin{itemize}
+	\item treba vam samo jedan nginx config file, recimo... /etc/nginx/sites-available/localhost
+  \item /etc/nginx/sites-enabled/localhost je obično simlink na /etc/nginx/sites-available/localhost
+  \item nakon promjene konfiguracijskih datoteka, potrebno ih je ponovno učitati pomoću \textit{nginx -s reload}
+  \item treba vam samo jedan nginx server block
+  \item pripazite na ime servera u konfiguraciji - inače se koristi domena koja se poslužuje, vama sada to zamjenjuje "localhost"
+  \item privremeni http redirect ima kod 302
+  \item u praksi je gotovo uvijek sigurnosni propust javno izlagati logove, obično se i access log i error log drže u /var/log
+  \item \textbf{BONUS} zadatak: konfigurirati nginx da sve poslužuje preko https protokola, uz self signed certifikat i redirect sa http na https
+\end{itemize}
+
+
+\end{document}
