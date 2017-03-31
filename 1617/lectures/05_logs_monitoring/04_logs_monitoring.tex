@@ -23,7 +23,7 @@
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Leonard Volarić Horvat, Marin Petričević]{Leonard Volarić Horvat, Marin Petričević\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\author[Leonard Volarić Horvat, Marin Petričević, Borna Skukan]{Leonard Volarić Horvat, Marin Petričević, Borna Skukan\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
 \subtitle{4. Sistemski logovi i nadziranje}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
@@ -114,6 +114,7 @@
                 \item news
                 \item user (user process)
                 \item uucp
+                \item local{0..}
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}  %%<--- here
@@ -127,7 +128,6 @@
                 \item notice
                 \item info
                 \item debug
-                \item *
                 \item none
             \end{itemize}
         \end{column}
@@ -157,7 +157,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Logger utilty - API to syslog}
+    \frametitle{Logger utility - API to syslog}
 
     \begin{itemize}
         \item Korištenje iz drugih programa
@@ -221,7 +221,7 @@
 
 \end{frame}
 
-
+\section{Monitoring}
 \begin{frame}
     \topskip0pt
     \vspace*{\fill}
@@ -233,18 +233,56 @@
 
 
 \begin{frame}
-    \frametitle{Nadzor procesa i sustava}
-
-    \begin{itemize}
-        \item Ossec - Nadzor logova + mail
-        \item Sentry - Ossec + akumulacija
-        \item Zabbix - agent + server + vizualizacija
-        \item Sentry - agent + server + plugins
-        \item Kibana - vizualizacijski alat
-        \item Sentry - Ossec + akumulacija
-    \end{itemize}
-
+	\frametitle{ps}
+	
+	\begin{itemize}
+		\item "process status"
+		\item Alat za prikaz trenutno aktivnih proces
+		\item Cesto koristen u kombinaciji sa grep-om
+	\end{itemize}
+		 \shell{ps aux  \newline
+				ps -ejH}		
+	
+		
+	
 \end{frame}
+
+\begin{frame}
+	\frametitle{top}
+	
+	\begin{itemize}
+		\item Pracenje trenutnih procesa u real-timeu
+		\item Mogucnost sortiranja i filtriranja
+		\item Prikazuje i osnovne metrike o sustavu
+		\item \shell{ htop } - intuitivniji i pregledniji
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Nadzor procesa i sustava}
+	
+	\begin{itemize}
+		\item Ossec - Nadzor logova + mail
+		\item Sentry - Ossec + akumulacija
+		\item Zabbix - agent + server + vizualizacija
+		\item Sentry - agent + server + plugins
+		\item Kibana - vizualizacijski alat
+		\item Sentry - Ossec + akumulacija
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Zabbix}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{graph-network}
+		\caption{Zabbix}
+		\label{fig:graph-network}
+	\end{figure}
+	
+\end{frame}
+
 
 \begin{frame}
 	\frametitle{Literatura}
