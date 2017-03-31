@@ -1,6 +1,6 @@
 \frametitle{Logrotate}
     \begin{itemize}
-        \item Specificna datoteka
+        \item Specifična datoteka
     \end{itemize}
     \begin{verbatim}
     # /etc/logrotate.d/nginx
