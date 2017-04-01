@@ -23,7 +23,7 @@
 \captionsetup{compatibility=false}
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
-\author[Leonard Volarić Horvat, Marin Petričević, Borna Skukan]{Leonard Volarić Horvat, Marin Petričević, Borna Skukan\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
+\author[Leonard Volarić Horvat, Borna Skukan]{Leonard Volarić Horvat, Borna Skukan\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
 \subtitle{4. Sistemski logovi i nadziranje}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
@@ -256,6 +256,30 @@
 		\item Prikazuje i osnovne metrike o sustavu
 		\item \shell{ htop } - intuitivniji i pregledniji
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{htop}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{htop-marvin}
+        \caption{htop}
+        \label{fig:htop-marvin}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{/proc}
+    \begin{itemize}
+        \item Direktorij /proc - izvor većine podataka
+        \begin{itemize}
+            \item \shell{uptime - /proc/uptime}
+            \item \shell{loadavg - /proc/loadavg}
+            \item \shell{proces s traženim PID-om - /proc/\textless PID\textgreater}
+        \end{itemize}
+        \item /proc koristi \shell{procfs} pseudo-filesystem
+        \item Dinamička struktura - stvara i briše pripadajuće datoteke zajedno s procesima
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
