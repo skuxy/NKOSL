@@ -271,7 +271,7 @@
 \begin{frame}
     \frametitle{/proc}
     \begin{itemize}
-        \item Direktorij /proc - izvor većine podataka
+        \item Direktorij /proc - izvor većine podataka o procesima
         \begin{itemize}
             \item \shell{uptime - /proc/uptime}
             \item \shell{loadavg - /proc/loadavg}
@@ -279,6 +279,22 @@
         \end{itemize}
         \item /proc koristi \shell{procfs} pseudo-filesystem
         \item Dinamička struktura - stvara i briše pripadajuće datoteke zajedno s procesima
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Još neki alati}
+    \begin{itemize}
+        \item strace 
+        \begin{itemize}
+            \item Praćenje sistemskih poziva i signala
+            \item Može se doznati odakle neki proces dobiva informacije
+            \item \shell{strace uptime 2\textgreater\&1 | grep open} \\
+        \end{itemize}
+        \item iotop - top za IO operacije
+        \item iostat - statistika o IO uređajima
+        \item atop - top za "sve"
+        \item netstat, ss - mrežni dijagnostički alati
     \end{itemize}
 \end{frame}
 
@@ -291,6 +307,7 @@
         \item Sentry - Ossec + akumulacija
 		\item Sentry - agent + server + plugins
 		\item Kibana - vizualizacijski alat
+        \item Grafana, Prometheus
 		\item Sentry - Ossec + akumulacija
 	\end{itemize}
 	
