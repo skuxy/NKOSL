@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.31)  31 MAR 2017 17:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.31)  1 APR 2017 10:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1200,11 +1200,6 @@ Package caption Info: listings package is loaded.
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\\' on input line 26.
 
-
-Package hyperref Warning: Composite letter `\textasciicaron+c'
-(hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 26.
-
 (./04_logs_monitoring.aux)
 \openout1 = `04_logs_monitoring.aux'.
 
@@ -1390,7 +1385,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
 (./04_logs_monitoring.nav)
-Overfull \hbox (47.76167pt too wide) in paragraph at lines 30--30
+Overfull \hbox (0.6153pt too wide) in paragraph at lines 30--30
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
@@ -1402,42 +1397,52 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 
 {/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
 (./04_logs_monitoring.toc)
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [2
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [3
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [4
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [5
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [6
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 137
+.
+LaTeX Font Info:    No file OMScmss.fd. on input line 137.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 137.
+
+
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
@@ -1453,7 +1458,7 @@ tical[]
  []
 
 )
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
@@ -1463,7 +1468,7 @@ Overfull \hbox (47.76167pt too wide) has occurred while \output is active
 \openout4 = `04_logs_monitoring.vrb'.
 
  (./04_logs_monitoring.vrb)
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
@@ -1473,11 +1478,11 @@ Overfull \hbox (47.76167pt too wide) has occurred while \output is active
 \openout4 = `04_logs_monitoring.vrb'.
 
  (./04_logs_monitoring.vrb)
-Overfull \vbox (5.18657pt too high) detected at line 196
+Overfull \vbox (5.18657pt too high) detected at line 197
  []
 
 
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
@@ -1487,80 +1492,120 @@ Overfull \hbox (47.76167pt too wide) has occurred while \output is active
 \openout4 = `04_logs_monitoring.vrb'.
 
  (./04_logs_monitoring.vrb)
-Overfull \vbox (45.98659pt too high) detected at line 222
+Overfull \vbox (45.98659pt too high) detected at line 223
  []
 
 
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [11
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [12
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [13
 
 ]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [14
 
-]
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+] <htop-marvin.png, id=142, 955.57pt x 499.8675pt>
+File: htop-marvin.png Graphic file (type png)
+ <use htop-marvin.png>
+Package pdftex.def Info: htop-marvin.png used on input line 270.
+(pdftex.def)             Requested size: 342.2953pt x 179.05212pt.
+
+Overfull \vbox (4.7386pt too high) detected at line 270
+ []
+
+
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [15
 
-] <graph-network.png, id=148, 779.91376pt x 548.0475pt>
-File: graph-network.png Graphic file (type png)
+ <./htop-marvin.png>]
+LaTeX Font Info:    Try loading font information for OML+cmtt on input line 284
+.
+LaTeX Font Info:    No file OMLcmtt.fd. on input line 284.
 
-<use graph-network.png>
-Package pdftex.def Info: graph-network.png used on input line 284.
-(pdftex.def)             Requested size: 239.60567pt x 168.37099pt.
 
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+LaTeX Font Warning: Font shape `OML/cmtt/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 284.
+
+
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
 [16
 
+]
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[17
+
+]
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[18
+
+] <graph-network.png, id=174, 779.91376pt x 548.0475pt>
+File: graph-network.png Graphic file (type png)
+
+<use graph-network.png>
+Package pdftex.def Info: graph-network.png used on input line 326.
+(pdftex.def)             Requested size: 239.60567pt x 168.37099pt.
+
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
+ [][]  \OT1/cmss/m/n/6 ([])  
+ []
+
+[19
+
  <./graph-network.png>]
-LaTeX Font Info:    Try loading font information for U+msa on input line 297.
+LaTeX Font Info:    Try loading font information for U+msa on input line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 297.
+LaTeX Font Info:    Try loading font information for U+msb on input line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 297.
+line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-Overfull \hbox (47.76167pt too wide) has occurred while \output is active
+Overfull \hbox (0.6153pt too wide) has occurred while \output is active
  [][]  \OT1/cmss/m/n/6 ([])  
  []
 
-[17
+[20
 
 ]
 \tf@nav=\write6
@@ -1572,11 +1617,11 @@ Overfull \hbox (47.76167pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `04_logs_monitoring.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 299.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 299.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 341.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 341.
  (./04_logs_monitoring.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 299.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 299.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 341.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 341.
 Package rerunfilecheck Info: File `04_logs_monitoring.out' has not changed.
 (rerunfilecheck)             Checksum: 5DA43AF759175CCB0209E4D4824544FA;87.
 
@@ -1584,26 +1629,32 @@ Package rerunfilecheck Info: File `04_logs_monitoring.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 299.
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 341.
  ) 
 Here is how much of TeX's memory you used:
- 21283 strings out of 494946
- 389981 string characters out of 6180981
- 488789 words of memory out of 5000000
- 24030 multiletter control sequences out of 15000+600000
- 11631 words of font info for 43 fonts, out of 8000000 for 9000
+ 21318 strings out of 494946
+ 390406 string characters out of 6180981
+ 488722 words of memory out of 5000000
+ 24052 multiletter control sequences out of 15000+600000
+ 11987 words of font info for 44 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 65i,17n,100p,1064b,690s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on 04_logs_monitoring.pdf (17 pages, 183844 bytes).
+ 65i,17n,100p,1064b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmtt10.pfb>
+Output written on 04_logs_monitoring.pdf (20 pages, 334889 bytes).
 PDF statistics:
- 203 PDF objects out of 1000 (max. 8388607)
- 162 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
- 100 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 240 PDF objects out of 1000 (max. 8388607)
+ 192 compressed objects within 2 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
