@@ -149,7 +149,7 @@
     *.emerg                             *
     *.emerg                             @10.1.1.254
     
-    # " = " will force ONYL specific priorty
+    # " = " will force ONLY specific priorty
     news.=crit                          /var/log/news/critical
 
     \end{verbatim}
@@ -236,9 +236,9 @@
 	\frametitle{ps}
 	
 	\begin{itemize}
-		\item "process status"
-		\item Alat za prikaz trenutno aktivnih proces
-		\item Cesto koristen u kombinaciji sa grep-om
+		\item "\textbf{p}rocess \textbf{s}tatus"
+		\item Alat za prikaz trenutno aktivnih procesa
+		\item Često koristen u kombinaciji s grep-om
 	\end{itemize}
 		 \shell{ps aux  \newline
 				ps -ejH}		
@@ -251,8 +251,8 @@
 	\frametitle{top}
 	
 	\begin{itemize}
-		\item Pracenje trenutnih procesa u real-timeu
-		\item Mogucnost sortiranja i filtriranja
+		\item \textit{Realtime} praćenje trenutnih procesa
+		\item Mogućnost sortiranja i filtriranja
 		\item Prikazuje i osnovne metrike o sustavu
 		\item \shell{ htop } - intuitivniji i pregledniji
 	\end{itemize}
@@ -262,9 +262,9 @@
 	\frametitle{Nadzor procesa i sustava}
 	
 	\begin{itemize}
-		\item Ossec - Nadzor logova + mail
-		\item Sentry - Ossec + akumulacija
 		\item Zabbix - agent + server + vizualizacija
+        \item Ossec - Nadzor logova + mail
+        \item Sentry - Ossec + akumulacija
 		\item Sentry - agent + server + plugins
 		\item Kibana - vizualizacijski alat
 		\item Sentry - Ossec + akumulacija
