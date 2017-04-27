@@ -1,4 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\select@language {croatian}
-\beamer@sectionintoc {1}{Logging}{3}{0}{1}
-\beamer@sectionintoc {2}{Monitoring}{12}{0}{2}
