@@ -1,0 +1,60 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Laboratorijska vježba 3}
+	\date{\vspace{-5ex} 29.03.2017.}
+	\maketitle
+
+Zadatke je potrebno napraviti proizvoljno na vlastitom računalu, virtualnom stroju ili serveru. Operacijski sustav ne bi trebao biti bitan, ako se osjećate pustolovno možete pokušati i riješiti na Windowsima.
+
+\section*{1. Zadatak}
+
+Učeći za ove meuđuispite listali ste po Redditu, te ste primjetili mnogo članaka koji hvale ili grde Docker tehnologiju, pa ste ju odlučili i sami vidjeti o čemu se radi. Za (vjerojatno) prvi zadatak s tom tehnologijom odlučili ste uzeti nešto banalno: kontejner koji neprekidno skuplja podatke o trenutnom stanju vremena u Zagrebu.
+
+\underline{\textbf{Potrebno je:}}
+\begin{itemize}
+  \item instalirati \textit{Docker} i \textit{docker-compose} na željeno računalo
+  \item napisati Dockerfile za servis koji bi sa nekog API-ja dohvaćao podatke o trenutnom vremenskom stanju u Zagrebu svakih nekoliko sekundi i ispisivao ih na običan stdout
+  
+  \item primjer naredbe: \textit{curl -s wttr.in/Zagreb} \vert$ \textit{head -7}
+  
+  \item Nakon što ste se uvjerili da servis propisno radi, napišite docker-compose koji bi stvorio 4 instance tog servisa i pokrenite ga. Nemojte naknadno zaboraviti ugasiti te servise.
+  \item Razmislite kako bi se mogao pogledati stdout pojedinog kontejnera?
+\end{itemize}
+
+
+\newpage
+
+
+\section*{2. Zadatak}
+
+Marljivo i dalje učeći na Redditu, naišli ste na r/dataisbeautiful, te ste poželjeli spremiti te rezultate na lokalno računalo kako bi ih kasnije mogli parsirati u neki graf ili tablicu, kako bi sakupili mnogo imaginarnih internet bodova. 
+
+Kako bi to napravili, potrebno je modificirati postojeće Dockerfileove da se u kontejnere mounta lokalni volume, te da ti servisi rezultate pišu u njih.
+
+
+\underline{\textbf{Potrebno je:}}
+\begin{itemize}
+	\item stvoriti novi direktorij i mountati ga na direktorije
+	\item preusmjeriti ispis servisa da zapisuje i u \textit{fileove} u novom direktoriju, i na stdout
+	\item BONUS: Proučite kako bi u zasebnog kontejneru stvorili bazu podataka \itemit{linkali} ju s postojećim kontejnerima
+\end{itemize}
+
+\newpage
+
+\section*{3. Zadatak}
+
+Kako ste u svom detaljnom listanju Reddita naišli i na pojam REST API-ja, odlučili ste svoje kontejnerčiće pretvoriti u jedan. Potrebno je skriptu, koja će vam biti dostupna (TODO DO KRAJA KONJINO) pokrenuti u zasebnom kontejneru. Na taj kontejner bi bio mountan folder iz prethodnog zadatka, te bi imao otvoren port na sebi, s kojeg možete dobiti neki response. 
+
+Završetkom ovog zadatka, nesvjesno ste implementirali krnju verziju još jednog \textit{fancy} pojma iz industrije, \textit{Map-Reduce Joba}
+
+BONUS: Napisati skriptu za \textit{graceful} gašenje otvorenih kontejnera.
+
+\end{document}

@@ -1,0 +1,14 @@
+\frametitle{QEMU}
+	\begin{itemize}
+		\item Quick Emulator
+	\end{itemize}
+	\begin{itemize}
+		\item Emulira različite arhitekture neovisno o arhitekturi hosta
+		\item Userspace virtualizator za KVM i Xen
+	\end{itemize}
+	\vfill
+	\small
+	\begin{verbatim}
+$ qemu-img create -f raw disk.img 4G
+$ qemu-system-i386 -cdrom fedora.iso -boot order=d disk.img
+	\end{verbatim}
