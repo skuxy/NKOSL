@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.31)  27 APR 2017 13:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.3.31)  30 APR 2017 11:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -636,44 +636,38 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 52.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.50 \newpage
-              [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 60.
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.60 \end{document}
-                    [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 60.
+l.52 \end{document}
+                    [2]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 52.
  (./lab3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 60.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 60.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 52.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 52.
 Package rerunfilecheck Info: File `lab3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 60.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 52.
  ) 
 Here is how much of TeX's memory you used:
- 5988 strings out of 494946
- 85888 string characters out of 6180981
+ 5987 strings out of 494946
+ 85878 string characters out of 6180981
  178978 words of memory out of 5000000
  9245 multiletter control sequences out of 15000+600000
  8848 words of font info for 31 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 29i,6n,32p,388b,330s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,6n,32p,359b,330s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on lab3.pdf (3 pages, 62809 bytes).
+Output written on lab3.pdf (2 pages, 60021 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 31 compressed objects within 1 object stream
- 5 named destinations out of 1000 (max. 500000)
+ 38 PDF objects out of 1000 (max. 8388607)
+ 28 compressed objects within 1 object stream
+ 4 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
