@@ -48,8 +48,9 @@
 	\frametitle{X11}
 	\begin{itemize}
 		\item Sustav koji povezuje aplikacije (klijente) s grafičkim serverom
-		\item X sustav razvijen na MIT 1984. godine
-		\item U verziji X11 od 1987. godine. Male nadogradnje održavaju korak s razvojem grafičkih sustava
+		\item X sustav razvijen na MIT 1984. 
+		\item U verziji X11 od 1987.  
+		\item Male nadogradnje održavaju korak s razvojem grafičkih sustava
 		\item[]
 		\item \emph{Xorg server}
 	\end{itemize}
@@ -59,8 +60,9 @@
 \begin{frame}
 	\frametitle{X11}
 	\begin{itemize}
-		\item Aplikacije koriste X kroz framework za crtanje grafičkih elemenata
+		\item Aplikacije koriste X kroz \textit{framework} za crtanje grafičkih elemenata
 		\item Uređivanje prikaza svih aplikacija obavlja \emph{window manager}
+		\item Konfiguracijske datoteke u \textit{/etc/X11/}
 	\end{itemize}
 	
 	\begin{figure}[h]
@@ -80,7 +82,7 @@
 	\frametitle{X11}
 	\begin{itemize}
 		\item Mrežni sustav
-		\item Klijent (GUI aplikacija) se može nazaliti na udaljenom serveru
+		\item Klijent (GUI aplikacija) se može nalaziti na udaljenom serveru
 		\item X server ostvaruje vezu prema grafičkoj kartici
 	\end{itemize}
 	\begin{figure}
@@ -104,6 +106,20 @@
 	\includegraphics[width=0.75\textwidth]{graphics.png}
 \end{frame}
 
+\begin{frame}
+	\frametitle{X11}
+	\framesubtitle{Arhitektura}
+	\begin{itemize}
+		\item X - direktno sučelje između X-servera i X-aplikacije
+		\item GLX - sučelje između \textbf{X}-servera i Open\textbf{GL} aplikacije
+		\item AIGLX - Accelerated Indirect GLX - sučelje između X-servera i DRI-a
+		\item DRI - Direct Rendering Infrastructure - sučelje prema grafičkom hardveru, za rasterećenje X-servera u 3D iscrtavanjima
+		\item DRM - Direct Rendering Manager - sučelje grafičke kartice
+	\end{itemize}
+
+\end{frame}
+
+
 
 \begin{frame}
 	\frametitle{Window managers}
@@ -119,19 +135,19 @@
 
 \begin{frame}
 	\frametitle{GUI}
-	Graphical shells
+	\underline{Graphical shells}
 	\begin{itemize}
-		\item Koriste window manager za prikaz cijelog GUI-a
-		\item Omogućuje programa iz GUI-a, bolje upravljanje prozorima i radnim površinama, \ldots
+		\item Koriste \textit{window manager} za prikaz cijelog GUI-ja
+		\item Omogućuju pokretanje programa iz GUI-ja, bolje upravljanje prozorima i radnim površinama, \ldots
 	\end{itemize}
-	Desktop environment
+	\underline{Desktop environment}
 	\begin{itemize}
 		\item Predstavlja kompletno rješenje grafičkog korisničkog sučelja
-		\item U mnogim distribucijama dolazi neki predinstalirani desktop environment
-		\item Mogu se po volji mijenjati; Ponovnom instalacijom ili odabirom između više instaliranih desktop environmenta pri loginu
+		\item U mnogim distribucijama dolazi neki predinstalirani \textit{desktop environment}
+		\item Mogu se po volji mijenjati - ponovnom instalacijom ili odabirom pri loginu
 	\end{itemize}
 	
-	Gnome, KDE, Xfce, Unity, MATE, Cinnamon, \ldots
+	Primjeri: Gnome, KDE, Xfce, Unity, MATE, Cinnamon, \ldots
 
 \end{frame}
 
@@ -171,11 +187,10 @@
 	\begin{itemize}
 		\item Grafičko sučelje za logiranje
 		\item Pokreće se kao servis - na startupu
-		\item Redovito podržavaju različite konfiguracije sesije
-		\item[] Na primjer izbor desktop environmenta koje želimo koristiti
+		\item Redovito podržavaju različite konfiguracije sjednice - primjerice, izbor \textit{desktop environmenta} koje želimo koristiti
 	\end{itemize}
 	\vfill
-	Primjer
+	Primjeri:
 	\begin{itemize}
 		\item GDM
 		\item KDM
@@ -187,47 +202,18 @@
 
 
 \begin{frame}
-	\frametitle{X11}
-	\framesubtitle{Konfiguracija}
-	\begin{itemize}
-		\item Xorg konfiguracija
-		\item[] \texttt{/etc/X11/}
-		\begin{itemize}
-			\item[] \texttt{/etc/X11/xorg.conf}
-			\item[] \texttt{/etc/X11/xorg.conf.d}
-		\end{itemize}
-		\item[] \texttt{/etc/xorg.conf}
-	\end{itemize}
-	\vfill
-	\texttt{Xorg :0 -configure}\\
-	\texttt{startx} - Pokreće \texttt{\textbf{xinit}}
-	\vfill
-	\begin{itemize}
-		{\ttfamily
-			\item[] /etc/X11/xinit/xinitrc
-			\item[] \textasciitilde/.xinitrc
-		}
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}
 	\frametitle{Keyboard layout}
 	\begin{itemize}
-		\item \texttt{/etc/vconsole.conf}
-		\begin{itemize}
-			\item Postavke terminala
-		\end{itemize}
 		\item \texttt{loadkeys}
 		\item X KeyBoard extension (xkb)
 		\begin{itemize}
 			\item[] \texttt{setxkbmap}
-			\item[] Postavlja layout na X serveru
+			\item[] Postavlja \textit{layout} na X serveru
 		\end{itemize}
 		\item \texttt{localectl}
 		\begin{itemize}
 			\item Alat iz \texttt{systemd}
-			\item Razne regionalne postavke, uključujući layout u terminalu i X serveru
+			\item Razne regionalne postavke, uključujući \textit{layout} u terminalu i X serveru
 		\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -303,8 +289,7 @@
 	\textbf{Zvuk}\\
 	Open sound system (OSS)
 	\begin{itemize}
-		\item Potisnuo ga ALSA
-		\item Nakon verzije 4 opet često umjesto ALSA-e
+		\item Potisnut od ALSA-e
 	\end{itemize}
 	\vspace{1em}
 	JACK
@@ -314,10 +299,7 @@
 	\end{itemize}
 	\vfill
 	\textbf{Grafika}\\
-	Wayland
-	\begin{itemize}
-		\item Grafički server u razvoju
-	\end{itemize}
+	Wayland, Mir
 	
 \end{frame}
 
