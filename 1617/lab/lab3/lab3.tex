@@ -12,22 +12,22 @@
 	\date{\vspace{-5ex} 06.05.2017.}
 	\maketitle
 
-Zadatke je potrebno napraviti proizvoljno na vlastitom računalu, virtualnom stroju ili serveru. Operacijski sustav ne bi trebao biti bitan, no ako se osjećate pustolovno zadatke možete pokušati riješiti i na Windowsima.
+Zadatke je potrebno napraviti proizvoljno na vlastitom računalu, virtualnom stroju ili serveru. Izbor operacijskog sustava prepuštamo vama - ako se osjećate pustolovno, zadatke možete pokušati riješiti i na Windowsima.
 
 \section*{1. Zadatak}
 
-Učeći za ove međuispite listali ste po Redditu, te ste primjetili mnogo članaka koji hvale ili grde Docker tehnologiju, pa ste ju odlučili i sami vidjeti o čemu se radi. Za (vjerojatno) prvi zadatak s tom tehnologijom odlučili ste uzeti nešto banalno: kontejner koji neprekidno skuplja podatke o trenutnom stanju vremena u Zagrebu.
+Učeći za netom protekle međuispite, listali ste po Redditu, te ste primjetili mnogo članaka koji hvale ili grde \textit{Docker} tehnologiju. Da barem malo ublažite grižnju savjesti zbog toga što visite na Redditu, odlučili ste i sami vidjeti o čemu se radi. Za prvi zadatak s tom tehnologijom odlučili ste uzeti nešto banalno: kontejner koji neprekidno skuplja podatke o trenutnom stanju vremena u Zagrebu.
 
 \underline{\textbf{Potrebno je:}}
 \begin{itemize}
   \item instalirati \textit{Docker} i \textit{docker-compose} na željeno računalo
-  \item napisati Dockerfile za servis koji bi sa nekog API-ja dohvaćao podatke o trenutnom vremenskom stanju u Zagrebu svakih nekoliko sekundi i ispisivao ih na običan stdout
+  \item napisati \textit{Dockerfile} za servis koji bi sa nekog API-ja dohvaćao podatke o trenutnom vremenskom stanju u Zagrebu svakih nekoliko sekundi i ispisivao ih na običan stdout
   
-  \item primjer naredbe: \textit{curl -s wttr.in/Zagreb} \vert$ \textit{head -7}
+  \item primjer naredbe: \textit{curl -s wttr.in/Zagreb} $\vert$ \textit{head -7}
   
-  \item Nakon što ste se uvjerili da servis propisno radi, napišite docker-compose koji bi stvorio 4 instance tog servisa i pokrenite ga. Nemojte naknadno zaboraviti ugasiti te servise.
-  \item Razmislite kako bi se mogao pogledati stdout pojedinog kontejnera?
+  \item nakon što ste se uvjerili da servis propisno radi, napisati \textit{docker-compose} koji bi stvorio 4 instance tog servisa i pokrenite ga (nemojte naknadno zaboraviti ugasiti te servise)
 \end{itemize}
+  Razmislite - kako bi se mogao pogledati stdout pojedinog kontejnera?
 
 
 \newpage
@@ -35,16 +35,16 @@ Učeći za ove međuispite listali ste po Redditu, te ste primjetili mnogo član
 
 \section*{2. Zadatak}
 
-Marljivo i dalje učeći na Redditu, naišli ste na r/dataisbeautiful, te ste poželjeli spremiti te rezultate na lokalno računalo kako bi ih kasnije mogli parsirati u neki graf ili tablicu, kako bi sakupili mnogo imaginarnih internet bodova. 
+Marljivo i dalje učeći na Redditu, naišli ste na \textit{r/dataisbeautiful}\footnote{\url{https://www.reddit.com/r/dataisbeautiful}}, \textit{subreddit} koji glorificira vizualizaciju različitih podataka, te ste poželjeli spremiti te rezultate na lokalno računalo kako biste ih kasnije mogli parsirati u neki graf ili tablicu, s konačnim ciljem stjecanja vječne slave na \textit{r/dataisbeautiful}.
 
-Kako bi to napravili, potrebno je modificirati postojeće Dockerfileove da se u kontejnere mounta lokalni volume, te da ti servisi rezultate pišu u njih.
+Kako biste to napravili, potrebno je modificirati postojeće \textit{Dockerfileove} da se u kontejnere \textit{mounta} lokalni \textit{volume}, te da ti servisi rezultate pišu u njih.
 
 
 \underline{\textbf{Potrebno je:}}
 \begin{itemize}
-	\item stvoriti novi direktorij i mountati ga na containere
-	\item preusmjeriti ispis servisa da zapisuje i u \textit{fileove} u novom direktoriju, i na stdout
-	\item BONUS: Proučite kako bi u zasebnog kontejneru stvorili bazu podataka \itemit{linkali} ju s postojećim kontejnerima
+	\item stvoriti novi direktorij i \textit{mountati} ga na kontejnere
+	\item preusmjeriti ispis servisa da zapisuje i na \textit{stdout} i u \textit{fileove} u novom direktoriju 
+	\item BONUS: Proučite kako biste u zasebnom kontejneru stvorili bazu podataka i \textit{linkali} ju s postojećim kontejnerima
 \end{itemize}
 
 
