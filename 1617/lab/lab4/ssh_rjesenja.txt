@@ -1,0 +1,38 @@
+Instalirat openssh
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= sshd_config =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+(^točno 79 znakova)
+
+Port 31415
+PermitRootLogin no
+HostKey /etc/ssh/ssh_host_rsa_key
+
+RSAAuthentication yes
+PubkeyAuthentication yes
+
+PasswordAuthentication no
+PrintLastLog yes # last login
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+# dodaj korisnika papiga
+useradd -m papiga 
+
+# scp bash rc na lokalno računalo
+scp papiga@server:/home/papiga/.bashrc neki_folder/
+
+rsync penis
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=- ssh_profile -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Host srvr
+    IdentityFile ~/.ssh/NKOSL_rsa
+    User NKOSL
+
+Host srvr
+    IdentityFile ~/.ssh/id_rsa
+    User <korisnik>
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Bonus: dodat RSA public key na git profil te pokrenut ssh -T git@github.com
