@@ -21,8 +21,6 @@ useradd -m papiga
 # scp bash rc na lokalno računalo
 scp papiga@server:/home/papiga/.bashrc neki_folder/
 
-rsync penis
-
 =-=-=-=-=-=-=-=-=-=-=-=-=-=- ssh_profile -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 Host srvr
