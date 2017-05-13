@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  5 MAY 2017 23:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.20)  6 MAY 2017 11:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1471,12 +1471,12 @@ Package pdftex.def Info: sound_arch.png used on input line 230.
 \tf@snm=\write8
 \openout8 = `07_graphics_sound.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 324.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 324.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 320.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 320.
 
 (./07_graphics_sound.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 324.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 324.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 320.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 320.
 Package rerunfilecheck Info: File `07_graphics_sound.out' has not changed.
 (rerunfilecheck)             Checksum: BB07EAB6AB749D97DAA76AA8D7D2BB14;98.
 
@@ -1484,13 +1484,13 @@ Package rerunfilecheck Info: File `07_graphics_sound.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 324.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 320.
  ) 
 Here is how much of TeX's memory you used:
- 19877 strings out of 494374
- 368479 string characters out of 6164954
+ 19875 strings out of 494374
+ 368463 string characters out of 6164954
  465411 words of memory out of 5000000
- 22663 multiletter control sequences out of 15000+600000
+ 22661 multiletter control sequences out of 15000+600000
  11855 words of font info for 44 fonts, out of 8000000 for 9000
  350 hyphenation exceptions out of 8191
  59i,17n,94p,1063b,676s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1501,7 +1501,7 @@ ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on 07_graphics_sound.pdf (21 pages, 3168744 bytes).
+Output written on 07_graphics_sound.pdf (21 pages, 3168638 bytes).
 PDF statistics:
  250 PDF objects out of 1000 (max. 8388607)
  191 compressed objects within 2 object streams
