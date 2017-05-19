@@ -1,0 +1,202 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[croatian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{soul}
+\pagenumbering{gobble}
+
+\begin{document}
+	\title{Završna laboratorijska vježba\\{\large Napredno korištenje operacijskog sustava Linux}}
+	\date{\vspace{-5ex} 3. lipnja 2017.}
+	\maketitle
+
+	Marcus želi konačno znati podići svoj server. Ali ne samo lokalno, za suho isprobavanje komunikacijskih protokola za koje je čuo na fakultetu, već želi nešto što nudi potpunije iskustvo s radom na serveru. Čuo je od kolege Rona da mu studentski status na FER-u nudi brojne pogodnosti što se tiče besplatnog \textit{hostinga} servera, pa je silno poželio naučiti uzeti svoj server, kako bi na njemu mogao pokrenuti različite \textit{dockere} u kojima bi vrtio aplikacije koje razvija. \\
+	Kako priča ne bi stala tu, Marcus je zamislio i stvaranje korisničkih računa za svoje prijatelje, kako bi i oni mogli razvijati svoje web aplikacije. Ipak, budući da je njegov najam servera, bio bi red da uvede i neki sustav kontrole korištenja serverskog diskovnog prostora. Sjetio se davnog razgovora sa svojim prijateljem \textit{sistemašem} Jeremyjem, koji mu je spominjao kvote u UNIX sustavima, pa bi svakako htio napraviti nešto takvo i ostvariti jedno realno i uređeno višekorisničko okruženje. \\
+	Da bi cijela stvar bila koliko-toliko \textit{user-friendly}, a opet jednostavno konfigurabilna i sigurna, Marcus je naumio koristiti NginX, budući da s njim već ima prethodnog iskustva. Međutim, ono što svakako želi jest voditi dnevnike pristupa dijelovima njegovog servera. Zato će pokušati upregnuti svoje poznavanje logova na UNIX sustavima. Te logove potom želi prebaciti na udaljeni server, a za to je naumio koristiti \textit{rsync} protokol, koji mu je jako nahvalila kolegica Saša u pauzi između predavanja na prošlogodišnjoj \href{http://www.dorscluc.org/}{DORS/CLUC konferenciji.}
+	Konačno, budući da se već pošteno bacio u održavanje svog servera, poželio je dio zadataka automatizirati, pa se sjetio sustava cron, kao najzastupljenijeg sustava za automatizaciju periodički ponovljenih zadataka. \\
+
+	\par Nužno je imati na umu da je Marcus ipak relativno "zelen" u UNIX okruženjima, pa ne čudi da vas je lijepo zamolio da mu pomognete s njegovim ne-baš-bezazlenim projektom.
+
+	\textbf{Napomena:} nije zgorega prije nastavka rješavanja vježbe prvo pročitati završne napomene koje se nalaze na zadnjoj stranici teksta vježbe.
+
+	\newpage
+
+	\section*{\underline{Zadatak 1 - nabavka servera}}
+	
+	Rasprava o radu na serveru nije moguća bez servera na kojem bismo radili. Prema tome, prvo je potrebno pronaći neki \textit{hosting} servis koji nudi servere. U nastavku su dane neke opcije koje nude besplatan ili probni hosting, koji bi bio dovoljan za naše potrebe.
+	
+	\hfill
+	\hfill
+	\begin{itemize}
+		\item \href{https://education.github.com/pack}{\textbf{GitHub Education Pack}} studentima besplatno nudi brojne alate za kojekakve programske zadatke, a između ostalog i nekoliko \textit{cloud hosting} opcija koje će nam poslužiti - ovdje je možda najjednostavnija takva opcija \textbf{\textit{DigitalOcean}}.
+
+		\item \href{https://aws.amazon.com/free/}{\textbf{Amazon Web Services Free Tier}} je skup besplatnih razvojnih alata koje - uz, naravno, neka ograničenja - nudi Amazon. U \textit{GitHub Education Packu} postoji i opcija uzimanja AWS-ovog servera.
+
+		\item \href{https://cloud.google.com/free/}{\textbf{Google Cloud Platform Free Tier}} je, pak, skup Googleovih razvojnih alata.
+
+		\item Virtualni stroj\footnote{Ovo je daleko najmanje impresivna opcija i zbilja bi trebala biti razmotrena tek kao zadnja opcija. S virtualnim ste se strojevima sigurno susreli na NKOSL-u, a vrlo vjerojatno i na OKOSL-u i na još nekoliko predmeta na fakultetu, pa u tom pogledu \textbf{nećete ništa novo naučiti.}}. 
+  	\end{itemize}
+  	\vfill
+
+  	\textbf{\underline{NAPOMENE:}}
+  	\begin{itemize}
+  		\item Svaka od ovih metoda nabavke servera ima svojih poteškoća - primjerice, DigitalOcean iz sigurnosnih razloga traži i valjanu bankovnu karticu, ali Visa kartice iz nekih logističkih razloga u pravilu odbija, pa je prije iskorištavanja promo kôda potrebno podnijeti zahtjev za korisničkom podrškom (engl. \textit{ticket}), dok AWS ima relativno nezgrapan i neintuitivan registracijski proces, pa vas, za Marcusovo dobro, molimo da (barem ovaj) zadatak \textbf{\underline{počnete raditi na vrijeme, a ne noć prije predaje!}} U slučaju nemogućnosti dolaska do servera, javite nam se što je ranije moguće.
+  		\item Što se operacijskog sustava tiče, važno je samo da je riječ o nekoj Linux distribuciji koja koristi \textbf{\textit{systemd}}. Radi popularnosti (kako globalnoj, tako i na vještini) i jednostavnosti, preporučamo serversku inačicu distribucije Ubuntu. 
+  		\item Nijedan pošteni serverski OS \textbf{nema GUI} (\textit{Graphical User Interface} - grafičko korisničko sučelje), pa vas je Marcus pomalo drsko zamolio da ga ne sramotite tako da mu na server instalirate GUI. Naime: GUI u serverskom okruženju ne donosi gotovo nikakve korisne mogućnosti, jer se većina konfiguriranja ionako svodi na rad kroz terminal i uređivanje tekstualnih konfiguracijskih datoteka. S druge strane, GUI zauzima neke resurse na serverskom računalu, i predstavlja samo još jednu komponentu koja se može pokvariti. Također, zbog arhitekture X sustava, otvara se i mogućnost sigurnosnih propusta, što nikako nije poželjno\footnote{Više o argumentaciji zaoštrenih odnosa između servera i GUI-ja možete pročitati na \href{https://help.ubuntu.com/community/ServerGUI}{linku.}}.
+  	\end{itemize}
+
+  	\newpage
+
+	\section*{\underline{Zadatak 2 - dodavanje korisnika; kvote}}
+		Nakon posljednjeg predavanja NKOSL-a, Marcus se s nekoliko kolega upustio u žustru diskusiju o serverima. Vrlo zadovoljan i motiviran raspravom, odlučio je na svom serveru napraviti i jedan korisnički račun za kolege s NKOSL-a, kako bi oni mogli staviti svoje web-stranice ili neke datoteke na njegov server. Ipak, budući da je svjestan vrijednosti resursa svog servera, želi ograničiti njihovo korištenje diskovnog prostora, i to koristeći kvote (engl. \textit{quotas}.
+
+		\par Dakle, nakon što smo osigurali neku inačicu servera, moramo pomoći Marcusu da ostvari željenu višekorisničku konfiguraciju, koja treba sadržavati barem sljedeće:
+		\begin{itemize}
+			\item Uz \textit{root} i \textit{default} korisnika (koji bi se mogao zvati \textit{marcus}), potrebno je dodati i korisnika s imenom \textit{nkosl}.
+			\item Korisnik \textit{marcus} mora imati sudo ovlasti, tj. mora se nalaziti u datoteci \textit{/etc/sudoers}. 
+			\item Korisnik \textit{nkosl} ne smije imati sudo ovlasti.
+		\end{itemize}
+
+		Što se kvota tiče, nužno je da postoje sljedeće komponente:
+		\begin{itemize}
+			\item \textit{Soft limit}
+			\item \textit{Hard limit}
+			\item \textit{Grace period}
+		\end{itemize}
+		Budući da ne zna puno o kvotama, kolega nam je ostavio nešto slobode što se tiče izbora vrijednosti. Važno je da su \textit{soft limit} i \textit{hard limit} različiti, te da postoji grace period. Ipak, nastojte te vrijednosti svesti na nešto što je lako demonstrirati (čak i ako se time malo narušava vjerodostojnost sustava). Primjer konfiguracije:
+		\begin{itemize}
+			\item SL = 10 MB
+			\item HL = 15 MB
+			\item GP od nekoliko sekundi
+		\end{itemize}
+		Također, na vama je i da smislite adekvatnu demonstraciju kao dokaz da su kvote ispravno konfigurirane.
+		\vfill
+
+		\textbf{\underline{NAPOMENE:}}
+	  	\begin{itemize}
+	  		\item Ako se ukaže potreba za uređivanjem datoteke \textit{/etc/sudoers}, za to \\ \textbf{\underline{obavezno koristiti naredbu \textit{visudo}!}} U protivnom je moguće, primjerice, ukloniti sudo prava svim korisnicima, što nikako ne bi bilo dobro.
+	  		\item Za brže shvaćanje kvota, dobre se upute nalaze na \href{https://www.digitalocean.com/community/tutorials/how-to-enable-user-and-group-quotas}{linku}.
+	  	\end{itemize}
+
+
+	\newpage
+
+	\section*{\underline{Zadatak 3 - korisnički pristup: SSH, lozinka}}
+		Marcusu se jako sviđa dosad obavljeno, ali prelijen je da bi svaki put upisivao lozinku, pa se sjetio SSH ključeva i činjenice da se SSH ključevi koriste za autentikaciju korisnika. Prema tome, Marcus vas je zamolio da \textbf{omogućite} SSH login i \textbf{zabranite} login lozinkom svim korisnicima.
+		\par S tim željama na umu, vaš se zadatak ugrubo može podijeliti na sljedeće dijelove:
+		\begin{itemize}
+			\item Dignite SSH server na portu 31415.
+			\item Omogućite login pomoću RSA keyeva (za marcusa te za korisnika \textit{nkosl}, za kojeg ćemo vam mi dati ključ) 
+			\item O\textbf{ne}mogućite login koristeći password. 
+			\item Onemogućite login korisniku root\footnote{Ovo je česta i dobra praksa}.
+			\item Kreirajte korisnika \textit{papiga} (nominativ) te kopirajte njegov \textit{.bashrc} u direktorij kojeg poslužuje NginX iz sljedećeg zadatka.
+			\item Uredite \textit{welcome message} tako da u toj poruci piše kad i odakle se korisnik prethodni put spojio.  
+		\end{itemize}
+		\underline{BONUS:} Za jednostavniji rad i demonstraciju pokušajte napraviti alias za login na server naredbom "ssh srvr", tj. da ne morate pisati ni IP adresu servera ni username.
+		Hint: koristiti \textit{ssh\_profile}, ne \textit{bashrc}.
+
+
+		\newpage
+
+		\section*{\underline{Zadatak 4 - NginX}}
+		Odlučili smo se malo poigrati sa stvaranjem svoje male web stranice uz pomoć Nginx-a, kako bismo olakšali pristup važnim datotekama s našeg servera. Pritom, naravno, ne želimo da tome svatko može pristupiti. Zato smo ga odlučili koliko-toliko zaštititi jednostavnim metodama.
+
+		\par Za početak želimo:
+		\begin{itemize}
+			\item Preko URL-a \textit{server\_IP/mydistro} pristupiti web stranici svoje omiljene Linux distribucije
+			\item Preko URL-a \textit{server\_IP/files} pristupiti direktoriju u kojem se nalaze datoteke i moći pregledavati/preuzimati svaku od njih
+		\end{itemize}
+
+		Nakon ove kratke konfiguracije, pobrinut ćemo se da Marcusova stranica bude osigurana.
+
+		Da bismo to ostvarili, potrebno je:
+		\begin{itemize}
+			\item Promijeniti port na kojem Nginx sluša zahtjeve na 8080.
+			\item Omogućiti pristup našem web serveru samo sa CARNet-ovih IP adresa:
+			\begin{itemize}
+				\item 161.53.0.0/16
+				\item 193.198.0.0/16
+				\item 82.132.0.0/17
+				\item 31.147.0.0/16
+			\end{itemize}
+		\end{itemize}
+		Napomena: za potrebe testiranja možete dodati još neki pogodan raspon IP adresa (lokalne adrese (192.168.0.0/16), adrese vašeg providera i sl.). Kompletan popis adresa možete pronaći na \href{https://sysportal.carnet.hr/hr_alloclist}{linku.}
+
+
+		\par Puno smo napravili, i Marcus je zadovoljan trudom i predanošću, ali sa sigurnosne mu strane ovo nije dovoljno, pa nas je zamolio da mu pomognemo prebaciti stranicu na HTTPS te zaštititi naše datoteke korisničkim imenom i lozinkom. Za to je potrebno:
+		\begin{itemize}
+			\item stvoriti \textit{self-signed} SSL certifikat s RSA ključem za potrebe HTTPS-a (hint: \textit{openssl})
+				\begin{itemize}
+					\item napomena: dodatni podaci koje budete unosili nisu važni
+				\end{itemize}
+			\item konfigurirati web server da:
+			\begin{itemize}
+				\item koristi HTTPS i da sluša na portu 3648,
+				\item sve HTTP zahtjeve preusmjerava na HTTPS,
+				\item kod pristupanja datotekama zatraži korisničko ime i lozinku,
+				\item pritom imati na umu sljedeće naputke:
+				\begin{itemize}
+					\item treba stvoriti datoteku s popisom korisnika,
+					\item \textit{openssl} je dovoljan.
+				\end{itemize}
+			\end{itemize}
+		\end{itemize}
+
+		Napomena: kod prvog pristupa HTTPS verziji stranice preglednik bi trebao javiti poruku da veza nije sigurna (\textit{connection insecure}). To je normalna pojava u ovom slučaju.
+
+
+	\newpage
+
+	\section*{\underline{Zadatak 5 - logovi}}
+		
+		Sada je Marcus zadovoljan postavkama NginX-a. I, naravno, beskrajno zahvalan. Sljedeće što ga zanima je vođenje logova o radu servera. Ranije spomenuta kolegica Saša rekla mu je za \textit{systemd}-ov alat \textit{journalctl}, pa je naumio njega koristiti. Saša je KSET-ovka, pa mu je rekla da, ako želi, može radi vježbe logove prosljeđivati na KSET-ov server, koristeći protokol \textit{rsync}. On je tu ponudu objeručke prihvatio, pa je naumio napraviti sljedeće:
+		\begin{itemize}
+			\item Otkriti način kako, koristeći naredbu \textit{journalctl}, doći do logova vezanih za NginX.
+			\begin{itemize}
+				\item Obavijestite Marcusa da mu tu možda može pomoći naredba \textit{systemctl list-units}.
+			\end{itemize}
+			\item Ograničiti se na logove samo od trenutnog dana.
+			\item Tako profiltrirane logove zapisati u datoteku \textit{logNginx.txt}.
+			\item Konačno, tako zapisane logove poslati, koristeći naredbu \textit{rsync}, na adresu \textit{hactar.kset.org}, u udaljeni direktorij \textit{nkosl/log}.
+		\end{itemize}
+		
+	\newpage
+
+	\section*{\underline{Zadatak 6 - cron}}
+		\par Nakon dobro obavljenog posla, Marcus je lokalno pokrenuo naredbu \textit{ping -D google.hr}, i, uvjerivši se da server radi kako treba, odvojio nekoliko trenutaka da se nasloni i zadovoljno protrlja rukama. Ali - dogodila se nezgoda: dok se Marcus divio (više) vašim i (manje) vlastitim \textit{sysadmin} postignućima, mačka mu je skočila na \textit{router} i pritom ga isključila iz struje! Nakon što je Marcus preneraženo gledao nekoliko propalih \textit{pingova}, primijetio je da je \textit{router} isključen, i ponovno ga uključio u struju.
+		\par Ta ga je nezgoda nagnala na razmišljanje, i ustanovio je da želi voditi nekakvu evidenciju o dostupnosti mreže. Budući da mu se na ekranu još uvijek vrtila naredba \textit{ping}, i da je iz nje bilo očito kada je došlo do prekida veze, a kada je veza ponovno uspostavljena, zaključio je da bi jedan grubi način vođenja te evidencije mogao biti periodičko pinganje i, ako je neki paket "propao", evidentiranje toga u neku datoteku.
+		\par Marcus se sjetio svog cimera sa Šare, Malog Pere, koji je svojevremeno "rasturao" Linux, i sjetio se da je Pero za štošta koristio sustav za raspoređivanje i automatsko periodično obavljanje zadataka \textit{cron}. Shodno tome, nazvao je Peru i pitao ga može li mu pomoći sa sastavljanjem \textit{cronjoba} koji bi periodički, svaka 4 sata, pokrenuo ping naredbu i zapisao grešku u log u slučaju gubitka ping paketa.
+		\par Pero mu je, naravno, odgovorio potvrdno i rado pomogao. Rekao mu je da mora napraviti sljedeće:
+		\begin{itemize}
+			\item smišljenu ping naredbu koja šalje 8 paketa, a njen ispis na \textit{stderr stream} preusmjeriti u log datoteku proizvoljnog naziva\footnote{Konvencija je da nazivi log datoteke završe s ".log".},
+			\item pokrenuti naredbu \textit{crontab -e},\footnote{To je naredba namijenjena postavljanju crontab datoteke, preko koje se konfiguriraju cronjobovi za pojedinog korisnika. U njoj bi trebali biti zadani neki primjeri korištenja. Trebali bi biti dovoljni za shvaćanje sintakse crona, ali svakako dodatno istražite tu sintaksu ako vam nije jasna.}
+			\item cijelu ranije smišljenu ping naredbu staviti na adekvatno mjesto u crontab,
+			\item konfigurirati cron tako da pokreće tu naredbu svaki dan, svaka četiri sata.
+		\end{itemize}
+
+		\par Marcus je drage volje poslušao svog prijatelja i učinio kako mu je ovaj rekao. Nakon toga mu je palo na pamet da je mogao upregnuti \textit{cron} i za prethodni zadatak i slanje logova. Pomognite mu da još to učini (na analogan način) i steknite njegovu vječnu zahvalnost!
+
+	\newpage
+
+	\section*{\underline{Bonus zadaci, naputci i napomene}}
+		\underline{\textbf{Bonus zadaci:}}
+		\begin{enumerate}
+			\item Ako želite, pokušajte napisati i upregnuti skriptu koja bi omogućila proizvoljan ispis u log datoteku, i koja bi prekinula izvođenje ping naredbe odmah nakon prvog pucanja veze.
+			\item Pošaljite i log pingnja na rsync server kao u petom zadatku.
+			\item Napravite cronjob koji jednom dnevno, u podne, pokreće naredbu \textit{traceroute}, koja prati\footnote{Uvjetno rečeno "prati" - više detalja o ovome možete čuti, primjerice, na Komunikacijskim mrežama.} put ping-paketa od izvora do odredišta, i taj zapis prebacuje (nevažno koristi li se \textit{scp} ili \textit{rsync}) na isti server kao u petom zadatku.
+		\end{enumerate}
+
+		\vfill
+		\underline{\textbf{Naputci i napomene: }}
+		\begin{itemize}
+			\item Važno je još jednom istaknuti da barem prvi zadatak \textbf{počnete raditi na vrijeme!} Čak i u slučaju da se ne odlučite koristiti neki cloud hosting servis za nabavku servera, nego se opredijelite za virtualni stroj, greške i problemi vrebaju!
+			\item Neke komponente ove vježbe (poput \textit{crona}, \textit{rsynca} ili \textit{scp}-a) namjerno nisu detaljno objašnjene, kako vas ne bismo previše "držali za ruku" - u cilju nam je pokušati vas navesti da se snađete pred problemom. Prema tome, cijenimo svaki pokušaj rješavanja problema, pa makar se on pokazao neuspješnim.
+			\item \textit{man} stranice za mrežne protokole često znaju biti prevelike, nepregledne i nimalo \textit{user-friendly}, pogotovo ako ne znate što tražiti. Zato postoji projekt \textit{tldr}, koji koristi vezu s internetom kako bi dohvatio sažetak \textit{man} stranica koji je čitak i koristan. Projekt se može dohvatiti u ovom \href{https://github.com/tldr-pages/tldr}{git repozitoriju}, a njegova bi se instalacija nekome tko nikad nije koristio git za dohvat programa mogla shvatiti kao još jedan bonus zadatak. Ali bez brige - nije teško, a iznimno je korisno.
+		\end{itemize}
+		Sretno!
+\end{document}
