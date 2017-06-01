@@ -1,0 +1,119 @@
+TEKST ZADATKA:
+Odlučili smo se malo poigrati sa stvaranjem svoje male web stranice uz pomoć Nginx-a da bismo olakšali pristup bitnim datotekama sa našeg servera. Ali, ne želimo da tome svatko može pristupiti. Zato smo ga odlučili koliko-toliko zaštititi jednostavnim metodama.
+
+Za početak želimo:
+-preko adrese <vas_server>/mydistro pristupiti web stranici omiljene Linux distribucije (po želji)
+-preko adrese <vas_server>/files pristupiti direktoriju u kojem se nalaze datoteke i moći pregledavati/preuzimati svaku od njih
+
+Jednom kada smo to postavili, pobrinut ćemo se da nam je stranica osigurana.
+
+Potrebno je:
+-promijeniti port na kojem Nginx sluša zahtjeve u 8080
+
+-omogućiti pristup našem web serveru samo sa CARNet-ovih IP adresa:
+161.53.0.0/16
+193.198.0.0/16
+82.132.0.0/17
+31.147.0.0/16
+
+napomena: za potrebe testiranja možete dodati još koji raspon IP adresa (lokalne adrese, adrese vašeg providera i sl.). Kompletan popis adresa možete pronaći na https://sysportal.carnet.hr/hr_alloclist
+
+
+To nam nije dovoljno, stoga smo se odlučili prebaciti na HTTPS te zaštititi naše datoteke korisničkim imenom i lozinkom.
+Potrebno je:
+-stvoriti self-signed SSL certifikat sa RSA ključem za potrebe HTTPS-a (hint: openssl)
+(napomena: dodatni podaci koje budete unosili nisu bitni)
+
+-konfigurirati web server da koristi HTTPS i da sluša na portu 3648
+
+-promijeniti naš server tako da sve HTTP zahtjeve preusmjerava na HTTPS
+
+-konfigurirati web server da kod pristupanja datotekama zatraži korisničko ime i lozinku 
+(hint 1: treba stvoriti datoteku sa popisom korisnika)
+(hint 2: openssl je dovoljan)
+
+napomena: kod prvog pristupa HTTPS verziji stranice preglednik će vam reći da veza nije sigurna (connection insecure). To je normalna pojava u ovom slučaju.
+
+--------------------------------------------------------------------------------------------------------------
+
+RJEŠENJA:
+-------------------------------------------------------
+NAREDBE:
+
+sudo apt-get install nginx
+
+#SSL:
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+
+#Basic user authentication
+sudo sh -c "echo -n 'nkoslovci:' >> /etc/nginx/.htpasswd"
+sudo sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd"
+
+------------------------------------------------------
+DATOTEKE:
+--------
+/etc/nginx/sites-available/labzav:
+
+#HTTPS!
+server {
+	#slusa na portu 3648
+	listen 3648 ssl;
+
+	#konfiguracija SSL
+	server_name localhost;
+	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
+	#blokada IP adresa
+	include conf.d/allow.conf;
+	
+	#proxypass
+	location /mydistro/ {
+		proxy_pass https://www.debian.org/;
+	}
+
+	#pristup datotekama s autentikacijom
+	location /files {
+		auth_basic "Tko si ti?";
+		auth_basic_user_file /etc/nginx/.htpasswd;
+		
+		alias /tmp;
+		autoindex on;
+		
+	}
+
+
+	location / {
+		root /var/www/html;
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+	
+}
+
+#HTTP
+server {
+	listen 8080;
+	server_name localhost;
+	return 302 "https://$host:3648$request_uri";
+
+}
+
+--------
+/etc/nginx/conf.d/allow.conf:
+
+allow 161.53.0.0/16;
+allow 193.198.0.0/16;
+allow 82.132.0.0/17;
+allow 31.147.0.0/16;
+deny all;
+
+--------------------------------------------------------------------------------------------------------------
+Moguća pitanja:
+-testirati i navigaciju po stranici distroa, ako puca, zašto puca? (stranica na koju proxyamo može koristiti apsolutne putanje a ne relativne pa može doći do problema. na www.debian.org radi kako spada, na mxlinux.org puca, na 4mlinux.com koristi originalnu domenu)
+-ako nisu stavili popis IP adresa u file, pitat ih kako bi to izveli? (include redak, inače može i direktno u config)
+-drugi način generiranja popisa usera za basic authentication? (paket apache2-utils, koristiti htpasswd naredbu)
+-zašto smo odlučili koristiti promjenu porta? (teže napast stranicu koja ne koristi default portove)
+-dodatni načini osiguravanja web stranice?
+-što znači /16 kod IP-a? (subnet mask)

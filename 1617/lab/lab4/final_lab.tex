@@ -53,7 +53,7 @@
   	\newpage
 
 	\section*{\underline{Zadatak 2 - dodavanje korisnika; kvote}}
-		Nakon posljednjeg predavanja NKOSL-a, Marcus se s nekoliko kolega upustio u žustru diskusiju o serverima. Vrlo zadovoljan i motiviran raspravom, odlučio je na svom serveru napraviti i jedan korisnički račun za kolege s NKOSL-a, kako bi oni mogli staviti svoje web-stranice ili neke datoteke na njegov server. Ipak, budući da je svjestan vrijednosti resursa svog servera, želi ograničiti njihovo korištenje diskovnog prostora, i to koristeći kvote (engl. \textit{quotas}.
+		Nakon posljednjeg predavanja NKOSL-a, Marcus se s nekoliko kolega upustio u žustru diskusiju o serverima. Vrlo zadovoljan i motiviran raspravom, odlučio je na svom serveru napraviti i jedan korisnički račun za kolege s NKOSL-a, kako bi oni mogli staviti svoje web-stranice ili neke datoteke na njegov server. Ipak, budući da je svjestan vrijednosti resursa svog servera, želi ograničiti njihovo korištenje diskovnog prostora, i to koristeći kvote (engl. \textit{quotas}).
 
 		\par Dakle, nakon što smo osigurali neku inačicu servera, moramo pomoći Marcusu da ostvari željenu višekorisničku konfiguraciju, koja treba sadržavati barem sljedeće:
 		\begin{itemize}
@@ -91,7 +91,7 @@
 		\par S tim željama na umu, vaš se zadatak ugrubo može podijeliti na sljedeće dijelove:
 		\begin{itemize}
 			\item Dignite SSH server na portu 31415.
-			\item Omogućite login pomoću RSA keyeva (za marcusa te za korisnika \textit{nkosl}, za kojeg ćemo vam mi dati ključ) 
+			\item Omogućite login pomoću RSA keyeva (za marcusa te za korisnika \textit{nkosl}, čiji javni ključ možete naći na \href{http://www.fer.unizg.hr/_download/repository/nkosl_rsa.pub}{linku}) 
 			\item O\textbf{ne}mogućite login koristeći password. 
 			\item Onemogućite login korisniku root\footnote{Ovo je česta i dobra praksa}.
 			\item Kreirajte korisnika \textit{papiga} (nominativ) te kopirajte njegov \textit{.bashrc} u direktorij kojeg poslužuje NginX iz sljedećeg zadatka.
@@ -108,8 +108,8 @@
 
 		\par Za početak želimo:
 		\begin{itemize}
-			\item Preko URL-a \textit{server\_IP/mydistro} pristupiti web stranici svoje omiljene Linux distribucije
-			\item Preko URL-a \textit{server\_IP/files} pristupiti direktoriju u kojem se nalaze datoteke i moći pregledavati/preuzimati svaku od njih
+			\item Preko URL-a \textit{server\_IP/mydistro} pristupiti web stranici svoje omiljene Linux distribucije,
+			\item Preko URL-a \textit{server\_IP/files} pristupiti direktoriju u kojem se nalaze datoteke i moći pregledavati sadržaj direktorija i preuzeti svaku datoteku.
 		\end{itemize}
 
 		Nakon ove kratke konfiguracije, pobrinut ćemo se da Marcusova stranica bude osigurana.
@@ -154,7 +154,7 @@
 
 	\section*{\underline{Zadatak 5 - logovi}}
 		
-		Sada je Marcus zadovoljan postavkama NginX-a. I, naravno, beskrajno zahvalan. Sljedeće što ga zanima je vođenje logova o radu servera. Ranije spomenuta kolegica Saša rekla mu je za \textit{systemd}-ov alat \textit{journalctl}, pa je naumio njega koristiti. Saša je KSET-ovka, pa mu je rekla da, ako želi, može radi vježbe logove prosljeđivati na KSET-ov server, koristeći protokol \textit{rsync}. On je tu ponudu objeručke prihvatio, pa je naumio napraviti sljedeće:
+		Sada je Marcus zadovoljan postavkama NginX-a. I, naravno, beskrajno zahvalan. Sljedeće što ga zanima je vođenje logova o radu servera. Ranije spomenuta kolegica Saša rekla mu je za \textit{systemd}-ov alat \textit{journalctl}, pa je naumio njega koristiti. Saša je KSET-ovka, pa mu je rekla da, kad je sa svojim kolegama slušala NKOSL, se njih nekoliko dogovorilo i međusobno su si slali logove, koristeći protokol \textit{rsync}. Ta ga je ideja zainteresirala, ali prvo je poželio te logove prosljeđivati lokalno. Shodno tome, naumio je učiniti sljedeće:
 		\begin{itemize}
 			\item Otkriti način kako, koristeći naredbu \textit{journalctl}, doći do logova vezanih za NginX.
 			\begin{itemize}
@@ -162,7 +162,8 @@
 			\end{itemize}
 			\item Ograničiti se na logove samo od trenutnog dana.
 			\item Tako profiltrirane logove zapisati u datoteku \textit{logNginx.txt}.
-			\item Konačno, tako zapisane logove poslati, koristeći naredbu \textit{rsync}, na adresu \textit{hactar.kset.org}, u udaljeni direktorij \textit{nkosl/log}.
+			%\item Konačno, tako zapisane logove poslati, koristeći sustav za upravljanje logovima \textit{rsyslog} i TCP, na adresu \textit{hactar.kset.org}, port 514, u udaljeni direktorij \textit{nkosl/log}.
+			\item Konačno, tako zapisane logove poslati na svoje lokalno računalo.
 		\end{itemize}
 		
 	\newpage
@@ -187,8 +188,9 @@
 		\underline{\textbf{Bonus zadaci:}}
 		\begin{enumerate}
 			\item Ako želite, pokušajte napisati i upregnuti skriptu koja bi omogućila proizvoljan ispis u log datoteku, i koja bi prekinula izvođenje ping naredbe odmah nakon prvog pucanja veze.
-			\item Pošaljite i log pingnja na rsync server kao u petom zadatku.
-			\item Napravite cronjob koji jednom dnevno, u podne, pokreće naredbu \textit{traceroute}, koja prati\footnote{Uvjetno rečeno "prati" - više detalja o ovome možete čuti, primjerice, na Komunikacijskim mrežama.} put ping-paketa od izvora do odredišta, i taj zapis prebacuje (nevažno koristi li se \textit{scp} ili \textit{rsync}) na isti server kao u petom zadatku.
+			\item Pošaljite i log pinganja na svoje lokalno računalo kao u petom zadatku.
+			\item Napravite cronjob koji jednom dnevno, u podne, pokreće naredbu \textit{traceroute}, koja prati\footnote{Uvjetno rečeno "prati" - više detalja o ovome možete čuti, primjerice, na Komunikacijskim mrežama.} put ping-paketa od izvora do odredišta, i taj zapis prebacuje (koristeći, primjerice, \textit{scp} ili \textit{rsync}) na lokalno računalo.
+			\item Uz slanje na svoje lokalno računalo (što je prilično dosadan zadatak), pokušajte se s nekim od kolega dogovoriti da si međusobno šaljete logove, kao što je Saša natuknula Marcusu!
 		\end{enumerate}
 
 		\vfill

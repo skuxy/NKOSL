@@ -1,0 +1,9 @@
+Dignite SSH server na portu 31415, omogućite login pomoću RSA keyeva (za svojeg korisnika te za korisnika NKOSL za kojeg ćemo vam mi dati ključ), ali i onemogućite login koristeći password. Također onemogućite login korisniku root (dobra praksa).
+
+Kreirajte korisnika "papiga" te kopirajte njegov .bashrc u folder kojeg poslužuje NGINX. 
+
+Uredit welcome message da piše kad i odakle se trenutni korisnik zadnje spojio.  
+
+Dodatno, sredite si alias za login na server naredbom "ssh srvr", tj. da ne morate pisati niti IP servera niti username. (hint: ssh_profile, ne bashrc)
+
+Bonus: natjerajte git da koristi RSA ključeve
