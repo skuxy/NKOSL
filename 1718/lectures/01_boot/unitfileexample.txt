@@ -1,0 +1,28 @@
+Upute:
+
+dodaj unitfile u /etc/systemd/system
+dodaj svoj program ("brojevi" u ovom primjeru) u /usr/bin/
+systemctl daemon-reload; systemctl start moj_service ("test" u ovom primjeru)
+
+
+
+[Unit]
+Description=moj super kul program
+After=network.target # kao ovisi o mrezi pa kazes da se prvo digne mreza
+
+[Service]
+ExecStart=/opt/program.sh
+# tu se mogu dodati stvari poput
+# ExecStop=/opt/program.sh --stop # ako postoji neki poseban nacin za zaustaviti program
+# ExecReload=/opt/program.sh --reload # ako postoji neki poseban nacin za restartati program
+# systemd ima defaultan nacin za gasenje programa (signali) tako da nije potrebno eksplicitno pisati to
+# i po defaultu restart smatra gasenjem i paljenjem
+
+# jos tu mozes stavljati fileove koji specificiraju environment varijable
+# kul je ovaj restart
+Restart=always
+# systemd ce sada pratiti je li program ziv i ako nije, restartati ce ga
+
+[Install]
+WantedBy=default.target # u kojoj grupi se pokrece servis
+

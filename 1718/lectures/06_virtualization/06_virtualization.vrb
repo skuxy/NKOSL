@@ -1,0 +1,20 @@
+\frametitle{docker-compose.yml}
+
+  \begin{verbatim}
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    links:
+      - db
+    env_file: .env
+    ports:
+      - "3000:3000"
+    restart: always
+  \end{verbatim}
+

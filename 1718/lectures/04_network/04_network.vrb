@@ -1,0 +1,30 @@
+\frametitle{WLAN}
+	\framesubtitle{wpa\_supplicant}
+	\begin{itemize}
+		\item Konfiguracija kroz \texttt{wpa\_cli} ili izravno \texttt{/etc/wpa\_supplicant.conf}
+	\end{itemize}
+	{\tiny \begin{verbatim}
+$ wpa_passphrase MYSSID passphrase
+network={
+    ssid="MYSSID"
+    #psk="passphrase"
+    psk=59e0d07fa4c7741797a4e394f38a5c321e3bed51d54ad5fcbd3f84bc7415d73d
+}
+	\end{verbatim}
+	\begin{block}{/etc/wpa\_supplicant/eduroam.conf}
+	\begin{verbatim}
+network={
+   ssid="eduroam"
+   proto=WPA2 WPA
+   key_mgmt=WPA-EAP
+   pairwise=CCMP TKIP
+   group=CCMP TKIP
+   ca_cert="<path_to_cert>/eduroam_fer.hr_CA.pem"
+   subject_match="freeradius.fer.hr"
+   identity="<USER>"
+   eap=TTLS
+   password="<PASSWORD>"
+   phase2="auth=PAP"
+}
+	\end{verbatim}
+	\end{block}}

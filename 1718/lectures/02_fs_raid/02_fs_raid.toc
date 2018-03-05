@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {croatian}
+\beamer@sectionintoc {1}{Datote\IeC {\v c}ni sustav}{3}{0}{1}
+\beamer@sectionintoc {2}{RAID}{15}{0}{2}
+\beamer@subsectionintoc {2}{1}{Osnovni RAID leveli}{18}{0}{2}
+\beamer@subsectionintoc {2}{2}{Ugnije\IeC {\v z}\IeC {\dj }eni RAID leveli}{22}{0}{2}
+\beamer@subsectionintoc {2}{3}{Hardverski RAID}{24}{0}{2}
+\beamer@subsectionintoc {2}{4}{Softverski RAID}{25}{0}{2}
+\beamer@sectionintoc {3}{LVM}{27}{0}{3}
+\beamer@sectionintoc {4}{Kvote}{33}{0}{4}
+\beamer@sectionintoc {5}{Napredne mogu\IeC {\'c}nosti}{38}{0}{5}
