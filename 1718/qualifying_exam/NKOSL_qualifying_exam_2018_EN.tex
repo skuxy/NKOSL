@@ -1,0 +1,337 @@
+\documentclass[a4paper,11pt]{exam}
+\usepackage[left=1.5cm, right=1.5cm, top=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\shell}[1]{\texttt{#1}}
+
+\CorrectChoiceEmphasis{\bfseries\itshape}
+%\printanswers
+
+\usepackage{xpatch}
+\xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
+\xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
+
+\begin{document}
+\firstpageheader
+	{}
+	{{\large \textbf{Advanced Use of Linux Operating System}}\\
+		\textbf{Qualifying Exam - March 7th, 2018}}
+	{}
+\footer
+	{}{}{\thepage}
+	
+Name: \fillin[][7cm] \hfill ID Number: \fillin[][5cm]\\
+
+\begin{questions}
+	\question
+	Who holds the leading authority in Linux development today?
+	
+	\begin{oneparchoices}
+		\CorrectChoice Linus Torvalds
+		\choice Richard Stallman
+		\choice Lennart Poettering
+		\choice Steve Ballmer
+	\end{oneparchoices}
+	
+	\question
+	Debian, Fedora and OpenSUSE are examples of many Linux
+	
+	\begin{oneparchoices}
+		\CorrectChoice distributions
+		\choice classes
+		\choice components
+		\choice segments
+	\end{oneparchoices}
+	
+	\question
+	The licence most commonly used with Linux is:
+	
+	\begin{oneparchoices}
+		\choice BSD
+		\choice MIT
+		\CorrectChoice GPL
+		\choice Apache
+	\end{oneparchoices}
+	
+	\question
+  Two types of distribution updates are: 
+
+	\begin{oneparchoices}
+		    \choice stable and testing
+        \CorrectChoice rolling and stable 
+        \choice rolling and rocking
+        \choice unstable and stable
+	\end{oneparchoices}
+
+	\question
+  Which of these is commonly used to manually add removable storage?
+	
+	\begin{oneparchoices}
+        \choice /bin
+        \CorrectChoice /mnt
+        \choice /lib
+        \choice /etc
+	\end{oneparchoices}
+	
+	\question
+One can check disk space usage by running which of these commands?
+	
+	\begin{oneparchoices}
+		\choice ds 
+		\choice ls 
+		\CorrectChoice df 
+		\choice free
+	\end{oneparchoices}
+	
+	\question
+  An empty file can be created by running:
+
+	\begin{oneparchoices}
+		\choice mk
+		\CorrectChoice touch
+		\choice mv
+		\choice pwd
+	\end{oneparchoices}
+	
+	\question
+	Which of the following commands would create a directory called "\shell{linux}", and another one within it, called "\shell{osnovni}"? 
+	
+	\begin{oneparchoices}
+		\choice \shell{touch -p linux/osnovni} \\
+		\choice \shell{touch linux/osnovni} \\
+		\choice \shell{mkdir linux/osnovni} \\
+		\CorrectChoice \shell{mkdir -p linux/osnovni}
+	\end{oneparchoices}
+	
+	\question
+  Our current working directory is \shell{/home/pedro/.config/hexchat/assets}. Where will we end up after running the command \shell{cd ../../././../} ? 
+
+	\begin{oneparchoices}
+		\choice \shell{/home/pedro/.config/hexchat} \\
+		\choice \shell{/home/} \\
+		\choice \shell{/home/pedro/.config/} \\
+		\CorrectChoice \shell{/home/pedro/}
+	\end{oneparchoices}
+	
+	\question
+ Which sequence of characters redirects stdout and stderr elsewhere? 
+	\begin{oneparchoices}
+		\choice 2>\&1 
+		\CorrectChoice \&> 
+		\choice >
+		\choice >2
+	\end{oneparchoices}
+	
+	\question
+\shell{yes} is a command which, in its base form, merely prints ‘y’ to the standard output. Sometimes, we don't want scripts and commands to pest us with "[y/n]" confirmations, and instead want them to simply assume ‘y’ to be the answer to all questions. The command \shell{rm -ri <directory>} is an example of such a command. Which of the following enables the behavior described above?
+	
+	\begin{oneparchoices}
+		\choice \shell{rm -ri | yes} 
+		\CorrectChoice \shell{yes | rm -ri} 
+		\choice \shell{rm -ri \&\& yes} 
+		\choice \shell{yes || rm -ri}
+	\end{oneparchoices}
+	
+	\question
+  In order to redirect the printing of errors (and \textbf{only} errors) encountered during the execution of some command to some file, which of the following should we append to the command being run?
+
+	\begin{oneparchoices}
+	  \choice \shell{1>./some_file} 
+		\CorrectChoice \shell{2>./some_file} 
+		\choice \shell{\&>./some_file} 
+		\choice \shell{>./some_file}
+	\end{oneparchoices}
+	
+	\question
+	Odd man out! Which of these doesn't fit?
+	
+	\begin{oneparchoices}
+		\CorrectChoice before
+		\choice while
+		\choice until
+		\choice for
+	\end{oneparchoices}
+
+	\question
+	The command ls -ld /etc/??? lists:
+	\begin{oneparchoices}
+		\choice all files whose name has at least 3 characters
+		\choice all directories whose name starts with ???
+    \CorrectChoice all directories whose name has exactly 3 characters
+	  \choice all files named ???
+	\end{oneparchoices}
+	
+	\question
+  In bash, every variable is of the type:
+	
+	\begin{oneparchoices}
+		\choice integer
+		\CorrectChoice string
+		\choice double
+		\choice char
+	\end{oneparchoices}
+	
+	\question
+  In regular expressions, which character denotes End-of-Line?
+
+	\begin{oneparchoices}
+		\choice \textasciicircum
+		\CorrectChoice \$
+		\choice >
+		\choice *
+	\end{oneparchoices}
+
+	\question
+	What is the result of running \verb| sed -r "s/(.*)\.(.*)\.(.*)/\2\1\3/"| on the string A.B.C?:
+	
+	\begin{oneparchoices}
+		\choice CBA
+		\choice ABC
+		\CorrectChoice BAC
+		\choice CAB
+	\end{oneparchoices}
+	
+	\question
+	Choose the command which will, given a string containing any number of digits followed by a word (e.g. 1337banana, 90000mango), strip off the numbers and turn all letters to uppercase.
+
+	\begin{oneparchoices}
+		\CorrectChoice \verb|sed -r "s/([[:digit:]])*(.*)/\U\2/"| \\ 
+		\choice \verb|sed -r "s/([[:digit:]])(.*)/\u\2/"|  \\
+		\choice \verb|sed -r "s/([[:alnum:]])*(.*)/\u\1/"| \\
+		\choice \verb|sed -r "s/([[:alnum:]])(.*)/\U\2"| 
+	\end{oneparchoices}
+
+
+  \question
+  Which of these commands will remove the sequence of characters ".?" (without quotation marks) from the end of the line? 
+
+		\begin{oneparchoices}
+		\choice \verb|sed -r "s/(.*)(.?)$/\1/"|  \\
+		\choice \verb|sed -r "s/\.*.?$/\1/"| \\
+    \CorrectChoice \verb|sed -r "s/(.*)(\.\?)$/\1/"| \\ 
+    \choice \verb|sed -r "s/(\.*)(\.\?)$/\2/"|
+	\end{oneparchoices}
+
+	
+		\question
+	The line \shell{root:T3RqrzxU1MAH3F3wtuQu/:13284:0:99999:7:::} is a representative line from which file?
+	
+	\begin{oneparchoices}
+		\choice \shell{/etc/root} 
+		\choice \shell{/etc/sudoers} 
+		\choice \shell{/etc/fstab} 
+		\CorrectChoice \shell{/etc/shadow}
+  \end{oneparchoices}
+
+		\question
+	The line \shell{GROUPTWO    ALL = NOPASSWD: /usr/bin/updatedb, PASSWD: /bin/kill} is a representative line from which file?
+	
+	\begin{oneparchoices}
+		\choice \shell{/etc/root} 
+		\CorrectChoice \shell{/etc/sudoers} 
+		\choice \shell{/etc/fstab} 
+		\choice \shell{/etc/shadow}
+  \end{oneparchoices}
+
+
+	\question
+	The primary group for each user is written in:
+
+	\begin{oneparchoices}
+   	\choice \shell{/etc/hosts}
+		\CorrectChoice \shell{/etc/passwd}
+		\choice \shell{/usr/passwd} 
+		\choice \shell{/usr/group}  
+	\end{oneparchoices}
+
+	\question
+  The command "\shell{su}" run with no arguments:
+	
+	\begin{oneparchoices}
+		\choice gives the current user sudo privileges \\
+		\CorrectChoice switches the current user with \shell{root} \\ 
+		\choice creates a new user \\
+		\choice returns an error due to being run improperly
+	\end{oneparchoices}
+	
+	\question
+  Which command ensures the file may only be read and nothing else? 
+
+	\begin{oneparchoices}
+		\CorrectChoice \shell{chmod 444 some_file}\\ 
+		\choice \shell{chmod 755 some_file} \\
+		\choice \shell{chmod 777 some_file} \\
+		\choice \shell{chmod 333 some_file}
+	\end{oneparchoices}
+	
+	\question
+	Which command permits deleting files inside of a directory \textbf{only} to the directory owner and root?
+	
+	\begin{oneparchoices}
+		\choice \shell{chmod +X some_directory} \\
+		\choice \shell{chmod +r some_directory} \\
+    	\CorrectChoice \shell{chmod +t some_directory}\\ 	
+	  \choice \shell{chmod -X some_directory}
+	\end{oneparchoices}
+
+	\question
+	Which of these is valid if you want to run a command in the background?
+
+	\begin{oneparchoices}
+		\choice \shell{<command> \$} \\
+		\CorrectChoice \shell{<command> \&} \\
+		\choice \shell{<command> !} \\
+		\choice \shell{<command> \textasciicircum} \\
+	\end{oneparchoices}
+	
+	\question
+  What does the \shell{\$\$} variable contain?
+
+	\begin{oneparchoices}
+				\choice current kernel version\\
+		\CorrectChoice \textit{PID} of the current process \\ 
+		\choice \textit{exit code} of the last run program \\
+		\choice the default terminal emulator
+	\end{oneparchoices}
+	
+	\question
+  Which signal is sent by pressing Ctrl+C? 
+
+  \begin{oneparchoices}
+		\choice \shell{SIGKILL}
+		\choice \shell{SIGTRAP}
+    \choice \shell{SIGHUP}
+    \CorrectChoice \shell{SIGINT}  
+  \end{oneparchoices}
+
+	\question
+  Choose the "strongest" signal:
+
+  \begin{oneparchoices}
+		\CorrectChoice \shell{SIGKILL}
+		\choice \shell{SIGTRAP}
+    \choice \shell{SIGHUP}
+    \choice \shell{SIGINT}  
+  \end{oneparchoices}
+
+
+	\question
+  If a user wants to suspend the active process, which of these key combinations will enable them to do it?
+
+  \begin{oneparchoices}
+		\choice \shell{CTRL+C}
+		\CorrectChoice \shell{CTRL+Z}
+    \choice \shell{ALT+C}
+    \choice \shell{CTRL+D}  
+  \end{oneparchoices}
+	
+\vspace{1em}
+\uplevel{
+	Which term do You prefer:
+	\\ A. In the morning (10-12) \hspace{20mm} B. In the afternoon (12-14)
+}    
+
+\end{questions}
+\end{document}
