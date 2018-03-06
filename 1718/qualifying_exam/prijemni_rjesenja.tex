@@ -7,7 +7,7 @@
 \newcommand{\shell}[1]{\texttt{#1}}
 
 \CorrectChoiceEmphasis{\bfseries\itshape}
-\printanswers
+%\printanswers
 
 \usepackage{xpatch}
 \xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
@@ -66,7 +66,7 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\end{oneparchoices}
 
 	\question
-  Direktorij u koji korisnik ručno dodaje pokretne uređjaje/medije jest:
+  Direktorij u koji korisnik (uobičajeno) ručno dodaje pokretne uređjaje/medije jest:
 	
 	\begin{oneparchoices}
         \choice /bin
@@ -76,7 +76,7 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\end{oneparchoices}
 	
 	\question
-Zauzece prostora po particija provjeravamo naredbom:
+Zauzeće prostora po particijama provjeravamo naredbom:
 	
 	\begin{oneparchoices}
 		\choice ds 
@@ -116,7 +116,7 @@ Zauzece prostora po particija provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
- Znakovi kojima se vrši preusmjeravanje stdout i stderr jesu: 
+ Niz znakova kojime se vrši preusmjeravanje stdout i stderr je: 
 	\begin{oneparchoices}
 		\choice 2>\&1 
 		\CorrectChoice \&> 
@@ -125,7 +125,7 @@ Zauzece prostora po particija provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati ‘y’. Ponekad skriptama ne želimo ručno odgovarati ‘y’ i želimo da se sve izvede kao da smo na svako pitanje odgovorili ‘y’. Dobar primjer je naredba \shell{rm -ri <direktorij>}. Koja naredba će nam omogućiti takvo izvođenje:
+\shell{yes} je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati ‘y’. Ponekad skriptama ne želimo ručno odgovarati ‘y’ i želimo da se sve izvede kao da smo na svako pitanje odgovorili ‘y’. Dobar primjer je naredba \shell{rm -ri <direktorij>}. Koja naredba od navedenih će nam omogućiti takvo izvođenje?
 	
 	\begin{oneparchoices}
 		\choice \shell{rm -ri | yes} 
@@ -135,7 +135,7 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 	\end{oneparchoices}
 	
 	\question
-  Da bismo preusmjerili \textbf{samo} ispis pogreški neke naredbe u datoteku, na kraj naredbe dodajemo:
+  Da bismo preusmjerili ispis pogrešaka (i \textbf{samo} njih) neke naredbe u datoteku, na kraj naredbe dodajemo:
 
 	\begin{oneparchoices}
 	  \choice \shell{1>./datoteka} 
@@ -157,14 +157,14 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 	\question
 	Naredba ls -ld /etc/??? izlistava:
 	\begin{oneparchoices}
-		\choice sve datoteke koje čiji naziv ima najmanje tri znaka
+		\choice sve datoteke čiji naziv ima najmanje tri znaka
 		\choice sve direktorije čiji naziv počinje s ???
     \CorrectChoice sve direktorije čiji naziv ima točno tri znaka
 	  \choice sve datoteke s nazivom ???
 	\end{oneparchoices}
 	
 	\question
-  U skriptnom jeziku bash, svaka varijabla je tipa:
+  U skriptnom jeziku bash, svaka je varijabla tipa:
 	
 	\begin{oneparchoices}
 		\choice integer
@@ -174,7 +174,7 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 	\end{oneparchoices}
 	
 	\question
-  Kojim znakom oznacavamo kraj reda u regularnim izrazima?
+  Kojim znakom označavamo kraj reda u regularnim izrazima?
 
 	\begin{oneparchoices}
 		\choice \textasciicircum
@@ -208,10 +208,10 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
   Naredba kojom se briše niz .? na kraju retka jest: 
 
 		\begin{oneparchoices}
-		\choice \verb|sed -r "s/(.*)(.?)\$/\1/"|  \\
-		\choice \verb|sed -r "s/\.*.?\$/\1/"| \\
-    \CorrectChoice \verb|sed -r "s/(.*)(\.\?)\$/\1/"| \\ 
-    \choice \verb|sed -r "s/(\.*)(\.\?)\$/\2/"|
+		\choice \verb|sed -r "s/(.*)(.?)$/\1/"|  \\
+		\choice \verb|sed -r "s/\.*.?$/\1/"| \\
+    \CorrectChoice \verb|sed -r "s/(.*)(\.\?)$/\1/"| \\ 
+    \choice \verb|sed -r "s/(\.*)(\.\?)$/\2/"|
 	\end{oneparchoices}
 
 	
@@ -247,7 +247,7 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 	\end{oneparchoices}
 
 	\question
-  Naredba \shell{su} bez argumenata:
+  Naredba "\shell{su}" bez argumenata:
 	
 	\begin{oneparchoices}
 		\choice daje trenutnom korisniku sudo prava \\
@@ -297,7 +297,7 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 	\end{oneparchoices}
 	
 	\question
-  Koji se signal šalje sa pritiskom kombinacije tipki Ctrl+C? 
+  Koji se signal šalje pritiskom kombinacije tipki Ctrl+C? 
 
   \begin{oneparchoices}
 		\choice \shell{SIGKILL}
@@ -318,7 +318,7 @@ Yes je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati
 
 
 	\question
-Pomoću koje kombinacije tipki je moguće suspendirati privremeno zaustaviti aktivni proces u ljusci?
+Pomoću koje kombinacije tipki je moguće suspendirati (privremeno zaustaviti) aktivni proces u ljusci?
 
   \begin{oneparchoices}
 		\choice \shell{CTRL+C}
@@ -328,15 +328,6 @@ Pomoću koje kombinacije tipki je moguće suspendirati privremeno zaustaviti akt
   \end{oneparchoices}
 	
     
-	\vspace{1em}
-\uplevel{
-	Preferencija termina:
-	\\ A. Jutarnji (10-12) \hspace{20mm} B. Popodnevni (12-14)
-}
-	%\begin{oneparchoices}
-	%	\choice Jutarnji (10-12) \\
-	%	\choice Popodnevni (12-14)
-	%\end{oneparchoices}
 
 \end{questions}
 \end{document}
