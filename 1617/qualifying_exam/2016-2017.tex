@@ -7,7 +7,7 @@
 \newcommand{\shell}[1]{\texttt{#1}}
 
 \CorrectChoiceEmphasis{\bfseries\itshape}
-%\printanswers
+\printanswers
 
 \usepackage{xpatch}
 \xpatchcmd{\oneparchoices}{\penalty -50\hskip 1em plus 1em\relax}{\hfill}{}{}
@@ -17,7 +17,7 @@
 \firstpageheader
 	{}
 	{{\large \textbf{Napredno korištenje OS Linux}}\\
-		\textbf{Prijemni ispit - 7. ožujka 2018.}}
+		\textbf{Prijemni ispit - 1. ožujka 2017.}}
 	{}
 \footer
 	{}{}{\thepage}
@@ -26,13 +26,13 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 
 \begin{questions}
 	\question
-	Najveći autoritet u današnjem razvoju Linuxa ima:
+	Gruba podjela operacijskih sustava je na:
 	
 	\begin{oneparchoices}
-		\CorrectChoice Linus Torvalds
-		\choice Richard Stallman
-		\choice Lennart Poettering
-		\choice Steve Ballmer
+		\CorrectChoice Windows i UNIX bazirane
+		\choice Windows i Linux bazirane
+		\choice Linux i Unix bazirane
+		\choice Linux i iOS bazirane
 	\end{oneparchoices}
 	
 	\question
@@ -41,58 +41,58 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\begin{oneparchoices}
 		\CorrectChoice distribucija
 		\choice klasa
-		\choice komponenata
+		\choice dijelova
 		\choice segmenata
 	\end{oneparchoices}
 	
 	\question
-	Najraširenija licenca u razvoju Linuxa općenito jest:
+	Terminiranje naredbe moguće je korištenjem kratice na tipkovnici:
 	
 	\begin{oneparchoices}
-		\choice BSD
-		\choice MIT
-		\CorrectChoice GPL
-		\choice Apache
+		\choice Ctrl + X
+		\choice Ctrl + V
+		\CorrectChoice Ctrl + C
+		\choice Ctrl + S
 	\end{oneparchoices}
 	
 	\question
-  Dva načina distribucije ažuriranja su: 
+    Ispis: \shell{lrwxrwxrwx 1 root root 4 2010-04-29 10:44 /bin/sh -> bash} \\može se dobiti korištenjem naredbe:
+    
+	\begin{oneparchoices}
+		\CorrectChoice \shell{ls -l /bin/sh}
+        \choice \shell{dir -p /bin/sh}
+        \choice \shell{grep -c /bin/sh}
+        \choice \shell{cat –all /bin/sh}
+	\end{oneparchoices}
 
-	\begin{oneparchoices}
-		    \choice stable i testing
-        \CorrectChoice rolling i stable 
-        \choice rolling i rocking
-        \choice unstable i stable
-	\end{oneparchoices}
-
 	\question
-  Direktorij u koji korisnik (uobičajeno) ručno dodaje pokretne uređjaje/medije jest:
+    U prvom bloku ispisa iz prethodnog zadatka, tri su skupine niza znakova "rwx". Druga po redu skupina predstavlja dozvole:
 	
 	\begin{oneparchoices}
-        \choice /bin
-        \CorrectChoice /mnt
-        \choice /lib
-        \choice /etc
+        \choice vlasnika datoteke
+        \CorrectChoice grupe vlasnika datoteke
+        \choice ostalih korisnika
+        \choice svih korisnika
 	\end{oneparchoices}
 	
 	\question
-Zauzeće prostora po particijama provjeravamo naredbom:
+	Trenutno se nalazite u direktoriju \shell{/home/korisnik/Dokumenti/faks/diglog}. Kojom od ponuđenih naredbi ćete se pozicionirati u \shell{/home/korisnik/Desktop}?
 	
 	\begin{oneparchoices}
-		\choice ds 
-		\choice ls 
-		\CorrectChoice df 
-		\choice free
+		\choice \shell{Cd .././../../Desktop} \\
+		\choice \shell{cd ././.././Desktop} \\
+		\CorrectChoice \shell{cd .././../../Desktop} \\
+		\choice \shell{cd ../../../../Desktop}
 	\end{oneparchoices}
 	
-	\question
-  Prazna datoteka stvara se naredbom:
-
+	\question	
+	Za preimenovanje datoteka možemo koristiti naredbu:
+	
 	\begin{oneparchoices}
-		\choice mk
-		\CorrectChoice touch
-		\choice mv
-		\choice pwd
+		\choice rn
+		\CorrectChoice mv
+		\choice cp
+		\choice rm
 	\end{oneparchoices}
 	
 	\question
@@ -106,228 +106,246 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-  Nalazimo se u direktoriju \shell{/home/pedro/.config/hexchat/assets}. U kojem se direktoriju nalazimo nakon izvođenja naredbe  \shell{cd ../../././../} ? 
-
+	Što ne vrijedi za naredbu \shell{touch}?
+	
 	\begin{oneparchoices}
-		\choice \shell{/home/pedro/.config/hexchat} \\
-		\choice \shell{/home/} \\
-		\choice \shell{/home/pedro/.config/} \\
-		\CorrectChoice \shell{/home/pedro/}
+		\choice njome možemo stvoriti novu praznu datoteku \\
+		\CorrectChoice njome možemo promijeniti sva MAC vremena odjednom, ali ne i pojedinačno \\
+		\choice njome možemo mijenjati MAC vremena direktorija \\
+		\choice njome možemo mijenjati MAC vremena datoteke
 	\end{oneparchoices}
 	
 	\question
- Niz znakova kojime se vrši preusmjeravanje stdout i stderr je: 
+	Da bismo preusmjerili stdout ispis neke naredbe u datoteku /tmp/ispis, na kraj naredbe dodajemo: 
+	
 	\begin{oneparchoices}
-		\choice 2>\&1 
-		\CorrectChoice \&> 
-		\choice >
-		\choice >2
+		\choice \shell{0>/tmp/ispis} 
+		\CorrectChoice \shell{1>/tmp/ispis} 
+		\choice \shell{2>/tmp/ispis} 
+		\choice \shell{3>/tmp/ispis}
 	\end{oneparchoices}
 	
 	\question
-\shell{yes} je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati ‘y’. Ponekad skriptama ne želimo ručno odgovarati ‘y’ i želimo da se sve izvede kao da smo na svako pitanje odgovorili ‘y’. Dobar primjer je naredba \shell{rm -ri <direktorij>}. Koja naredba od navedenih će nam omogućiti takvo izvođenje?
+	Naredbom \shell{wc}, kojoj je kao argument zadana datoteka, u općenitom slučaju ne možemo ispisati:
 	
 	\begin{oneparchoices}
-		\choice \shell{rm -ri | yes} 
-		\CorrectChoice \shell{yes | rm -ri} 
-		\choice \shell{rm -ri \&\& yes} 
-		\choice \shell{yes || rm -ri}
+		\choice broj riječi u datoteci
+		\CorrectChoice broj slova u datoteci
+		\choice broj znakova u datoteci
+		\choice broj linija u datoteci
 	\end{oneparchoices}
 	
 	\question
-  Da bismo preusmjerili ispis pogrešaka (i \textbf{samo} njih) neke naredbe u datoteku, na kraj naredbe dodajemo:
-
+	Kojim znakom označavamo početak reda u regularnim izrazima? 
+	
 	\begin{oneparchoices}
-	  \choice \shell{1>./datoteka} 
-		\CorrectChoice \shell{2>./datoteka} 
-		\choice \shell{\&>./datoteka} 
-		\choice \shell{>./datoteka}
+		\CorrectChoice \textasciicircum
+		\choice '
+		\choice <
+		\choice \$ 
 	\end{oneparchoices}
 	
 	\question
 	Izbaci uljeza!
 	
 	\begin{oneparchoices}
-		\CorrectChoice before
-		\choice while
-		\choice until
-		\choice for
+		\CorrectChoice leave
+		\choice Ctrl+D
+		\choice logout
+		\choice exit
 	\end{oneparchoices}
 
 	\question
-	Naredba ls -ld /etc/??? izlistava:
-	\begin{oneparchoices}
-		\choice sve datoteke čiji naziv ima najmanje tri znaka
-		\choice sve direktorije čiji naziv počinje s ???
-    \CorrectChoice sve direktorije čiji naziv ima točno tri znaka
-	  \choice sve datoteke s nazivom ???
-	\end{oneparchoices}
-	
-	\question
-  U skriptnom jeziku bash, svaka je varijabla tipa:
+	Redak \shell{root:x:0:0:root:/root:/bin/bash} primjer je retka iz datoteke:
 	
 	\begin{oneparchoices}
-		\choice integer
-		\CorrectChoice string
-		\choice double
-		\choice char
-	\end{oneparchoices}
-	
-	\question
-  Kojim znakom označavamo kraj reda u regularnim izrazima?
-
-	\begin{oneparchoices}
-		\choice \textasciicircum
-		\CorrectChoice \$
-		\choice >
-		\choice *
-	\end{oneparchoices}
-
-	\question
-	Rezultat izvođenja naredbe \verb| sed -r "s/(.*)\.(.*)\.(.*)/\2\1\3/"| nad nizom A.B.C jest:
-	
-	\begin{oneparchoices}
-		\choice CBA
-		\choice ABC
-		\CorrectChoice BAC
-		\choice CAB
-	\end{oneparchoices}
-	
-	\question
-	Odaberite naredbu kojom će se iz niza koji je sastavljen od proizvoljnog broja znamenki nakon kojih slijedi riječ (npr. 1337banana, 90000mango) maknuti niz brojeva i sva slova prebaciti u velika:
-
-	\begin{oneparchoices}
-		\CorrectChoice \verb|sed -r "s/([[:digit:]])*(.*)/\U\2/"| \\ 
-		\choice \verb|sed -r "s/([[:digit:]])(.*)/\u\2/"|  \\
-		\choice \verb|sed -r "s/([[:alnum:]])*(.*)/\u\1/"| \\
-		\choice \verb|sed -r "s/([[:alnum:]])(.*)/\U\2"| 
-	\end{oneparchoices}
-
-
-  \question
-  Naredba kojom se briše niz .? na kraju retka jest: 
-
-		\begin{oneparchoices}
-		\choice \verb|sed -r "s/(.*)(.?)$/\1/"|  \\
-		\choice \verb|sed -r "s/\.*.?$/\1/"| \\
-    \CorrectChoice \verb|sed -r "s/(.*)(\.\?)$/\1/"| \\ 
-    \choice \verb|sed -r "s/(\.*)(\.\?)$/\2/"|
-	\end{oneparchoices}
-
-	
-		\question
-	Redak \shell{root:T3RqrzxU1MAH3F3wtuQu/:13284:0:99999:7:::} primjer je retka iz datoteke:
-	
-	\begin{oneparchoices}
-		\choice \shell{/etc/root} 
+		\choice \shell{/etc/hosts} 
 		\choice \shell{/etc/sudoers} 
 		\choice \shell{/etc/fstab} 
-		\CorrectChoice \shell{/etc/shadow}
-  \end{oneparchoices}
-
-		\question
-	Redak \shell{GROUPTWO    ALL = NOPASSWD: /usr/bin/updatedb, PASSWD: /bin/kill} primjer je retka iz datoteke:
-	
-	\begin{oneparchoices}
-		\choice \shell{/etc/root} 
-		\CorrectChoice \shell{/etc/sudoers} 
-		\choice \shell{/etc/fstab} 
-		\choice \shell{/etc/shadow}
-  \end{oneparchoices}
-
-
-	\question
-	Primarna grupa svakog korisnika zapisana je u datoteci:
-
-	\begin{oneparchoices}
-   	\choice \shell{/etc/hosts}
 		\CorrectChoice \shell{/etc/passwd}
-		\choice \shell{/usr/passwd} 
-		\choice \shell{/usr/group}  
 	\end{oneparchoices}
-
+	
 	\question
-  Naredba "\shell{su}" bez argumenata:
+	U retku \shell{root:x:0:0:root:/root:/bin/bash}, što označava druga nula?
 	
 	\begin{oneparchoices}
-		\choice daje trenutnom korisniku sudo prava \\
-		\CorrectChoice mijenja trenutnog korisnika u \shell{root} korisnika \\ 
-		\choice stvara novog usera \\
-		\choice ispisuje pogrešku zbog nepravilnog poziva
+		\choice ID korisnika
+		\CorrectChoice ID primarne grupe
+		\choice broj prijava na sustav
+		\choice broj znakova u lozinki
 	\end{oneparchoices}
 	
 	\question
-  Naredba kojom omogućujemo samo čitanje određene datoteke jest: 
-
-	\begin{oneparchoices}
-		\CorrectChoice \shell{chmod 444 datoteka}\\ 
-		\choice \shell{chmod 755 datoteka} \\
-		\choice \shell{chmod 777 datoteka} \\
-		\choice \shell{chmod 333 datoteka}
-	\end{oneparchoices}
-	
-	\question
-	Naredba koja dozvoljava brisanje datoteka unutar direktorija samo vlasniku i rootu 
+	Za (trajnu) promjenu korisnika prijavljenog unutar ljuske možemo koristiti naredbu:
 	
 	\begin{oneparchoices}
-		\choice \shell{chmod +X direktorij} \\
-		\choice \shell{chmod +r direktorij} \\
-    	\CorrectChoice \shell{chmod +t direktorij}\\ 	
-	  \choice \shell{chmod -X direktorij}
-	\end{oneparchoices}
-
-	\question
-	Koju sintaksu biste upotrijebili za pokretanje procesa u pozadini?
-
-	\begin{oneparchoices}
-		\choice \shell{<naredba> \$} \\
-		\CorrectChoice \shell{<naredba> \&} \\
-		\choice \shell{<naredba> !} \\
-		\choice \shell{<naredba> \textasciicircum} \\
+		\choice \shell{sudo}
+		\CorrectChoice \shell{su}
+		\choice \shell{switchuser}
+		\choice \shell{who}
 	\end{oneparchoices}
 	
 	\question
-  Što sadrži varijabla \shell{\$\$}?
-
+	Što ne vrijedi za naredbu \shell{adduser}?
+	
 	\begin{oneparchoices}
-				\choice trenutnu verziju kernela\\
-		\CorrectChoice \textit{PID} trenutnog procesa \\ 
-		\choice \textit{exit code} posljednjeg pokrenutog programa\\
-		\choice podrazumijevani emulator terminala
+		\choice može stvoriti novu grupu \\
+		\CorrectChoice može dodati više korisnika odjednom \\
+		\choice može dodati postojećeg korisnika u postojeću grupu \\
+		\choice može stvoriti korisnika bez matičnog direktorija
 	\end{oneparchoices}
 	
 	\question
-  Koji se signal šalje pritiskom kombinacije tipki Ctrl+C? 
+	Direktorij \shell{/etc/skel} sadrži:
+	
+	\begin{oneparchoices}
+		\CorrectChoice standardne konfiguracijske datoteke za korisnika \\
+		\choice obično je prazan \\
+		\choice slike kostura raznih životinja \\
+		\choice skripte koje sustav izvršava pri pokretanju
+	\end{oneparchoices}
 
-  \begin{oneparchoices}
+	\question
+	Kako bismo korisniku vlasniku datoteke, bez mijenjanja ostalih dozvola, omogućili pisanje u tu datoteku?
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{chmod u+w datoteka} \\
+		\choice \shell{usermod +w datoteka} \\
+		\choice \shell{chmod u=w datoteka} \\
+		\choice \shell{chmod 200 datoteka} \\
+	\end{oneparchoices}
+
+	\question
+	Ako želimo osigurati da se skripta koju smo napisali pokrene u bash ljusci, moramo u prvi red skripte napisati:
+	
+	\begin{oneparchoices}
+		\choice \shell{\$!/bin/bash} \\ 
+		\choice \shell{!\#/bin/bash} \\ 
+		\CorrectChoice \shell{\#!/bin/bash} \\ 
+		\choice \shell{./bin/bash}
+	\end{oneparchoices}
+	
+	\question
+	Izbaci uljeza!
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{SIGSTOP} 
+		\choice \shell{SIGINT} 
+		\choice \shell{SIGTERM} 
 		\choice \shell{SIGKILL}
-		\choice \shell{SIGTRAP}
-    \choice \shell{SIGHUP}
-    \CorrectChoice \shell{SIGINT}  
-  \end{oneparchoices}
+	\end{oneparchoices}
+	
+	\question
+	Matični direktorij \shell{root} korisnika nalazi se:
+	
+	\begin{oneparchoices}
+		\choice u /sys direktoriju
+		\choice u /home direktoriju
+		\CorrectChoice u korijenskom (root) direktoriju
+		\choice nema svoj matični direktorij
+	\end{oneparchoices}
+	
+	\question
+	Izvorni proces koji je proces-roditelj svim procesima naziva se:
+	
+	\begin{oneparchoices}
+		\CorrectChoice \shell{init} 
+		\choice \shell{root}  
+		\choice \shell{parent} 
+		\choice \shell{start}
+	\end{oneparchoices}
+	
+	\question
+	Izbaci uljeza!
+	
+	\begin{oneparchoices}
+		\choice ifconfig
+		\choice iwconfig
+		\choice ip
+		\CorrectChoice ipconfig
+	\end{oneparchoices}
+
+
+\vspace{1em}
+\uplevel{
+	U idućim zadacima potrebno je odrediti ispravni regularni izraz koji zadovoljava uvjete zadatka, koji se prosljeđuje naredbi egrep.
+}
+
 
 	\question
-  Odaberite "najjači" signal:
-
-  \begin{oneparchoices}
-		\CorrectChoice \shell{SIGKILL}
-		\choice \shell{SIGTRAP}
-    \choice \shell{SIGHUP}
-    \choice \shell{SIGINT}  
-  \end{oneparchoices}
-
-
+	Iz datoteke ispisati sve retke u kojima se \textbf{ne} nalaze praznine:
+	
+	\begin{oneparchoices}
+		\choice \shell{egrep "[[:blank:]]" datoteka} \\
+		\CorrectChoice \shell{egrep -v "[[:blank:]]" datoteka} \\
+		\choice \shell{egrep -c "[[:blank:]]" datoteka} \\
+		\choice \shell{egrep "[\textasciicircum[:blank:]]" datoteka} \\
+	\end{oneparchoices}
+	
 	\question
-Pomoću koje kombinacije tipki je moguće suspendirati (privremeno zaustaviti) aktivni proces u ljusci?
-
-  \begin{oneparchoices}
-		\choice \shell{CTRL+C}
-		\CorrectChoice \shell{CTRL+Z}
-    \choice \shell{ALT+C}
-    \choice \shell{CTRL+D}  
-  \end{oneparchoices}
+	Ispisati količinu redaka datoteke u kojima se nalazi znakovni niz "nux" na kraju retka: 
+	
+	\begin{oneparchoices}
+		\choice \shell{egrep "nux\$" datoteka | wc -w} \\
+		\CorrectChoice \shell{egrep -c "nux\$" datoteka} \\
+		\choice \shell{egrep -c "nux\%" datoteka | wc -l} \\
+		\choice \shell{egrep "nux\%" datoteka|} 
+	\end{oneparchoices}
+	
+	\question
+	Iz datoteke ispisati sve retke u kojima se nalazi niz "C++":
+	
+	\begin{oneparchoices}
+		\choice \verb|egrep "C+{2}" datoteka| \\
+		\choice \verb|egrep "C++" datoteka| \\
+		\CorrectChoice \verb|egrep "C\+{2}" datoteka| \\
+		\choice \verb|egrep "C+\+" datoteka|
+	\end{oneparchoices}
+	
+	\question
+	Iz datoteke ispisati sve retke u kojima se veliko slovo nalazi između dva mala slova (npr "mAn"): 
+	
+	\begin{oneparchoices}
+		\choice \verb|egrep "[[:lower:]]?[A-Z]{1}[[:lower:]]?" datoteka| \\
+		\choice \verb|egrep "[^A-Z][A-Z][^A-Z]" datoteka| \\
+		\choice \verb|egrep "[a-z][[:alpha:]][a-z]" datoteka| \\
+		\CorrectChoice \verb|egrep "[a-z][[:upper:]][a-z]" datoteka|
+	\end{oneparchoices}
 	
     
+\vspace{1em}
+\uplevel{
+	U idućim zadacima potrebno je odrediti ispravni izraz koji zadovoljava uvjete zadatka, koji se prosljeđuje naredbi sed -r.
+}
+
+
+	\question Prva i zadnja tri znaka retka zamijene mjesta (npr.: \shell{kineski zid} $\longrightarrow$ \shell{zideski kin}): 
+	
+	\begin{oneparchoices}
+		\choice \verb|'s/(...).*(...)/\2\1/'| \\
+		\choice \verb|'s/(...)(.*)(...)/\2\3\1/'| \\
+		\CorrectChoice \verb|'s/(...)(.*)(...)/\3\2\1/'| \\
+		\choice \verb|'s/(..)(.*)(..)/\3\2\1/'| 
+	\end{oneparchoices}
+	
+	\question Ako je zarez na kraju retka, obriši taj zarez (npr.: \shell{dakle,} $\longrightarrow$ \shell{dakle}): 
+
+	\begin{oneparchoices}
+		\CorrectChoice \verb|'s/(.*)\,$/\1/'| \\
+		\choice \verb|'s/(.*)\,/\1/'| \\
+		\choice \verb|'s/.*(\,)/\1/'| \\
+		\choice \verb|'s/(.*)\,$/\U\1/'|
+	\end{oneparchoices}
+
+	\vspace{1em}
+\uplevel{
+	Preferencija termina:
+	\\ A. Jutarnji (10-12) \hspace{20mm} B. Popodnevni (12-14)
+}
+	%\begin{oneparchoices}
+	%	\choice Jutarnji (10-12) \\
+	%	\choice Popodnevni (12-14)
+	%\end{oneparchoices}
 
 \end{questions}
 \end{document}
