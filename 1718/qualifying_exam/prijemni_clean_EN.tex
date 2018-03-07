@@ -16,17 +16,17 @@
 \begin{document}
 \firstpageheader
 	{}
-	{{\large \textbf{Napredno korištenje OS Linux}}\\
-		\textbf{Prijemni ispit - 7. ožujka 2018.}}
+	{{\large \textbf{Advanced Use of Linux Operating System}}\\
+		\textbf{Qualifying Exam - March 7th, 2018}}
 	{}
 \footer
 	{}{}{\thepage}
 	
-Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
+Name: \fillin[][7cm] \hfill ID Number: \fillin[][5cm]\\
 
 \begin{questions}
 	\question
-	Najveći autoritet u današnjem razvoju Linuxa ima:
+	Who holds the leading authority in Linux development today?
 	
 	\begin{oneparchoices}
 		\CorrectChoice Linus Torvalds
@@ -36,17 +36,17 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\end{oneparchoices}
 	
 	\question
-	Debian, Fedora i OpenSUSE samo su neke od Linux
+	Debian, Fedora and OpenSUSE are examples of many Linux
 	
 	\begin{oneparchoices}
-		\CorrectChoice distribucija
-		\choice klasa
-		\choice komponenata
-		\choice segmenata
+		\CorrectChoice distributions
+		\choice classes
+		\choice components
+		\choice segments
 	\end{oneparchoices}
 	
 	\question
-	Najraširenija licenca u razvoju Linuxa općenito jest:
+	The licence most commonly used with Linux is:
 	
 	\begin{oneparchoices}
 		\choice BSD
@@ -56,17 +56,17 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\end{oneparchoices}
 	
 	\question
-  Dva načina distribucije ažuriranja su: 
+  Two types of distribution updates are: 
 
 	\begin{oneparchoices}
-		    \choice stable i testing
-        \CorrectChoice rolling i stable 
-        \choice rolling i rocking
-        \choice unstable i stable
+		    \choice stable and testing
+        \CorrectChoice rolling and stable 
+        \choice rolling and rocking
+        \choice unstable and stable
 	\end{oneparchoices}
 
 	\question
-  Direktorij u koji korisnik (uobičajeno) ručno dodaje pokretne uređjaje/medije jest:
+  Which of these is commonly used to manually add removable storage?
 	
 	\begin{oneparchoices}
         \choice /bin
@@ -76,7 +76,7 @@ Ime i prezime: \fillin[][7cm] \hfill JMBAG: \fillin[][5cm]\\
 	\end{oneparchoices}
 	
 	\question
-Zauzeće prostora po particijama provjeravamo naredbom:
+One can check disk space usage by running which of these commands?
 	
 	\begin{oneparchoices}
 		\choice ds 
@@ -86,7 +86,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-  Prazna datoteka stvara se naredbom:
+  An empty file can be created by running:
 
 	\begin{oneparchoices}
 		\choice mk
@@ -96,7 +96,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-	Kojom od sljedećih naredbi stvaramo direktorij "linux" i u njemu direktorij "osnovni"? 
+	Which of the following commands would create a directory called "\shell{linux}", and another one within it, called "\shell{osnovni}"? 
 	
 	\begin{oneparchoices}
 		\choice \shell{touch -p linux/osnovni} \\
@@ -106,7 +106,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-  Nalazimo se u direktoriju \shell{/home/pedro/.config/hexchat/assets}. U kojem se direktoriju nalazimo nakon izvođenja naredbe  \shell{cd ../../././../} ? 
+  Our current working directory is \shell{/home/pedro/.config/hexchat/assets}. Where will we end up after running the command \shell{cd ../../././../} ? 
 
 	\begin{oneparchoices}
 		\choice \shell{/home/pedro/.config/hexchat} \\
@@ -116,7 +116,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
- Niz znakova kojime se vrši preusmjeravanje stdout i stderr je: 
+ Which sequence of characters redirects stdout and stderr elsewhere? 
 	\begin{oneparchoices}
 		\choice 2>\&1 
 		\CorrectChoice \&> 
@@ -125,7 +125,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-\shell{yes} je naredba koja će u slučaju pozivanja bez argumenata na stdout ispisivati ‘y’. Ponekad skriptama ne želimo ručno odgovarati ‘y’ i želimo da se sve izvede kao da smo na svako pitanje odgovorili ‘y’. Dobar primjer je naredba \shell{rm -ri <direktorij>}. Koja naredba od navedenih će nam omogućiti takvo izvođenje?
+\shell{yes} is a command which, in its base form, merely prints ‘y’ to the standard output. Sometimes, we don't want scripts and commands to pest us with "[y/n]" confirmations, and instead want them to simply assume ‘y’ to be the answer to all questions. The command \shell{rm -ri <directory>} is an example of such a command. Which of the following enables the behavior described above?
 	
 	\begin{oneparchoices}
 		\choice \shell{rm -ri | yes} 
@@ -135,17 +135,17 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-  Da bismo preusmjerili ispis pogrešaka (i \textbf{samo} njih) neke naredbe u datoteku, na kraj naredbe dodajemo:
+  In order to redirect the printing of errors (and \textbf{only} errors) encountered during the execution of some command to some file, which of the following should we append to the command being run?
 
 	\begin{oneparchoices}
-	  \choice \shell{1>./datoteka} 
-		\CorrectChoice \shell{2>./datoteka} 
-		\choice \shell{\&>./datoteka} 
-		\choice \shell{>./datoteka}
+	  \choice \shell{1>./some\_file} 
+		\CorrectChoice \shell{2>./some\_file} 
+		\choice \shell{\&>./some\_file} 
+		\choice \shell{>./some\_file}
 	\end{oneparchoices}
 	
 	\question
-	Izbaci uljeza!
+	Odd man out! Which of these doesn't fit?
 	
 	\begin{oneparchoices}
 		\CorrectChoice before
@@ -155,16 +155,16 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 
 	\question
-	Naredba ls -ld /etc/??? izlistava:
+	The command ls -ld /etc/??? lists:
 	\begin{oneparchoices}
-		\choice sve datoteke čiji naziv ima najmanje tri znaka
-		\choice sve direktorije čiji naziv počinje s ???
-    \CorrectChoice sve direktorije čiji naziv ima točno tri znaka
-	  \choice sve datoteke s nazivom ???
+		\choice all files whose name has at least 3 characters
+		\choice all directories whose name starts with ???
+    \CorrectChoice all directories whose name has exactly 3 characters
+	  \choice all files named ???
 	\end{oneparchoices}
 	
 	\question
-  U skriptnom jeziku bash, svaka je varijabla tipa:
+  In bash, every variable is of the type:
 	
 	\begin{oneparchoices}
 		\choice integer
@@ -174,7 +174,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-  Kojim znakom označavamo kraj reda u regularnim izrazima?
+  In regular expressions, which character denotes End-of-Line?
 
 	\begin{oneparchoices}
 		\choice \textasciicircum
@@ -184,7 +184,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 
 	\question
-	Rezultat izvođenja naredbe \verb| sed -r "s/(.*)\.(.*)\.(.*)/\2\1\3/"| nad nizom A.B.C jest:
+	What is the result of running \verb| sed -r "s/(.*)\.(.*)\.(.*)/\2\1\3/"| on the string A.B.C?:
 	
 	\begin{oneparchoices}
 		\choice CBA
@@ -194,7 +194,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 	
 	\question
-	Odaberite naredbu kojom će se iz niza koji je sastavljen od proizvoljnog broja znamenki nakon kojih slijedi riječ (npr. 1337banana, 90000mango) maknuti niz brojeva i sva slova prebaciti u velika:
+	Choose the command which will, given a string containing any number of digits followed by a word (e.g. 1337banana, 90000mango), strip off the numbers and turn all letters to uppercase.
 
 	\begin{oneparchoices}
 		\CorrectChoice \verb|sed -r "s/([[:digit:]])*(.*)/\U\2/"| \\ 
@@ -205,7 +205,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 
 
   \question
-  Naredba kojom se briše niz .? na kraju retka jest: 
+  Which of these commands will remove the sequence of characters ".?" (without quotation marks) from the end of the line? 
 
 		\begin{oneparchoices}
 		\choice \verb|sed -r "s/(.*)(.?)$/\1/"|  \\
@@ -216,7 +216,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 
 	
 		\question
-	Redak \shell{root:T3RqrzxU1MAH3F3wtuQu/:13284:0:99999:7:::} primjer je retka iz datoteke:
+	The line \shell{root:T3RqrzxU1MAH3F3wtuQu/:13284:0:99999:7:::} is a representative line from which file?
 	
 	\begin{oneparchoices}
 		\choice \shell{/etc/root} 
@@ -226,7 +226,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
   \end{oneparchoices}
 
 		\question
-	Redak \shell{GROUPTWO    ALL = NOPASSWD: /usr/bin/updatedb, PASSWD: /bin/kill} primjer je retka iz datoteke:
+	The line \shell{GROUPTWO    ALL = NOPASSWD: /usr/bin/updatedb, PASSWD: /bin/kill} is a representative line from which file?
 	
 	\begin{oneparchoices}
 		\choice \shell{/etc/root} 
@@ -237,7 +237,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 
 
 	\question
-	Primarna grupa svakog korisnika zapisana je u datoteci:
+	The primary group for each user is written in:
 
 	\begin{oneparchoices}
    	\choice \shell{/etc/hosts}
@@ -247,57 +247,57 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 	\end{oneparchoices}
 
 	\question
-  Naredba "\shell{su}" bez argumenata:
+  The command "\shell{su}" run with no arguments:
 	
 	\begin{oneparchoices}
-		\choice daje trenutnom korisniku sudo prava \\
-		\CorrectChoice mijenja trenutnog korisnika u \shell{root} korisnika \\ 
-		\choice stvara novog usera \\
-		\choice ispisuje pogrešku zbog nepravilnog poziva
+		\choice gives the current user sudo privileges \\
+		\CorrectChoice switches the current user with \shell{root} \\ 
+		\choice creates a new user \\
+		\choice returns an error due to being run improperly
 	\end{oneparchoices}
 	
 	\question
-  Naredba kojom omogućujemo samo čitanje određene datoteke jest: 
+  Which command ensures the file may only be read and nothing else? 
 
 	\begin{oneparchoices}
-		\CorrectChoice \shell{chmod 444 datoteka}\\ 
-		\choice \shell{chmod 755 datoteka} \\
-		\choice \shell{chmod 777 datoteka} \\
-		\choice \shell{chmod 333 datoteka}
+		\CorrectChoice \shell{chmod 444 some\_file}\\ 
+		\choice \shell{chmod 755 some\_file} \\
+		\choice \shell{chmod 777 some\_file} \\
+		\choice \shell{chmod 333 some\_file}
 	\end{oneparchoices}
 	
 	\question
-	Naredba koja dozvoljava brisanje datoteka unutar direktorija samo vlasniku i rootu 
+	Which command permits deleting files inside of a directory \textbf{only} to the directory owner and root?
 	
 	\begin{oneparchoices}
-		\choice \shell{chmod +X direktorij} \\
-		\choice \shell{chmod +r direktorij} \\
-    	\CorrectChoice \shell{chmod +t direktorij}\\ 	
-	  \choice \shell{chmod -X direktorij}
+		\choice \shell{chmod +X some\_directory} \\
+		\choice \shell{chmod +r some\_directory} \\
+    	\CorrectChoice \shell{chmod +t some\_directory}\\ 	
+	  \choice \shell{chmod -X some\_directory}
 	\end{oneparchoices}
 
 	\question
-	Koju sintaksu biste upotrijebili za pokretanje procesa u pozadini?
+	Which of these is valid if you want to run a command in the background?
 
 	\begin{oneparchoices}
-		\choice \shell{<naredba> \$} \\
-		\CorrectChoice \shell{<naredba> \&} \\
-		\choice \shell{<naredba> !} \\
-		\choice \shell{<naredba> \textasciicircum} \\
+		\choice \shell{<command> \$} \\
+		\CorrectChoice \shell{<command> \&} \\
+		\choice \shell{<command> !} \\
+		\choice \shell{<command> \textasciicircum} \\
 	\end{oneparchoices}
 	
 	\question
-  Što sadrži varijabla \shell{\$\$}?
+  What does the \shell{\$\$} variable contain?
 
 	\begin{oneparchoices}
-				\choice trenutnu verziju kernela\\
-		\CorrectChoice \textit{PID} trenutnog procesa \\ 
-		\choice \textit{exit code} posljednjeg pokrenutog programa\\
-		\choice podrazumijevani emulator terminala
+				\choice current kernel version\\
+		\CorrectChoice \textit{PID} of the current process \\ 
+		\choice \textit{exit code} of the last run program \\
+		\choice the default terminal emulator
 	\end{oneparchoices}
 	
 	\question
-  Koji se signal šalje pritiskom kombinacije tipki Ctrl+C? 
+  Which signal is sent by pressing Ctrl+C? 
 
   \begin{oneparchoices}
 		\choice \shell{SIGKILL}
@@ -307,7 +307,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
   \end{oneparchoices}
 
 	\question
-  Odaberite "najjači" signal:
+  Choose the "strongest" signal:
 
   \begin{oneparchoices}
 		\CorrectChoice \shell{SIGKILL}
@@ -318,7 +318,7 @@ Zauzeće prostora po particijama provjeravamo naredbom:
 
 
 	\question
-Pomoću koje kombinacije tipki je moguće suspendirati (privremeno zaustaviti) aktivni proces u ljusci?
+  If a user wants to suspend the active process, which of these key combinations will enable them to do it?
 
   \begin{oneparchoices}
 		\choice \shell{CTRL+C}
@@ -327,7 +327,11 @@ Pomoću koje kombinacije tipki je moguće suspendirati (privremeno zaustaviti) a
     \choice \shell{CTRL+D}  
   \end{oneparchoices}
 	
-    
+\vspace{1em}
+\uplevel{
+	Which term do You prefer:
+	\\ A. In the morning (10-12) \hspace{20mm} B. In the afternoon (12-14)
+}    
 
 \end{questions}
 \end{document}
