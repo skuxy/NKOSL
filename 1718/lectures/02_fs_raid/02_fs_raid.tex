@@ -254,8 +254,8 @@
 	\frametitle{\texttt{/etc/fstab}}
 	\begin{itemize}
 		\item \textbf{F}ile \textbf{S}ystem \textbf{Tab}le
-		\item Sadrži opcije za automatsko mountanje filesystema
-		\item Pokretanjem \texttt{mount -a} mountaju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
+		\item Sadrži opcije za automatsko montiranje filesystema
+		\item Pokretanjem \texttt{mount -a} montiraju se filesystemi kako su redom navedeni u \texttt{/etc/fstab}
 	\end{itemize}
 	\begin{verbatim}
 	# <filesys>  <dir>  <type>  <options>          <dump> <pass>
@@ -464,7 +464,7 @@
 		\end{itemize}
 		\begin{itemize}
 			\item Prednosti RAID 0 na razini jednog polja
-			\item Sigurnost RAID 0 polja
+			\item Sigurnost RAID 1 polja
 		\end{itemize}
 	\end{column}
 	\begin{column}{0.45\textwidth}
@@ -576,13 +576,11 @@
 	\textbf{Physical Volume} (PV)
 	\begin{itemize}
 		\item Particije na fizičkim diskovima
-		\item LVM ih dijeli na manje jedinice - \textbf{Physical extent} (PE)
 	\end{itemize}
 	\vfill
 	\textbf{Logical Volume} (LV)
 	\begin{itemize}
 		\item Logički disk (particija)
-		\item LVM ih dijeli da manje jedinice - \textbf{Logical extent} (LE)
 	\end{itemize}
 	\vfill
 	\textbf{Volume Group} (VG)
@@ -791,7 +789,7 @@ Disk quotas for user cetko (uid 1001):
 	\texttt{setfacl}, \texttt{getacl}
 	\vspace{1em}
 	\begin{itemize}
-		\item Filesystem mora biti mountan s opcijom \texttt{acl}
+		\item Filesystem mora biti montiran s opcijom \texttt{acl}
 	\end{itemize}
 \end{frame}
 
