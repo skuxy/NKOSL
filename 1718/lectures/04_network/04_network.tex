@@ -48,17 +48,6 @@
 	\includegraphics[width=0.5\textwidth]{osi_tcpip.png}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Modeli mreža}
-	\framesubtitle{Prisjetimo se...}
-	\begin{itemize}
-		\item TCP/IP je najraširenija implementacija OSI modela
-		\item Komutacija paketa
-		\item IP omogućuje globalnu komutaciju
-	\end{itemize}
-	\vfill
-	\includegraphics[width=0.8\textwidth]{service_layer.png}
-\end{frame}
 
 \begin{frame}
 	\frametitle{Adresiranje u TCP/IP modelu}
@@ -163,6 +152,7 @@ Mask:    255.255.192.0
 		\item \textbf{CIDR notacijom} adresa mreže se zapisuje u obliku
 		\item[] \texttt{172.16.64.0/18}
 		\item Broj iza adrese mreže (\texttt{/18}) odgovara broju jedinica u subnet maski
+        \item CIDR notaciju npr. alat ip
 	\end{itemize}
 \end{frame}
 
@@ -336,38 +326,6 @@ default via 192.168.1.10 dev eth0
 	\end{verbatim}
 \end{frame}
 
-\begin{frame}[fragile]
-	\frametitle{DNS}
-	DNS server - \texttt{bind}
-	\begin{itemize}
-		\item Svaka domena (npr. \texttt{fer.hr}) ima svoj \textit{authority}
-		\item[] \verb|$ dig soa fer.hr|
-		\item Primary i secondary DNS server
-		\item[] \verb|$ dig ns fer.hr|
-	\end{itemize}
-	\begin{itemize}
-		\item Svi zapisi o nekoj domeni (\textit{records}) nalaze se u \textit{zone fileu}
-		\item Proučiti bind konfiguraciju
-	\end{itemize}
-	\begin{verbatim}
-    $ dig www.fer.hr
-    www.fer.hr.    3600   IN   A   161.53.72.119
-	\end{verbatim}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{DNS}
-	Reverse DNS lookup
-	\begin{itemize}
-		\item Prevođenje IP adresa u domain nazive
-		\item Posebne zone s PTR recordima
-	\end{itemize}
-	\begin{verbatim}
-$ dig -x 161.53.72.119
-119.72.53.161.in-addr.arpa. 86400 IN	PTR	skynet.cc.fer.hr.
-	\end{verbatim}
-\end{frame}
-
 \subsection{iptables}
 \begin{frame}
 	\frametitle{iptables}
@@ -457,47 +415,6 @@ iface eth0:1 inet static
 	\end{block}
 \end{frame}
 
-\begin{frame}
-	\frametitle{VLAN}
-	\textbf{Virtual LAN}
-	\begin{itemize}
-		\item Omogućuje ga standard 802.1Q
-		\item Svaki mrežni paket može nositi "naljepnicu" (\textbf{tag}) koja označava kojem dijelu mreže paket pripada
-		\item VLAN tag sadrži \textbf{VLAN ID} (VID)
-	\end{itemize}
-	\begin{itemize}
-		\item Layer 2 mrežna oprema (konfigurabilni switchevi) usmjeravaju pakete među priključcima koji pripadaju istom VLAN-u
-		\item Ostvareno je \textbf{Layer 2 odvajanje}
-	\end{itemize}
-	\begin{itemize}
-		\item VLAN se na svakom priključku koristi kao
-		\begin{description}[labelindent=1em]
-			\item[Tagged promet] Računalo postavlja 802.1Q tag prije slanja paketa
-			\item[Untagged promet] Switch postavlja 802.1Q tag nakon što primi paket
-		\end{description}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{VLAN}
-	\footnotesize
-	\begin{verbatim}
-# apt-get install vlan
-# modprobe 8021q
-
-# ifup eth0
-# vconfig add eth0 100
-Added VLAN with VID == 100 to IF -:eth0:-
-# ifconfig eth0.100 192.168.10.20/24
-
-# ifconfig eth0.100
-eth0.100  Link Encap: Ethernet 	...
-...       inet addr:192.168.10.20
-
-# vconfig rem eth0.100
-Removed VLAN -:eth0.100:-
-	\end{verbatim}
-\end{frame}
 
 \begin{frame}
 	\frametitle{Konfiguracija mreže}
