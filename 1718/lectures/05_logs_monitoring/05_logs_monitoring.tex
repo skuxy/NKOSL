@@ -24,7 +24,7 @@
 
 \title[NKOSL]{Napredno korištenje operacijskog sustava Linux}
 \author[Leonard Volarić Horvat, Borna Skukan]{Leonard Volarić Horvat, Borna Skukan\\{\small Nositelj: doc.dr.sc. Stjepan Groš}}
-\subtitle{4. Sistemski logovi i nadziranje}
+\subtitle{4. Sistemski logovi}
 \institute[FER]{Sveučilište u Zagrebu\\Fakultet elektrotehnike i računarstva}
 
 \begin{document}
@@ -222,121 +222,25 @@
 
 \end{frame}
 
-\section{Monitoring}
-\begin{frame}
-    \topskip0pt
-    \vspace*{\fill}
-        \begin{center}
-            \Huge{Monitoring}
-        \end{center}
-    \vspace*{\fill}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{ps}
-	
-	\begin{itemize}
-		\item "\textbf{p}rocess \textbf{s}tatus"
-		\item Alat za prikaz trenutno aktivnih procesa
-		\item Često koristen u kombinaciji s grep-om
-	\end{itemize}
-		 \shell{ps aux  \newline
-				ps -ejH}		
-	
-		
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{top}
-	
-	\begin{itemize}
-		\item \textit{Realtime} praćenje trenutnih procesa
-		\item Mogućnost sortiranja i filtriranja
-		\item Prikazuje i osnovne metrike o sustavu
-		\item \shell{ htop } - intuitivniji i pregledniji
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{htop}
-    \begin{figure}
-        \centering
-        \includegraphics[width=1.0\linewidth]{htop-marvin}
-        \caption{htop}
-        \label{fig:htop-marvin}
-    \end{figure}
-\end{frame}
-
-\begin{frame}
-    \frametitle{/proc}
+\begin{frame}[fragile]
+    \frametitle{Journalctl}
     \begin{itemize}
-        \item Direktorij /proc - izvor većine podataka o procesima
-        \begin{itemize}
-            \item \shell{uptime - /proc/uptime}
-            \item \shell{loadavg - /proc/loadavg}
-            \item \shell{proces s traženim PID-om - /proc/\textless PID\textgreater}
-        \end{itemize}
-        \item /proc koristi \shell{procfs} pseudo-filesystem
-        \item Dinamička struktura - stvara i briše pripadajuće datoteke zajedno s procesima
+        \item Alat za izvrsavanje upita (\textit{querya}) na Systemd Journal
+        \item Citat s ArchWiki:
+            \textit{journalctl allows you to filter the output by specific fields. Be aware that if there
+            are many messages to display or filtering of large time span has to be done, the output
+        of this command can be delayed for quite some time.}
+        \item Jednostavi primjeri koristenja:
     \end{itemize}
-\end{frame}
+    \begin{verbatim}
+    # journalctl
 
-\begin{frame}
-    \frametitle{Još neki alati}
-    \begin{itemize}
-        \item strace 
-        \begin{itemize}
-            \item Praćenje sistemskih poziva i signala
-            \item Može se doznati odakle neki proces dobiva informacije
-            \item \shell{strace uptime 2\textgreater\&1 | grep open} \\
-        \end{itemize}
-        \item iotop - top za IO operacije
-        \item iostat - statistika o IO uređajima
-        \item atop - top za "sve"
-        \item netstat, ss - mrežni dijagnostički alati
-    \end{itemize}
-\end{frame}
+    # journalctl --since 16:00
 
-\begin{frame}
-	\frametitle{Nadzor procesa i sustava}
-	
-	\begin{itemize}
-		\item Zabbix - agent + server + vizualizacija
-        \item Ossec - Nadzor logova + mail
-        \item Sentry - Ossec + akumulacija
-		\item Sentry - agent + server + plugins
-		\item Kibana - vizualizacijski alat
-        \item Grafana, Prometheus
-	\end{itemize}
-	
-\end{frame}
-
-\begin{frame}
-	\frametitle{Zabbix}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.7\linewidth]{graph-network}
-		\caption{Zabbix}
-		\label{fig:graph-network}
-	\end{figure}
-	
+    # journalctl /bin/bash
+    \end{verbatim}
 \end{frame}
 
 
-\begin{frame}
-	\frametitle{Literatura}
-	\url{https://peteris.rocks/blog/htop/}
-	\vfill
-	\url{http://www.linuxcommand.org/man_pages/logrotate8.html}\\
-	\url{http://man7.org/linux/man-pages/man3/syslog.3.html}\\
-	\vfill
-	\url{http://www.zabbix.com}\\
-	\vfill
-	\url{https://www.elastic.co/products/kibana}\\
-    \vfill
-    \url{https://www.cyberciti.biz/tips/top-linux-monitoring-tools.html}
-\end{frame}
 
 \end{document}
